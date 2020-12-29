@@ -10,11 +10,11 @@ web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码�
 
 ###### 项目架构详情
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\frameexplain.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frameexplain.png)
 
 ###### 测试输出报告
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\testresult.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/testresult.png)
 
 ###### 开始准备使用
 
