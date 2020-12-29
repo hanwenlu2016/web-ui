@@ -42,12 +42,7 @@ python3 run.py
   
 ```
 
-###### 支持的浏览器
 
-- [ ] - [ ] - [ ] | **Chromium** | 支持     |
-      | :----------: | -------- |
-      | **Firefox**  | **支持** |
-      |    **Ie**    | **支持** |
 
 ###### 后期更新
 
@@ -75,4 +70,4 @@ python3 run.py
 
 
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)# web-ui
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)
