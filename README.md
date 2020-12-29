@@ -6,7 +6,7 @@ web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码�
 
 ###### 项目框架设计图
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\frame.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frame.png)
 
 ###### 项目架构详情
 
@@ -63,16 +63,16 @@ python3 run.py
 
 
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\manage1.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage1.png)
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\manage2.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage2.png)
 
 
 
 管理端管理员后台：
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\admin1.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin1.png)
 
 
 
-![](D:\My-Svn-oprject\github\web-ui-auto\doct\img\admin2.png)# web-ui
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)# web-ui
