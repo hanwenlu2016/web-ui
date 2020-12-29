@@ -1,0 +1,85 @@
+2020-12-29 10:22:00.665 | ERROR    | __main__:casesteid:252 - test_login用列只有3个步骤，你确输入了4 步！
+2020-12-29 10:22:05.749 | ERROR    | __main__:casesteid:252 - test_login用列只有3个步骤，你确输入了3 步！
+2020-12-29 10:22:43.766 | ERROR    | __main__:casesteid:252 - test_login用列只有4个步骤，你确输入了4 步！
+2020-12-29 10:28:35.762 | ERROR    | __main__:get_set_data:147 - test_login用列只有4个步骤，你确输入了4 步！
+2020-12-29 10:28:36.894 | ERROR    | __main__:get_set_data:147 - test_login用列只有4个步骤，你确输入了4 步！
+2020-12-29 10:28:50.335 | ERROR    | __main__:get_set_data:147 - test_login用列只有4个步骤，你确输入了4 步！
+2020-12-29 10:28:56.804 | ERROR    | __main__:get_set_data:147 - test_login用列只有3个步骤，你确输入了4 步！
+2020-12-29 10:29:02.319 | ERROR    | __main__:get_set_data:147 - test_login用列只有3个步骤，你确输入了3 步！
+2020-12-29 15:48:16.771 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 15:48:16.813 | INFO     | test_login_and_out:test_login:27 - test_login
+2020-12-29 15:48:16.969 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 loginName name  存在
+2020-12-29 15:48:16.982 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:48:17.070 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 password name  存在
+2020-12-29 15:48:17.079 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:48:17.157 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 el-button class name  存在
+2020-12-29 15:48:17.166 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:48:17.579 | ERROR    | public.getcasedata:get_set_data:147 - test_login用列只有3个步骤，你确输入了3 步！
+2020-12-29 15:48:17.582 | ERROR    | public.getcasedata:get_set_data:147 - test_login用列只有3个步骤，你确输入了3 步！
+2020-12-29 15:48:18.380 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:48:18.409 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:48:18.494 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:48:18.500 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:48:39.952 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 15:49:42.377 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 15:49:42.381 | INFO     | test_login_and_out:test_login:27 - test_login
+2020-12-29 15:49:42.482 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 loginName name  存在
+2020-12-29 15:49:42.494 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:49:42.568 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 password name  存在
+2020-12-29 15:49:42.579 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:49:42.687 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 el-button class name  存在
+2020-12-29 15:49:42.697 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:49:42.967 | ERROR    | public.getcasedata:get_set_data:147 - test_login用列只有3个步骤，你确输入了3 步！
+2020-12-29 15:49:42.969 | ERROR    | public.getcasedata:get_set_data:147 - test_login用列只有3个步骤，你确输入了3 步！
+2020-12-29 15:49:43.279 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:49:43.287 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:49:43.343 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:49:43.351 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:49:58.223 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 15:50:33.462 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 15:50:33.467 | INFO     | test_login_and_out:test_login:27 - test_login
+2020-12-29 15:50:33.581 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 loginName name  存在
+2020-12-29 15:50:33.594 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:50:33.910 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 password name  存在
+2020-12-29 15:50:33.923 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:50:34.018 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 el-button class name  存在
+2020-12-29 15:50:34.027 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:50:34.672 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:50:34.681 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:50:34.700 | INFO     | public.basepage:get_text:302 - 获取文本 欢迎，blp
+2020-12-29 15:50:34.701 | INFO     | pageobj.login:login:27 - blp
+2020-12-29 15:50:34.701 | INFO     | pageobj.login:login:30 - 登录验证完成！当前用户:blp
+2020-12-29 15:50:34.738 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:50:34.743 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:50:34.818 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 //*[@id="app"]/div/div[1]/div[2]/span/div/span xpath  存在
+2020-12-29 15:50:34.827 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 15:50:49.805 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 16:24:13.776 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 16:24:13.779 | INFO     | test_baidu:test_index:27 - test_login
+2020-12-29 16:24:13.821 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 wd name  存在
+2020-12-29 16:24:13.844 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 16:24:13.972 | ERROR    | public.getcasedata:get_set_data:147 - test_index用列只有2个步骤，你确输入了2 步！
+2020-12-29 16:24:13.987 | ERROR    | public.getcasedata:get_set_data:147 - test_index用列只有2个步骤，你确输入了2 步！
+2020-12-29 16:24:21.011 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 16:24:49.972 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 16:24:49.975 | INFO     | test_baidu:test_index:27 - test_login
+2020-12-29 16:24:50.017 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 wd name  存在
+2020-12-29 16:24:50.029 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 16:24:50.146 | ERROR    | public.getcasedata:get_set_data:147 - test_index用列只有2个步骤，你确输入了2 步！
+2020-12-29 16:24:50.162 | ERROR    | public.getcasedata:get_set_data:147 - test_index用列只有2个步骤，你确输入了2 步！
+2020-12-29 16:24:57.296 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 16:27:56.715 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 16:27:56.717 | INFO     | test_baidu:test_index:27 - test_login
+2020-12-29 16:27:56.762 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 wd name  存在
+2020-12-29 16:27:56.773 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 16:27:56.933 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 su id  存在
+2020-12-29 16:27:56.942 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 16:28:03.625 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 17:07:44.867 | INFO     | __main__:run:33 - 测试报告生成完成！
+2020-12-29 17:09:03.205 | INFO     | public.webdriverfactory:opt:44 - 启动chrome浏览器
+2020-12-29 17:09:03.208 | INFO     | test_baidu:test_index:28 - test_login
+2020-12-29 17:09:03.255 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 wd name  存在
+2020-12-29 17:09:03.265 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 17:09:03.411 | INFO     | public.basepage:waitForElement:366 - 等待页面元素 su id  存在
+2020-12-29 17:09:03.424 | INFO     | public.basepage:isElementExist:347 - 找到元素
+2020-12-29 17:09:08.603 | INFO     | __main__:run:33 - 测试报告生成完成！

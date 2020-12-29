@@ -1,0 +1,35 @@
+{
+  "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
+  "name" : "packages",
+  "children" : [ {
+    "name" : "case.test_baidu",
+    "children" : [ {
+      "name" : "打开百度搜索",
+      "uid" : "ef3d9417fac45a23",
+      "parentUid" : "301b7313a70c9d116f0b0ba40f3de834",
+      "status" : "passed",
+      "time" : {
+        "start" : 1609232943208,
+        "stop" : 1609232943493,
+        "duration" : 285
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    }, {
+      "name" : "test_hone",
+      "uid" : "909ef6141266db9e",
+      "parentUid" : "301b7313a70c9d116f0b0ba40f3de834",
+      "status" : "passed",
+      "time" : {
+        "start" : 1609232943497,
+        "stop" : 1609232943497,
+        "duration" : 0
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "case.test_baidu"
+  } ]
+}

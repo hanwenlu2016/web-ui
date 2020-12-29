@@ -1,0 +1,39 @@
+{
+  "uid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
+  "name" : "timeline",
+  "children" : [ {
+    "name" : "hanwenlu",
+    "children" : [ {
+      "name" : "13164-MainThread",
+      "children" : [ {
+        "name" : "test_hone",
+        "uid" : "909ef6141266db9e",
+        "parentUid" : "de178c34961e78ef144fcd5f0716e634",
+        "status" : "passed",
+        "time" : {
+          "start" : 1609232943497,
+          "stop" : 1609232943497,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "打开百度搜索",
+        "uid" : "ef3d9417fac45a23",
+        "parentUid" : "de178c34961e78ef144fcd5f0716e634",
+        "status" : "passed",
+        "time" : {
+          "start" : 1609232943208,
+          "stop" : 1609232943493,
+          "duration" : 285
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "de178c34961e78ef144fcd5f0716e634"
+    } ],
+    "uid" : "7f4229b220ff366eb3020d86c1b202df"
+  } ]
+}

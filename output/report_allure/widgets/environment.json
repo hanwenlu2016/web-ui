@@ -1,0 +1,19 @@
+[ {
+  "values" : [ "FDV" ],
+  "name" : "RrojectName"
+}, {
+  "values" : [ "Chrome" ],
+  "name" : "Browser"
+}, {
+  "values" : [ "63.0" ],
+  "name" : "BrowserVersion"
+}, {
+  "values" : [ "win10" ],
+  "name" : "SystemVersion"
+}, {
+  "values" : [ "python3.8.0" ],
+  "name" : "PythonVersion"
+}, {
+  "values" : [ "2.13.6" ],
+  "name" : "AllureVersion"
+} ]

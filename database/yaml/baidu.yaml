@@ -1,0 +1,49 @@
+- model: baidu    # list  用列模块  对应的 case下的 test_ 文件
+
+- casename: test_index  # 用列  对应模块下的 用列函数 必填
+  title: 打开百度  # 对应  pageobj 下的定位函数  必填
+  precond: 无 #(暂未应用)
+  data:  # 测试数据 list{} 可有多少数据
+    - vue1: test
+      vue2: pyton
+  element: #定位数据 liss{} 可有多个步骤 必填
+    - casesteid: 1  # 步骤 必填
+      types: name   # 必填 定位类型  (id 对应 ID 、name 对应 NAME、、xpath 对应XPATH、css 对应 CSS_SELECTOR、class对应 CLASS_NAME、link 对应 LINK_TEXT、partlink 对应 PARTIAL_LINK_TEXT、tag 对应TAG_NAME)
+      operate: send  # 执行类型 (暂未应用)
+      locate: wd   # 定位元素 html元素  必填
+      info: 输入输出  # 操作说明
+      expect: test   # 预期结果  (暂未应用)
+    - casesteid: 2
+      types: id
+      operate: click
+      locate: su
+      info: 点击搜索
+      expect:
+
+
+- casename: test_xxx
+  title:
+  precond:
+  data:
+    - loginname:
+      password:
+    - loginname:
+      password:
+  element:
+    - casesteid:
+      types:
+      operate:
+      locate:
+      info:
+      expect:
+    - casesteid:
+      types:
+      operate:
+      locate:
+      info:
+      expect:
+
+
+
+
+

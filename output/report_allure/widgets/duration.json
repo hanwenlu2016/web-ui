@@ -1,0 +1,21 @@
+[ {
+  "uid" : "ef3d9417fac45a23",
+  "name" : "打开百度搜索",
+  "time" : {
+    "start" : 1609232943208,
+    "stop" : 1609232943493,
+    "duration" : 285
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "909ef6141266db9e",
+  "name" : "test_hone",
+  "time" : {
+    "start" : 1609232943497,
+    "stop" : 1609232943497,
+    "duration" : 0
+  },
+  "status" : "passed",
+  "severity" : "normal"
+} ]

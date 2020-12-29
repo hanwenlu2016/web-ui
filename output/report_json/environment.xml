@@ -1,0 +1,30 @@
+<environment>
+    <parameter>
+        <key>RrojectName</key>
+        <value>FDV</value>
+    </parameter>
+    <parameter>
+        <key>Browser</key>
+        <value>Chrome</value>
+    </parameter>
+    <parameter>
+        <key>BrowserVersion</key>
+        <value>63.0</value>
+    </parameter>
+    <parameter>
+        <key>SystemVersion</key>
+        <value>win10</value>
+    </parameter>
+    <parameter>
+        <key>SystemVersion</key>
+        <value>win10</value>
+    </parameter>
+    <parameter>
+        <key>PythonVersion</key>
+        <value>python3.8.0</value>
+    </parameter>
+    <parameter>
+        <key>AllureVersion</key>
+        <value>2.13.6</value>
+    </parameter>
+</environment>

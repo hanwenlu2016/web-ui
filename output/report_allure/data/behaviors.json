@@ -1,0 +1,35 @@
+{
+  "uid" : "b1a8273437954620fa374b796ffaacdd",
+  "name" : "behaviors",
+  "children" : [ {
+    "name" : "打开百度搜索",
+    "children" : [ {
+      "name" : "打开百度搜索",
+      "uid" : "ef3d9417fac45a23",
+      "parentUid" : "bd33dbbae6c4a8722569a12163d10e2b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1609232943208,
+        "stop" : 1609232943493,
+        "duration" : 285
+      },
+      "flaky" : false,
+      "newFailed" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "bd33dbbae6c4a8722569a12163d10e2b"
+  }, {
+    "name" : "test_hone",
+    "uid" : "909ef6141266db9e",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1609232943497,
+      "stop" : 1609232943497,
+      "duration" : 0
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ ]
+  } ]
+}

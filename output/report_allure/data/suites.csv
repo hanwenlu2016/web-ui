@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Dec 29 17:09:03 CST 2020","Tue Dec 29 17:09:03 CST 2020","285","case","test_baidu","TestBaidu","","","打开百度搜索","
+        登录用列
+        :param one_browser:
+        :return:
+        "
+"passed","Tue Dec 29 17:09:03 CST 2020","Tue Dec 29 17:09:03 CST 2020","0","case","test_baidu","TestBaidu","","","test_hone",""

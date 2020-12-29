@@ -1,0 +1,43 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "name" : "suites",
+  "children" : [ {
+    "name" : "case",
+    "children" : [ {
+      "name" : "test_baidu",
+      "children" : [ {
+        "name" : "TestBaidu",
+        "children" : [ {
+          "name" : "打开百度搜索",
+          "uid" : "ef3d9417fac45a23",
+          "parentUid" : "1b054089bc0abd6b8c41d024e99de34b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1609232943208,
+            "stop" : 1609232943493,
+            "duration" : 285
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "test_hone",
+          "uid" : "909ef6141266db9e",
+          "parentUid" : "1b054089bc0abd6b8c41d024e99de34b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1609232943497,
+            "stop" : 1609232943497,
+            "duration" : 0
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        } ],
+        "uid" : "1b054089bc0abd6b8c41d024e99de34b"
+      } ],
+      "uid" : "af34d6296923556a659257766c0d2aee"
+    } ],
+    "uid" : "7559db31629684e5f31176d189a833ac"
+  } ]
+}
