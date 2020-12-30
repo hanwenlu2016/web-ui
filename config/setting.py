@@ -75,5 +75,5 @@ REDIS_CLUSTER_PASWORD = 'reda2019'
 
 # 打码平台API信息  页面需要登录验证码时 启用
 # 账号 密码 打码软件id api地址
-IMG_INFO = {'username': 'redaflifht', 'password': 'qar2000!', 'code_id': 909536,
+IMG_INFO = {'username': '', 'password': '', 'code_id': 909536,
             'api_url': 'http://upload.chaojiying.net/Upload/Processing.php'}
