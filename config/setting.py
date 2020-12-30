@@ -8,12 +8,12 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# 是否清除 测试历史测试报告结果
+# 是否清除 测试历史测试报告结果 * 默认清除
 IS_CLEAN_REPORT = True
 
-# 是否读取redis 数据 (完成代码用列后导入管理平台时使用)
-#IS_REDIS = True
+# 是否读取redis 数据 (完成代码用列后导入管理平台时使用) 默认不读取
 IS_REDIS = False
+
 
 # 项目地址
 
@@ -71,7 +71,7 @@ REDIS_CLUSTER = [{'host': '192.168.7.51', 'port': 7000}, {'host': '192.168.7.52'
                  {'host': '192.168.7.52', 'port': 7001}, {'host': '192.168.7.53', 'port': 7001}]
 
 
-REDIS_CLUSTER_PASWORD = 'reda2019'
+REDIS_CLUSTER_PASWORD = ''
 
 # 打码平台API信息  页面需要登录验证码时 启用
 # 账号 密码 打码软件id api地址
