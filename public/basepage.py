@@ -423,5 +423,3 @@ class BasePage:
         logger.info(f'上传文件路径{filepath}')
 
 
-# x = BasePage(WebBrowserDriver.opt())
-# x.upload_files('id', 'calbtn', r'D:\My-Svn-oprject\reda-ui-auto\output\report_screen\我.png')
