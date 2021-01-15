@@ -5,10 +5,17 @@
 # @Time: 2020/10/26  11:08
 
 
+# -*- coding: utf-8 -*-
+# @File: test_demo.py
+# @Author: HanWenLu
+# @E-mail: wenlupay@163.com
+# @Time: 2020/10/26  11:08
+
+
 import allure
 import pytest
 from public.logs import logger
-from pageobj.baidu import Baidu
+from pageobj.webobj.baidu import Baidu
 
 '''
 case  文件下创建对应 pageobj 业务逻辑用列
@@ -30,3 +37,4 @@ class TestBaidu:
 
     def test_hone(self, one_browser):
         pass
+

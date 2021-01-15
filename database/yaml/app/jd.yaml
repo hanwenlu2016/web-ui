@@ -1,0 +1,22 @@
+- model : jd
+
+- casename: openjd
+  title: 打开京东
+  precond:
+  data:
+    - data1: "苹果"
+      data2: "华为"
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //android.view.View[@content-desc='我的']
+      info: 点击我的
+      expect:
+    - casesteid: 2
+      types: id
+      operate: click
+      locate: com.jd.lib.personal.feature:id/lb
+      info: 提取txt
+      expect: 登录/注册
+

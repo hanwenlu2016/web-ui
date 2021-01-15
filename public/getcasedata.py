@@ -7,7 +7,9 @@
 
 import os
 import pickle
+
 import yaml
+
 from public.logs import logger
 from public.db import RedisPool
 from config.setting import DATA_YAML, IS_REDIS
@@ -53,6 +55,7 @@ class GetCaseData:
                 return data
         except Exception as e:
             logger.error(e)
+            logger.error(f'读取yaml失败！{e}')
 
     def get_yaml(self):
         """
@@ -152,11 +155,15 @@ class GetCaseData:
         redis 返回全部数据
         :return:
         """
-        re = RedisPool()
-        modellanme = self.modelname.replace('.yaml', '')  # modellanme 模块  redis 不读.yaml 后缀
-        unpacked_object = pickle.loads(re.session.get(modellanme))
 
-        return unpacked_object
+        try:
+            re = RedisPool()
+            modellanme = self.modelname.replace('.yaml', '')  # modellanme 模块  redis 不读.yaml 后缀
+            unpacked_object = pickle.loads(re.session.get(modellanme))
+            return unpacked_object
+        except TypeError as e:
+
+            logger.error(e)
 
     def redi_case(self):
         """
@@ -243,14 +250,16 @@ class GetCaseData:
 
             for data in dataList:
                 # 如果用列等于当前 用列就返回 并且读取的是 yaml 数据
+
                 if data.get('casename') == self.case_name and self.isredis == False:
                     return data.get('data')[index].get(agrs)
 
-                # 读取是redis 时  data.get('data') 是字符串需要转为字典 列表
-                else:
+                elif data.get('casename') == self.case_name and self.isredis == True:
+                    # 读取是redis 时  data.get('data') 是字符串需要转为字典 列表
                     return eval(data.get('data'))[index].get(agrs)
+
         logger.error(f'{self.case_name}用列只有{self.dataCount()}条数据，你输入了第{index} 条！')
-        return None
+        # return None
 
     def casesteid(self, index):
         """
@@ -289,5 +298,3 @@ class GetCaseData:
         return self.get_set_data(index, 'expect')
 
 
-lo = GetCaseData('baidu.yaml', 'test_index')
-print(lo.data(0, 'vue1'), lo.types(0), lo.locate(0))

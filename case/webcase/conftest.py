@@ -5,12 +5,12 @@
 # @Time: 2020/10/26  20:16
 
 import pytest
-from public.webdriverfactory import WebBrowserDriver
+
+from public.web.webdriverfactory import WebBrowserDriver
 
 
-@pytest.fixture(scope='session', autouse=True)
-def one_browser():
-
+@pytest.fixture(scope='function', autouse=True)
+def webDriver():
     driver = WebBrowserDriver.opt()
 
     yield driver

@@ -1,123 +1,30 @@
 # -*- coding: utf-8 -*-
-# @File: selenium_driver.py
+# @File: appbase.py
 # @Author: HanWenLu
 # @E-mail: wenlupay@163.com
-# @Time: 2020/11/4  14:40
+# @Time: 2021/1/14  15:52
+
 
 import os
 import time
-import pyautogui, pyperclip
+
 import allure
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from appium.webdriver.common.touch_action import TouchAction
+
 from public.logs import logger
-from config.setting import PRPORE_SCREEN_DIR, IMPLICITLY_WAIT_TIME, POLL_FREQUENCY
+from config.setting import PRPORE_SCREEN_DIR
+from config.web_setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
 
 
-
-class BasePage:
+class Base():
 
     def __init__(self, driver):
         self.driver = driver
-
-    def get_title(self):
-        """
-        获取当前页面  title
-        :return:
-        """
-        title = self.driver.title
-        logger.info(f"获取当前title {title}")
-        return title
-
-    def get_url(self):
-        """
-        获取当前页面的URL
-        :return:
-        """
-        currentURL = self.driver.current_url
-        logger.info(f"获取当前url {currentURL}")
-        return currentURL
-
-    def get_url_html(self):
-        """
-        获取当前页面 html内容
-        :return:
-        """
-        sourceHtml = self.driver.page_source
-        logger.info(f"获取当前html {sourceHtml}")
-        return sourceHtml
-
-    def refresh(self):
-        """
-        刷新当前页面
-        :return:
-        """
-        logger.info('刷新当前页面')
-        return self.driver.refresh()
-
-    def back(self):
-        """
-        返回上一个页面
-        :return:
-        """
-        self.driver.back()
-        logger.info('返回上一个页面')
-
-    def forward(self):
-        """
-        前进到下一个页面
-        :return:
-        """
-        self.driver.forward()
-        logger.info('前进到下一个页面')
-
-    def web_scroll(self, direction):
-        """
-        网页滚动
-        :param direction: str   up 向上   Down 向下
-        :return:
-        """
-        if direction == "up":
-            logger.info('滚动到顶部')
-            self.driver.execute_script("window.scrollBy(0, -10000);")
-        if direction == "down":
-            logger.info('滚动到底部')
-            self.driver.execute_script("window.scrollBy(0, 10000)")
-
-    def current_window(self):
-        """
-        获取当前窗口句柄 不能单一使用 实际获取的不是当前句柄
-        :return:
-        """
-        current_window = self.driver.current_window_handle
-        logger.info(f'获取当前句柄 {current_window}')
-        return current_window
-
-    def all_handle(self):
-        """
-        获取所有句柄
-        :return:  list
-        """
-        handle = self.driver.window_handles
-        logger.info(f'获取所有句柄 {handle}')
-        return handle
-
-    def switch_windows(self, index):
-        """
-        多窗口切换
-        :param index: 列表索引 all_handle的列表索引位置
-        :return:
-        """
-        indexHandle = self.all_handle()[index]
-        try:
-            logger.info(f'窗口已经切换{indexHandle}')
-            return self.driver.switch_to_window(indexHandle)
-
-        except Exception as e:
-            logger.error("查找窗口句柄handle异常-> {0}".format(e))
 
     def accept(self):
         """
@@ -174,7 +81,7 @@ class BasePage:
 
     def get_by_type(self, locatorType):
         """
-        获取定位类型
+        获取定位类型  目前 app 只提供了 ，id，name，xpath，class
         :param locatorType:  str  in(id,name,xpath,css,class,link,partlink,tag)
         :return:  False
         """
@@ -185,16 +92,8 @@ class BasePage:
             return By.NAME
         elif locatorType == "xpath":
             return By.XPATH
-        elif locatorType == "css":
-            return By.CSS_SELECTOR
         elif locatorType == "class":
             return By.CLASS_NAME
-        elif locatorType == "link":
-            return By.LINK_TEXT
-        elif locatorType == "partlink":
-            return By.PARTIAL_LINK_TEXT
-        elif locatorType == "tag":
-            return By.TAG_NAME
         else:
             logger.info(f"Locator type {locatorType} not correct/supported")
         return False
@@ -212,6 +111,7 @@ class BasePage:
             return element
         else:
             logger.error('定位元素错误未找到！')
+            return None
 
     def clicks(self, locatorType, locator):
         """
@@ -222,6 +122,15 @@ class BasePage:
         """
         element = self.get_element(locatorType, locator)
         element.click()
+
+    def base_click(self):
+        """
+        点击页面
+        :return:
+        """
+        base_click = self.driver.click()
+
+        return base_click
 
     def rightClick(self, locatorType, locator):
         """
@@ -245,9 +154,9 @@ class BasePage:
 
         ActionChains(self.driver).double_click(element).perform()
 
-    def send_keys(self, data, locatorType, locator):
+    def input_keys(self, data, locatorType, locator):
         """
-        获取元素后输入
+        获取元素后输入 并支持键盘操作  from selenium.webdriver.common.keys import Keys  Keys.ENTER ..
         :param data: str 测试数据
         :param locatorType: 定位类型
         :param locator: 定位器
@@ -276,7 +185,7 @@ class BasePage:
         :return:
         """
         self.clear(locatorType, locator)
-        self.send_keys(data, locatorType, locator)
+        self.input_keys(data, locatorType, locator)
 
     def get_dropdown_options_count(self, locatorType, locator):
         """
@@ -310,8 +219,19 @@ class BasePage:
         :return:
         """
         element = self.get_element(locatorType, locator)
-        hover = ActionChains(self.driver).move_to_element(element)
-        hover.perform()
+        hover = ActionChains(self.driver).move_to_element(element).perform()
+        logger.info(f"鼠标悬停位置{locator}")
+
+    def element_hover_clicks(self, locatorType, locator):
+        """
+        获取元素后悬停到元素位置 后点击该元素
+        :param locatorType: 定位类型
+        :param locator: 定位器
+        :return:
+        """
+        element = self.get_element(locatorType, locator)
+        hover = ActionChains(self.driver).move_to_element(element).perform()
+        self.clicks(locatorType, locator)
         logger.info(f"鼠标悬停位置{locator}")
 
     def isElementDisplayed(self, locatorType, locator):
@@ -370,58 +290,82 @@ class BasePage:
             logger.error(e)
             return False
 
-    def save_as_img(self, locatorType, locator, filename, sleep=1):
+    def device_x_get(self):
         """
-        图片另存为  下载文件也可以直接使用
-        :param locatorType: 定位类型
-        :param locator: 定位器
-        :param filename: 图片名称 路径必须要输入正确 以为函数没办法判断是否成功
-        :param sleep: 等待windo 窗口时间 默认 1 秒
-        :return: str path 文件路径
-        """
-        # 右键点击
-        self.rightClick(locatorType, locator)
-        # 图片另存为
-        pyautogui.typewrite(['V'])
-
-        # 将地址以及文件名复制
-        pic_dir = os.path.join(PRPORE_SCREEN_DIR, f'{filename}.jpg')
-        pyperclip.copy(pic_dir)
-
-        # 等待窗口打开，以免命令冲突，粘贴失败，试过很多次才有0.8，具体时间自己试
-        time.sleep(sleep)
-
-        # 粘贴
-        pyautogui.hotkey('ctrlleft', 'V')
-
-        # 保存
-        pyautogui.press('enter')
-        logger.info(f'图片路径为{filename}！')
-        return pic_dir
-
-    def upload_files(self, locatorType, locator, filepath, sleep=1):
-        """
-        文件上传
-        :param locatorType: 定位类型
-        :param locator: 定位器
-        :param filepath: 文件路径 路径必须要输入正确 以为函数没办法判断是否成功
-        :param sleep: 等待windo 窗口时间 默认 1 秒
+        获取分辨率 宽
         :return:
         """
-        element = self.get_element(locatorType, locator)
-        element.click()
-        time.sleep(sleep)
+        return self.driver.get_window_size()['width']
 
-        # pyautogui.write(filepath)  # 不支持中文路径
+    def device_y_get(self):
+        """
+       获取分辨率 高
+       :return:
+       """
+        return self.driver.get_window_size()['height']
 
-        # 支持中文路径
-        pyperclip.copy(filepath)
-        time.sleep(sleep)
-        pyautogui.hotkey('ctrl', 'v')
+    def tap_click(self, x, y):
+        """
+        坐标点击
+        :param x: x点
+        :param y: y点
+        :return:
+        """
+        act = TouchAction(self.driver)
+        act.tap(x=x, y=y).perform()
 
-        pyautogui.press('enter', presses=2)
-        logger.info(f'上传文件路径{filepath}')
+    def swipe_left(self, swipe_times=1):
+        """
+        向左滑动
+        :param swipe_times:
+        :return:
+        """
+        logger.info("向左滑动" + str(swipe_times) + "次")
+        size = self.driver.get_window_size()
+        width = size["width"]
+        height = size["height"]
+        for i in range(0, swipe_times):
+            self.driver.swipe(width * 0.8, height * 0.5, width * 0.2, height * 0.5, duration=800)
+            time.sleep(0.5)
 
+    def swipe_right(self, swipe_times=1):
+        """
+        向右滑动
+        :param swipe_times:
+        :return:
+        """
+        logger.info("向右滑动" + str(swipe_times) + "次")
+        size = self.driver.get_window_size()
+        width = size["width"]
+        height = size["height"]
+        for i in range(0, swipe_times):
+            self.driver.swipe(width * 0.2, height * 0.5, width * 0.8, height * 0.5)
+            time.sleep(0.5)
 
-# x = BasePage(WebBrowserDriver.opt())
-# x.upload_files('id', 'calbtn', r'D:\My-Svn-oprject\reda-ui-auto\output\report_screen\我.png')
+    def swipe_up(self, swipe_times=1):
+        """
+        向上滑动
+        :param swipe_times:
+        :return:
+        """
+        logger.info("向上滑动" + str(swipe_times) + "次")
+        size = self.driver.get_window_size()
+        width = size["width"]
+        height = size["height"]
+        for i in range(0, swipe_times):
+            self.driver.swipe(width * 0.5, height * 0.2, width * 0.5, height * 0.8)
+            time.sleep(0.5)
+
+    def swipe_down(self, swipe_times=1):
+        """
+        向下滑动
+        :param swipe_times:
+        :return:
+        """
+        logger.info("向下滑动" + str(swipe_times) + "次")
+        size = self.driver.get_window_size()
+        width = size["width"]
+        height = size["height"]
+        for i in range(0, swipe_times):
+            self.driver.swipe(width * 0.5, height * 0.8, width * 0.5, height * 0.2)
+            time.sleep(0.5)

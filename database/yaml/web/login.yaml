@@ -1,0 +1,65 @@
+- model : login    # list  用列模块  对应的 case下的 test_ 文件
+
+- casename: test_login  # 用列  对应模块下的 用列函数
+  title: 账号登录  # 对应  pageobj 下的定位函数
+  precond: 前置条件
+  data:  # 测试数据
+    - loginname: "blp22"
+      password: "blp"
+    - loginname: "test"
+      password:  "test"
+    - loginname: "test"
+      password:  "test1"
+  element: #定位数据
+    - casesteid: 1
+      types: name
+      operate: perform
+      locate: loginName
+      info: 输入用户名
+      expect: 预期结果0
+    - casesteid: 2
+      types: name
+      operate: perform
+      locate: password
+      info: 输入密码
+      expect: 预期结果1
+    - casesteid: 3
+      types: class
+      operate: click
+      locate: el-button
+      info: 提交登录
+      expect: 预期结果2
+    - casesteid: 4
+      types:  xpath
+      operate: perform
+      locate: //*[@id="app"]/div/div[1]/div[2]/span/div/span
+      info: 定位当前登录用户
+      expect: 预期结果3
+
+- casename: test_signout
+  title: 账号退出
+  precond: 前置条件
+  data:
+    - loginname: "blp"
+      password: "blp"
+    - loginname: "test"
+      password:  "test"
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@id="app"]/div/div[1]/div[2]/span/div/span
+      info: 点击个人信息
+      expect: 预期结果
+    - casesteid: 2
+      types: xpath
+      operate: click
+      locate: /html/body/ul/li[3]
+      info: 点击安全退出
+      expect: 预期结果
+
+
+
+
+
+
