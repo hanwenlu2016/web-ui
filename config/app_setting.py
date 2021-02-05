@@ -14,25 +14,9 @@ PLATFORMVERSION = '7'
 DEVICENAME = '127.0.0.1:62001 device'
 
 # 测试app包名
-APPPACKAGE = 'com.jingdong.app.mall'
+# 测试app包名
+APP ='com.jingdong.app.mall' # 安卓appPackage / ios bundleId
 
-#
-APPACTIVITY = 'main.MainActivity'
-
-# 测试时是否需要自动运行app  * 必须要开启
-AUTOLAUNCH = True
-
-# 让appium自动授权app权限，如果noReset为True，则该条不生效。
-AUTOGRANTPERMISSIONS = True
-
-# 为了结束Appium会话，会设置一个等待从客户端发送命令的超时时间，默认为60秒，一般不需要设置
-NEWCOMMANDTIMEOUT = 60
-
-# 等待设备就绪的时间
-DEVICEREADYTIMEOUT = 60
-
-# 启动app时不要清除app里的原有的数据
-NORESET = True
 
 # appium 服务器地址
 APIUMHOST = '192.168.203.5'
@@ -44,11 +28,31 @@ APIUMPORT = '4723'
 CAPABILITIES = {"platformName": PLATFORMNAME,
                 "platformVersion": PLATFORMVERSION,
                 "deviceName": DEVICENAME,
-                "appPackage": APPPACKAGE,
-                "appActivity": APPACTIVITY,
-                "autoLaunch": AUTOLAUNCH,
-                "autoGrantPermissions": AUTOGRANTPERMISSIONS,
-                "newCommandTimeout": NEWCOMMANDTIMEOUT,
-                "deviceReadyTimeout": DEVICEREADYTIMEOUT,
-                "noReset": NORESET,
+                "appPackage": APP,  # app包名
+                "appActivity": 'main.MainActivity', # 启动页面 *
+                "autoLaunch": True,
+                "autoGrantPermissions": True,
+                "newCommandTimeout": 60, # 为了结束Appium会话，会设置一个等待从客户端发送命令的超时时间，默认为60秒，一般不需要设置
+                "deviceReadyTimeout": 60, # 等待设备就绪的时间
+                "noReset": True, # 启动app时不要清除app里的原有的数据
                 }
+
+# IOS参数
+IOS_CAPA = {
+    "platformName": PLATFORMNAME, # *
+    "platformVersion": PLATFORMVERSION, # *
+    "deviceName": DEVICENAME, # *
+    "automationName": "XCUITest",
+    "bundleId": APP, # *
+    "udid": "", # 手机UDID *
+    "xcodeOrgId": "", # 开发者id *
+    "xcodeSigningId": "iPhone Developer",
+    "useNewWDA": False,
+    "noReset": True, # 启动app时不要清除app里的原有的数据
+    "newCommandTimeo": 60
+}
+
+# 判断系统返回对应的参数
+isCAPA = lambda: IOS_CAPA if PLATFORMNAME.lower() == "ios" else ANDROID_CAPA
+
+CAPA = isCAPA()

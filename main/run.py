@@ -4,6 +4,10 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2020/10/26  19:04
 
+import  os ,sys
+
+sys.path.append(os.pardir)
+
 import pytest
 from config.setting import *
 from public.logs import logger

@@ -46,6 +46,7 @@ class WebBrowserDriver:
             return driver
         except Exception as e:
             logger.error(f'浏览器驱动启动失败 {e}')
+            raise Exception("浏览器驱动启动失败!!!!")
 
 
 

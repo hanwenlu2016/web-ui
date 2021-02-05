@@ -6,7 +6,7 @@
 
 from public.logs import logger
 from public.getcasedata import GetCaseData
-from public.web.webbase import Base
+from public.web.webbase import WebBase
 
 
 '''
@@ -14,7 +14,7 @@ from public.web.webbase import Base
 所有页面操作可在 pageobj 文件下 创建自己的业务逻辑定位
 '''
 
-class Baidu(Base): # 对应 test_baidu.py 业务逻辑
+class Baidu(WebBase): # 对应 test_baidu.py 业务逻辑
 
     def index(self):
         """
@@ -23,9 +23,9 @@ class Baidu(Base): # 对应 test_baidu.py 业务逻辑
         """
         lo = GetCaseData('baidu.yaml', 'test_index')
 
-        self.input_keys(lo.data(0, 'vue1'), lo.types(0), lo.locate(0))
+        self.used_input(text=lo.data(0, 'vue1'), types=lo.types(0), locate=lo.locate(0))
 
-        self.clicks(lo.types(1), lo.locate(1))
+        self.used_click(types=lo.types(1),locate= lo.locate(1))
 
     def home(self):
         pass

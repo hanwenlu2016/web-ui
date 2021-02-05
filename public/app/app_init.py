@@ -4,11 +4,12 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2021/1/13  19:17
 
+
 from appium import webdriver
 
 from public.logs import logger
-from config.app_setting import CAPABILITIES, APIUMHOST, APIUMPORT
-
+from public.common import ErrorExcep
+from config.app_setting import CAPA, APIUMHOST, APIUMPORT
 
 class AppiumInit:
     """
@@ -18,12 +19,10 @@ class AppiumInit:
     @staticmethod
     def setup():
         try:
-            caps = CAPABILITIES
+            caps = CAPA
             webdrivers = webdriver.Remote("http://" + APIUMHOST + ":" + APIUMPORT + "/wd/hub", caps)
-            #webdrivers.implicitly_wait(10)
 
             return webdrivers
         except Exception as e:
             logger.error(f'初始app失败 {e}')
-
-
+            raise ErrorExcep("初始app失败!!!!")

@@ -7,11 +7,11 @@
 import time
 
 from public.getcasedata import GetCaseData
-from public.app.appbase import Base
-from public.logs import logger
+from public.app.appbase import AppBase
 
 
-class Jd(Base):
+
+class Jd(AppBase):
     """
     京东demo
     """
@@ -20,13 +20,9 @@ class Jd(Base):
         jd = GetCaseData('jd.yaml', 'openjd')
 
         time.sleep(2)
-        self.swipe_down(1)
+        self.used_click(types=jd.types(0), locate=jd.locate(0))
 
-        time.sleep(2)
-        # self.clicks(jd.types(0), jd.locate(0))
-        #
-        # time.sleep(2)
-        # relust = self.get_text(jd.types(1), jd.locate(1))
-        # time.sleep(2)
+        relust = self.used_text(types=jd.types(1), locate=jd.locate(1))
+        time.sleep(1)
 
-        # assert relust == jd.expect(1)
+        assert relust == jd.expect(1)

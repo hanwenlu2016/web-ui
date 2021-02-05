@@ -26,6 +26,7 @@ web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码�
 # 安装所需的依赖环境(阿里源安装)
 
 pip install -r requirements.txt https://mirrors.aliyun.com/pypi/simple  
+
     
 # 安装配置Allure(官网下载解压包)
 
@@ -71,3 +72,9 @@ python3 run.py
 
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)
+
+
+# 更新日志
+2021 -02 -05
+
+支持 iso 调整架构目录优化函数类！！！！！

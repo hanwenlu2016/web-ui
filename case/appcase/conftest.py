@@ -5,7 +5,7 @@
 # @Time: 2020/10/26  20:16
 
 import pytest
-from public.app.appium_init import AppiumInit
+from public.app.app_init import AppiumInit
 
 # function class module session
 @pytest.fixture(scope='function', autouse=True)

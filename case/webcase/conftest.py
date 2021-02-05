@@ -6,7 +6,7 @@
 
 import pytest
 
-from public.web.webdriverfactory import WebBrowserDriver
+from public.web.web_init import WebBrowserDriver
 
 
 @pytest.fixture(scope='function', autouse=True)
