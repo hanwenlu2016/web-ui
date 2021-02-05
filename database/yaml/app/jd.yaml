@@ -1,3 +1,20 @@
+
+## 说明
+
+##  locate   ** app 定位方式
+# 通用：  AccessibilityId 、class(安卓对应 ClassName / iso对应 type) 、 xpath  * 公共的只支持 3种
+# 安卓：  uiautomator(*定位最快 不支持 iso) 、AccessibilityId(安卓对应 content-desc / iso对应 abel和name属性)  、
+#      class(ClassName) 、 id(resource-id)  、xpath  * 安卓只支持5种
+# ios： ios_predicate(*定位最快 不支持安卓) 、AccessibilityId(安卓对应 content-desc / iso对应 abel和name属性) 、
+#       class(安卓对应 ClassName / iso对应 type) 、xpath * ios只支持4种
+
+#  --operate 操作说明：
+#  input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)   * 只支持 6种
+
+# --- types 说明
+# uiautomator 、ios_predicate 、accessibilityid、xpath、class、id 定位类型
+
+
 - model : jd
 
 - casename: openjd

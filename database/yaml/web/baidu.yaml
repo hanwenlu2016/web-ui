@@ -1,3 +1,16 @@
+
+
+#  --operate 操作说明：
+#  input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , * 只支持 5种
+
+# --- types 说明
+#  id,name,xpath,css,class,link,partlink,tag 定位方式
+
+
+
+
+
+
 - model: baidu    # list  用列模块  对应的 case下的 test_ 文件
 
 - casename: test_index  # 用列  对应模块下的 用列函数 必填
