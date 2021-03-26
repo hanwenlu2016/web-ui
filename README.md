@@ -36,7 +36,7 @@ pip install -r requirements.txt https://mirrors.aliyun.com/pypi/simple
 
 打开控制台输入:  allure --version   出来版本代表安装成功
     
-# 运行(main 目录运行 run.py 文件即可)
+# 运行(run.py 文件即可)
 
 python3 run.py
 
@@ -78,3 +78,8 @@ python3 run.py
 2021 -02 -05
 
 支持 iso 调整架构目录优化函数类！！！！！
+
+2021 -03 -25
+
+调整架构目录！优化多余代码，支持selenium分布式！
+
