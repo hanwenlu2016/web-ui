@@ -111,7 +111,7 @@ def imgContent(img_path, img_type=1902):
     1012	1~12位英文数字	
     1020	1~20位英文数字	
     '''
-    IMG_INFO = {'username': 'redaflifht', 'password': 'qar2000!', 'code_id': 909536,
+    IMG_INFO = {'username': 'redaflifht', '': '', 'code_id': 909536,
                 'api_url': 'http://upload.chaojiying.net/Upload/Processing.php'}
 
     rep = CjyClient(IMG_INFO.get('username'), IMG_INFO.get('password'), IMG_INFO.get('code_id'),
