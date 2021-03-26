@@ -1,0 +1,74 @@
+- model: test_login_and_out      # case 目录下对应的 py 文件
+
+- casename: test_login        # test_login_and_out模块  对测试用例
+  title: 账号登录          # 对应  pageobj 下的定位函数
+  precond: 前置条件
+  testdata:              # 测试数据
+    - loginname: "blp"
+      password: "blp"
+      info: "blp"
+    - loginname: "blp1"
+      password: "blp1"
+      info: "blp1"
+    - loginname: "blp2"
+      password: "blp2"
+      info: "blp2"
+#    - loginname: "test123"
+#      password: "test123"
+#      info: "blp"
+#    - loginname: "test666"
+#      password: "test666"
+#      info: "blp"
+  element:               #定位数据
+    - casesteid: 1       # 测试步骤
+      types: name        # 定位类型  id ，name ,xpath , css, class,link,partlink, tag: web支持8中
+      operate: input     # 操作类型  input(输入) , click(点击) ,text(提取文本)
+      locate: loginName  # 定位元素  types 对应的元素
+      info: 输入用户名     # 操作说明
+      expect:            # 预期结果
+    - casesteid: 2
+      types: name
+      operate: input
+      locate: password
+      info: 输入密码
+      expect: 预期结果1
+    - casesteid: 3
+      types: class
+      operate: click
+      locate: el-button
+      info: 提交登录
+      expect: 预期结果2
+    - casesteid: 4
+      types: xpath
+      operate: text
+      locate: //*[@id="app"]/div/div[1]/div[2]/span/div/span
+      info: 定位当前登录用户
+      expect: 预期结果3
+
+- casename: test_signout
+  title: 账号退出
+  precond: 前置条件
+  testdata:
+    - loginname: "blp"
+      password: "blp"
+    - loginname: "test"
+      password: "test"
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@id="app"]/div/div[1]/div[2]/span/div/span
+      info: 点击个人信息
+      expect: 预期结果
+    - casesteid: 2
+      types: xpath
+      operate: click
+      locate: /html/body/ul/li[3]
+      info: 点击安全退出
+      expect: 预期结果
+
+
+
+
+
+

@@ -1,0 +1,207 @@
+
+## 说明
+
+##  locate   ** app 定位方式
+# 通用：  AccessibilityId 、class(安卓对应 ClassName / iso对应 type) 、 xpath  * 公共的只支持 3种
+# 安卓：  uiautomator(*定位最快 不支持 iso) 、AccessibilityId(安卓对应 content-desc / iso对应 abel和name属性)  、
+#      class(ClassName) 、 id(resource-id)  、xpath  * 安卓只支持5种
+# ios： ios_predicate(*定位最快 不支持安卓) 、AccessibilityId(安卓对应 content-desc / iso对应 abel和name属性) 、
+#       class(安卓对应 ClassName / iso对应 type) 、xpath * ios只支持4种
+
+## operate 操作说明
+# input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,
+
+
+
+- model : fdv_common
+
+- casename: tab_glight_info
+  title: 点击航班数据
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name=="航班数据"
+      info: 点击航班数据
+      expect:
+
+- casename: tab_individual_count
+  title: 点击个人统计
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name=="个人统计"
+      info: 点击个人统计
+      expect:
+
+- casename: tab_filght_calendar
+  title: 点击航班日历
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types:  ios_predicate
+      operate: click
+      locate: name="航班日历"
+      info: 点击航班日历
+      expect:
+
+- casename: tab_setting
+  title: 点击设置
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="设置"
+      info: 点击设置
+      expect:
+
+- casename: tab_flight_experience
+  title: 点击飞行经历
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="飞行经历"
+      info: 点击飞行经历
+      expect:
+
+- casename: tab_key_paramete
+  title: 点击关键参数
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="关键参数"
+      info: 点击关键参数
+      expect:
+
+- casename: tab_overrun_record
+  title: 点击超限记录
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="超限记录"
+      info: 点击超限记录
+      expect:
+
+- casename: tab_flight_info_refresh
+  title: 点击航班数据刷新
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="刷新"
+      info: 点击航班数据刷新
+      expect:
+
+- casename: tap_flight_info_query
+  title: 点击航班数据查询
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="查询"
+      info: 点击航班数据查询
+      expect:
+
+- casename: tap_flight_info_collection
+  title: 点击航班数据收藏夹
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: ios_predicate
+      operate: click
+      locate: name="收藏夹"
+      info: 点击航班数据收藏夹
+      expect:
+
+
+- casename: tab_individual_return
+  title: 个人统计-- 返回
+  precond:
+  testdata:
+    - data1: ""
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //XCUIElementTypeButton[1]
+      info: 点击返回按钮
+      expect:
+
+
+- casename: flight_info_mou_to
+  title: 航班数据滑动
+  precond:
+  testdata:
+    - x: 983
+      y: 145
+    - x: 766
+      y: 143
+  element:
+    - casesteid: 1
+      types:
+      operate: slide
+      locate:
+      info: 航班数据滑动
+      expect:
+
+
+
+
+#- casename: demo
+#  title: 航班数据点击刷新
+#  precond:
+#  data:
+#    - data1: ""
+#  element:
+#    - casesteid: 1
+#      types: uiautomator
+#      operate: click
+#      locate: new UiSelector().text("显示")
+#      info:
+#      expect:
+#
+#
+#- casename: demo1
+#  title: demo1
+#  precond:
+#  data:
+#    - data1: ""
+#  element:
+#    - casesteid: 1
+#      types:  ios_predicate
+#      operate: click
+#      locate: name=="航班日历"
+#      info: 点击航班日历
+#      expect:

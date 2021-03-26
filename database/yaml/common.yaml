@@ -1,0 +1,606 @@
+- model: common      # case 目录下对应的 py 文件
+
+# --login 相关
+- casename: login         # 对应 common.py 函数
+  title: 登录页面
+  precond:
+  testdata:              # 测试数据
+    - loginname: "blp"
+      password: "blp"
+      info:  "blp"
+  element:               #定位数据
+    - casesteid: 1       # 测试步骤
+      types: name        # 定位类型  id ，name ,xpath , css, class,link,partlink, tag: web支持8中
+      operate: input     # 操作类型  input(输入) , click(点击) ,text(提取文本)
+      locate: loginName  # 定位元素  types 对应的元素
+      info: 输入用户名     # 操作说明
+      expect:            # 预期结果
+    - casesteid: 2
+      types: name
+      operate: input
+      locate: password
+      info: 输入密码
+      expect: 预期结果1
+    - casesteid: 3
+      types: class
+      operate: click
+      locate: el-button
+      info: 登录fdv门户
+      expect: 预期结果2
+    - casesteid: 4
+      types: xpath
+      operate: text
+      locate: //*[@id="app"]/div/div[1]/div[2]/span/div/span
+      info: 定位当前登录用户
+      expect: 预期结果3
+
+- casename: logout
+  title: 登出fdv门户
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //div[@class='el-dropdown']/span
+      info: 点击用户信息
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: click
+      locate: //*[@class="el-dropdown-menu el-popper"]/li[3]
+      info: 点击安全退出
+      expect:
+
+
+- casename: jump_blp
+  title: 跳转BLP
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: class
+      operate: click
+      locate: cardStyle-box-name
+      info: 点击BLP
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: text
+      locate: //form[@class="el-form"]/div[1]/div
+      info: 提取blp平台信息
+      expect: 参数平台
+
+- casename: jump_bls
+  title: 跳转BLS
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: class
+      operate: click
+      locate: cardStyle-box-name
+      info: 点击BLS
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: text
+      locate: //form[@class="el-form"]/div[1]/div
+      info: 提取bla平台信息
+      expect: 飞安应用平台
+
+- casename: jump_fdr
+  title: 跳转BLP
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: class
+      operate: click
+      locate: cardStyle-box-name
+      info: 点击FDR
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: text
+      locate: //form[@class="el-form"]/div[1]/div
+      info: 提取fdr平台信息
+      expect: 地面管理平台
+
+- casename: jump_auth
+  title: 跳转auth
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: class
+      operate: click
+      locate: cardStyle-box-name
+      info: 点击AUTH
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: text
+      locate: //*[@class='sys-info']/p[1]
+      info: 提取权限平台信息
+      expect: 名称：权限管理平台
+
+
+####  auth 系统相关
+- casename: logou_auth
+  title: 登出auth
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@class='el-dropdown']/span
+      info: 点击用户信息
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: click
+      locate: //ul/li[1]/span
+      info: 点击退出登录
+      expect:
+    - casesteid: 3
+      types: xpath
+      operate: click
+      locate: /html/body/div[2]/div/div[3]/button[2]/span
+      info: 点击确定
+      expect:
+
+- casename: __auth_click_sysmanage
+  title: 点击系统管理
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@id="app"]/div/div/div/div[2]/div[1]/ul/li/div/span
+      info: 点击系统管理
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: click
+      locate: //div/span[2]
+      info: 点击菜单管理
+      expect:
+    - casesteid: 3
+      types: xpath
+      operate: text
+      locate: //section[@class='app-main']/div/div/h1
+      info: 提取断言结果
+      expect:
+
+- casename: click_auth_user_department_button
+  title: 点击auth系统-用户管理-归属部门按钮
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@class="row"]/div/div/div/div/div//button
+      info: 点击归属部门按钮
+      expect:
+
+- casename: click_auth_user_department_button_select_dep
+  title: 点击auth系统-用户管理-归属部门按钮-选择部门
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: /html/body/div[3]/div/div[2]/div/div/div # 定位元素是一个列表 //*[@class='el-dialog__body']/div/div/div[1]
+      info: 选择归属部门列表数据
+      expect:
+
+- casename: click_auth_user_department_button_deplist_ok
+  title: 点击auth系统-用户管理-归属部门按钮-部门列表确定
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //div/span/button[1]
+      info: 归属部门列表确定
+      expect:
+
+- casename: click_auth_user_department_button_select_deplist_cancel
+  title: 点击auth系统-用户管理-归属部门按钮-部门列表取消
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //div/span/button[2]
+      info: 归属部门列表取消
+      expect:
+
+- casename: click_auth_user_manage_input_loginname
+  title: 点击auth系统-用户管理-输入登录名
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: input
+      locate: //form/div/div[2]/div/div/input
+      info: 输入登录名
+      expect:
+
+- casename: click_auth_user_manage_input_name
+  title: 点击auth系统-用户管理-输入姓名
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: input
+      locate: //form/div/div[3]/div/div/input
+      info: 输入姓名
+      expect:
+
+- casename: click_auth_user_manage_query
+  title: 点击auth系统-用户管理-查询
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div/div[4]/div/button[1]/span
+      info: 点击查询
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: text
+      locate: //table/tbody/tr/td[3]/div
+      info: 提取查询输入字段
+      expect:
+    - casesteid: 3
+      types: xpath
+      operate: text
+      locate: //table/tbody/tr/td[6]/div
+      info: 提取查询输入字段
+      expect:
+
+- casename: click_auth_user_manage_clean
+  title: 点击auth系统-用户管理-清除
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div/div[4]/div/button[2]/span
+      info: 点击清除
+      expect:
+
+
+- casename: click_auth_user_manage_edit
+  title: 点击auth系统-用户管理-修改
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //table/tbody/tr[1]/td[9]/div/button[1]/span  #tr[2] 2行
+      info: 点击修改
+      expect:
+
+
+- casename: click_auth_edit_submit
+  title: 点击auth系统-修改-提交确认
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //div[@class='el-dialog']/div[3]/div/button[1]
+      info: 修改确定
+      expect:
+
+- casename: click_auth_edit_calloff
+  title: 点击auth系统-修改-取消
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //div[@class='el-dialog']/div[3]/div/button[2]
+      info: 修改取消
+      expect:
+
+- casename: click_auth_user_manage_del
+  title: 点击auth系统-用户管理-删除
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //table/tbody/tr[1]/td[9]/div/button[2]/span
+      info: 点击修改
+      expect:
+
+- casename: click_auth_del_submi
+  title: 点击auth系统--删除确定
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: /html/body/div[3]/div/div[3]/button[2]
+      info: 点击删除确定
+      expect:
+
+- casename: click_auth_del_calloff
+  title: 点击auth系统--删除取消
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: /html/body/div[3]/div/div[3]/button[1]
+      info: 点击删除取消
+      expect:
+
+- casename: click_auth_user_manage_assign_roles
+  title: 点击auth系统-用户管理-分配角色
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //table/tbody/tr[1]/td[9]/div/button[3]/span
+      info: 点击角色分配
+      expect:
+
+- casename: click_auth_assign_roles_submi
+  title: 点击auth系统--分配角色- 确定  # 角色分配确定通用
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //section[@class='app-main']/div/div[4]/div/div[3]/div/button[1]/span
+      info: 点击角色分配确定
+      expect:
+
+- casename: click_auth_assign_roles_calloff
+  title: 点击auth系统--分配角色- 取消  # 角色分取消通用
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //section[@class='app-main']/div/div[4]/div/div[3]/div/button[2]/span
+      info: 点击角色分配取消
+      expect:
+
+- casename: click_auth_role_manage_system
+  title: 点击auth系统--角色管理-所属系统
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div/div[1]/div/div/div[1]/input
+      info: 点击角色管理所属系统
+      expect:
+
+- casename: click_auth_role_manage_system_parameter
+  title: 点击auth系统--角色管理-所属系统-可选参数
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: text
+      locate: //div[@class='el-scrollbar']/div/ul/li  #是一个列表
+      info: 获取所需系统可选参数列表
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: click
+      locate: //div[@class='el-scrollbar']/div/ul/li  #是一个列表
+      info: 选择所属系统
+      expect:
+
+- casename: click_auth_role_manage_input_rolename
+  title: 点击auth系统--角色管理-输入角色名称
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: input
+      locate: //div[@class='el-input']/input
+      info: 输入角色名称
+      expect:
+
+- casename: click_auth_role_manage_query_input_rolenamet_text
+  title: 点击auth系统--角色管理-提取查询后的角色名称 #配合click_auth_role_manage_query
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: text
+      locate: //tr[@class='el-table__row'][1]/td[1]
+      info: 提取查询后输入参数
+      expect:
+
+
+- casename: click_auth_role_manage_query
+  title: 点击auth系统--角色管理-查询
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div/div[3]/div/button[1]/span
+      info: 点击查询
+      expect:
+
+- casename: click_auth_role_manage_input_clean
+  title: 点击auth系统--角色管理-清空
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div/div[3]/div/button[2]/span
+      info: 点查询
+      expect:
+
+- casename: click_auth_role_manage_newadd
+  title: 点击auth系统--角色管理-新增
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div/div[3]/div/button[3]/span
+      info: 点击新增
+      expect:
+
+- casename: click_auth_role_manage_newadd_organization_button
+  title: 点击auth系统--角色管理-新增机构按钮
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div[1]/div/div/div/div/div[1]/div/button/i
+      info: 点击机构按钮
+      expect:
+
+- casename: click_auth_role_manage_newadd_organization_input
+  title: 点击auth系统--角色管理-新增机构-选择数据
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //div[@class='el-dialog__body']/div/div/div  # 返回的是list
+      info: 点击选择机构
+      expect:
+
+
+- casename: click_auth_role_manage_newadd_input
+  title: 点击auth系统--角色管理-新增输入框 # 只包含输入框
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: input
+      locate: //form/div[2]/div/div[1]/div/div/div[1]/input #//form/div[2]/div/div[1]/div/div/div[1]
+      info: 输入角色名称
+      expect:
+    - casesteid: 2
+      types: xpath
+      operate: input
+      locate: //form/div[2]/div/div[2]/div/div/div[1]/input #//form/div[2]/div/div[2]/div/div/div[1]
+      info: 输入英文名称
+      expect:
+    - casesteid: 3
+      types: xpath
+      operate: input
+      locate: //form/div[3]/div/div/div/div/textarea
+      info: 输入备注
+      expect:
+
+- casename: click_auth_role_manage_newadd_system
+  title: 点击auth系统--角色管理-新增-所属系统
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //form/div[4]/div[1]/div/div/div/div[1]/input
+      info: 点击所属系统
+      expect:
+
+- casename: click_auth_role_manage_newadd_inputsystem
+  title: 点击auth系统--角色管理-新增-选择所属系统
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: /html/body/div/div/div/ul/li #//div[@class='el-dialog']/div[3]/div/button[1]/span # 返回的事列表
+      info: 点击选择所属系统
+      expect:
+
+- casename: click_auth_role_manage_newadd_submit
+  title: 点击auth系统--角色管理-新增确认
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@id="app"]/div/div/section/div/div[3]/div/div[3]/div/button[1]/span #//div[@class='el-dialog']/div[3]/div/button[1]/span
+      info: 点击确定
+      expect:
+
+- casename: click_auth_role_manage_newadd_close
+  title: 点击auth系统--角色管理-关闭
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //*[@id="app"]/div/div/section/div/div[3]/div/div[3]/div/button[2]/span #//div[@class='el-dialog']/div[3]/div/button[2]/span
+      info: 点击关闭
+      expect:
+
+- casename: click_auth_role_manage_del
+  title: 点击auth系统--角色管理-删除
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: click
+      locate: //table/tbody/tr[1]/td[5]/div/button[2]/span
+      info: 点击删除
+      expect:
+
+- casename: text_auth_list_total_bumber
+  title: 提取auth-列表总条数
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: xpath
+      operate: text
+      locate: //section/div/div[2]/div[2]/div/span[1]
+      info: 列表总条数提取
+      expect:
