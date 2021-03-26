@@ -4,6 +4,15 @@
 
 web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+vue *M端暂未开源功能还未开发完成) 做用例管理，定时任务分配，测试工具集合。
 
+###### 使用说明
+
+1 本架构元素定位 数据依赖为yaml文件
+2 使用前需要对 读取yaml函数已经(yaml_data.py) ，yaml对应说明仔细阅读 文件内代码处有注释！
+3 web-base.py 为 web函数封装 已经封装了功能代码 可以仔细阅读注释来完成页面功能！
+4 app_base.py 为 app 函数封装 可以仔细阅读注释来完成页面功能
+5 目前 web 端用例管理和任务定时触发已经在调试阶段，如果顺利可开源让大家参考！
+6 目前浏览器支持 ctenos7(谷歌/火狐)， windos(谷歌/火狐/IE)，mac(谷歌/火狐/safair) 其它浏览器暂未联调！
+
 ###### 项目框架设计图
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frame.png)
