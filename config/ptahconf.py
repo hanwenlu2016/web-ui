@@ -32,7 +32,8 @@ LOG_DIR = os.path.join(BASE_DIR, "log")
 CASE_DIR = os.path.join(BASE_DIR, "case", )
 
 ### yaml测试用列数据路径
-YAML_DIR = os.path.join(BASE_DIR, "database", "yaml", )
+CASEYMAL_DIR = os.path.join(BASE_DIR, "database", "caseYAML", ) # 测试数据
+LOCATORYMAL_DIR = os.path.join(BASE_DIR, "database", "locatorYAML", )  # 定位数据
 
 ### 测试文件路径
 DATA_FILE = os.path.join(BASE_DIR, "database", "file")

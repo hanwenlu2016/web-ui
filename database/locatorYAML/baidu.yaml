@@ -1,0 +1,29 @@
+- model: BaiDu  # 对应pageobj 的类名称
+
+- casename: input_search_content     # 对应类的 函数
+  title: 输入搜索内容            # 操作标题
+  precond:        # 前置说明
+  testdata:    # 测试数据 /列表
+    - content: python
+    - content: java
+    - content: c++
+  element:    # 操作步骤 /列表
+    - casesteid: 1      # 操作步骤
+      types: name      # 定位类型  支持 id/name/xpath/css/class/link/partlink/tag 对应源码web_base.p 325行
+      operate: input     # 操作类型   input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)
+      locate: wd    # 定位元素
+      info: 点击输入框收入    # 操作说明
+      expect:         # 预期结果
+
+
+- casename: click_search_button
+  title: 点击搜索按钮
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: id
+      operate: click
+      locate: su
+      info: 点击搜索按钮
+      expect:

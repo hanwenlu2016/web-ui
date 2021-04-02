@@ -1,8 +1,19 @@
 {
-  "total" : 2,
+  "total" : 3,
   "items" : [ {
     "uid" : "bd33dbbae6c4a8722569a12163d10e2b",
     "name" : "打开百度搜索",
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    }
+  }, {
+    "uid" : "a76e3034c0bacf1f726844fd54aff2b5",
+    "name" : "百度搜索",
     "statistic" : {
       "failed" : 0,
       "broken" : 0,

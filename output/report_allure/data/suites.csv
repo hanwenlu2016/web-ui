@@ -1,7 +1,10 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Apr 02 15:04:18 CST 2021","Fri Apr 02 15:04:22 CST 2021","3169","baid","test_baidu","TestBaiDu","","","输入内容并搜索","输入多参数搜索"
 "passed","Tue Dec 29 17:09:03 CST 2020","Tue Dec 29 17:09:03 CST 2020","285","case","test_baidu","TestBaidu","","","打开百度搜索","
         登录用列
         :param one_browser:
         :return:
         "
+"passed","Fri Apr 02 15:04:09 CST 2021","Fri Apr 02 15:04:12 CST 2021","3094","baid","test_baidu","TestBaiDu","","","输入内容并搜索","输入多参数搜索"
+"passed","Fri Apr 02 15:03:59 CST 2021","Fri Apr 02 15:04:02 CST 2021","2573","baid","test_baidu","TestBaiDu","","","输入内容并搜索","输入多参数搜索"
 "passed","Tue Dec 29 17:09:03 CST 2020","Tue Dec 29 17:09:03 CST 2020","0","case","test_baidu","TestBaidu","","","test_hone",""

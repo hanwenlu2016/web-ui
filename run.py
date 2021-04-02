@@ -114,8 +114,8 @@ def run_bebug():
     # 执行前检查是否清除报告
     #del_clean_report()
     pytest.main(['-s', '-v', '-n=1', '--reruns=0', '-W','ignore:Module already imported:pytest.PytestWarning','--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
-    # os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
-    # logger.info('测试报告生成完成！')
+    os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
+    logger.info('测试报告生成完成！')
 
 
 if __name__ == '__main__':

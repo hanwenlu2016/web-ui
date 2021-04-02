@@ -14,12 +14,27 @@ import requests
 from hashlib import md5
 
 from config.setting import IS_CLEAN_REPORT
-from public.yaml_data import GetCaseData
+from public.yaml_data import GetCaseYmal
 from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR
 from public.logs import logger
 
 
-def sleep(s: int):
+def get_run_func_name():
+    """
+    获取运行函数名称
+    :return:
+    """
+    try:
+        raise Exception
+    except:
+        exc_info = sys.exc_info()
+        traceObj = exc_info[2]
+        frameObj = traceObj.tb_frame
+        Upframe = frameObj.f_back
+        return Upframe.f_code.co_name
+
+
+def sleep(s: float):
     """
     休眠秒数
     :param s:
@@ -111,7 +126,7 @@ def imgContent(img_path, img_type=1902):
     1012	1~12位英文数字	
     1020	1~20位英文数字	
     '''
-    IMG_INFO = {'username': 'redaflifht', '': '', 'code_id': 909536,
+    IMG_INFO = {'username': 'redaflifht', 'password': 'qar2000!', 'code_id': 909536,
                 'api_url': 'http://upload.chaojiying.net/Upload/Processing.php'}
 
     rep = CjyClient(IMG_INFO.get('username'), IMG_INFO.get('password'), IMG_INFO.get('code_id'),
@@ -140,7 +155,7 @@ class Get:
 
     @staticmethod
     def test_data(yamlname: str, casename: str) -> List:
-        testdata = GetCaseData(yamlname, casename).test_data_values()
+        testdata = GetCaseYmal(yamlname, casename).test_data_values()
         return testdata
 
 

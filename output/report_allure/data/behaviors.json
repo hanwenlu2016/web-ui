@@ -5,7 +5,7 @@
     "name" : "打开百度搜索",
     "children" : [ {
       "name" : "打开百度搜索",
-      "uid" : "ef3d9417fac45a23",
+      "uid" : "ff2178a7f643bdc1",
       "parentUid" : "bd33dbbae6c4a8722569a12163d10e2b",
       "status" : "passed",
       "time" : {
@@ -20,7 +20,7 @@
     "uid" : "bd33dbbae6c4a8722569a12163d10e2b"
   }, {
     "name" : "test_hone",
-    "uid" : "909ef6141266db9e",
+    "uid" : "9476cc4cce46524b",
     "parentUid" : "b1a8273437954620fa374b796ffaacdd",
     "status" : "passed",
     "time" : {
@@ -31,5 +31,52 @@
     "flaky" : false,
     "newFailed" : false,
     "parameters" : [ ]
+  }, {
+    "name" : "百度搜索",
+    "children" : [ {
+      "name" : "所搜验证",
+      "children" : [ {
+        "name" : "输入内容并搜索",
+        "uid" : "b668ea56853ff38a",
+        "parentUid" : "2249c6438e61b861cc328111dda6595b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1617347039794,
+          "stop" : 1617347042367,
+          "duration" : 2573
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "('python',)" ]
+      }, {
+        "name" : "输入内容并搜索",
+        "uid" : "dead24e7d5f6c119",
+        "parentUid" : "2249c6438e61b861cc328111dda6595b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1617347049316,
+          "stop" : 1617347052410,
+          "duration" : 3094
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "('java',)" ]
+      }, {
+        "name" : "输入内容并搜索",
+        "uid" : "39450f705612e4e",
+        "parentUid" : "2249c6438e61b861cc328111dda6595b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1617347058859,
+          "stop" : 1617347062028,
+          "duration" : 3169
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "('c++',)" ]
+      } ],
+      "uid" : "2249c6438e61b861cc328111dda6595b"
+    } ],
+    "uid" : "a76e3034c0bacf1f726844fd54aff2b5"
   } ]
 }

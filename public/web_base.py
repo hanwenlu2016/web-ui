@@ -16,13 +16,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
+from public.common import ErrorExcep
+from public.yaml_data import GetLocatorYmal, GetCaseYmal
 from public.logs import logger
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
 
 
 class Base:
-
+    yamlfile = None
     def __init__(self, driver):
         self.driver = driver
 
@@ -402,7 +404,7 @@ class Base:
             logger.error('等待元素错误,元素在等待时间内未出现！')
             logger.error(e)
 
-    def used_operate(self, types, locate, el=None):
+    def used_operate(self, types, locate, el=None, notes=None):
         """
         获取元素  此函数配合 isElementExist 检查元素是否存在
         :param types: 定位类型
@@ -411,6 +413,7 @@ class Base:
         :return: driver 对象
         """
         types = self.get_by_type(types)
+        #logger.info(notes)
         if self.isElementExist(types, locate):
             if el is not None:
                 # find_element 不为空时 查询多个
@@ -562,6 +565,33 @@ class WebBase(Base):
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
 
+    def get_locator(self, yaml_names=None, case_names=None):
+        """
+        获取定位数据
+        :param yaml_names:  ymal 路径
+        :param case_names:   用例名称
+        :return:
+        """
+
+        if yaml_names is not None:
+            d = GetLocatorYmal(yaml_name=yaml_names, case_name=case_names)
+            return d
+        else:
+            raise ErrorExcep('yaml路径不能为空！')
+
+    def get_case(self, yaml_names=None, case_names=None):
+        """
+        获取用例数据
+        :param yaml_names: ymal 路径
+        :param case_names:  用例名称
+        :return:
+        """
+        if yaml_names is not None:
+            d = GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
+            return d
+        else:
+            raise ErrorExcep('yaml路径不能为空！')
+
     def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5):
         """
         * 私有方法不继承
@@ -606,7 +636,7 @@ class WebBase(Base):
         目前只支持类型 ： input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) 
             """)
 
-    def web_expression(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5):
+    def web_expression(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5, notes=None):
         """
         web 执行操作判断
         :param types: 定位类型
@@ -616,13 +646,16 @@ class WebBase(Base):
         :param el: 单个/多个  默认 el=None 单个  / 如果 el = 's' 代表多个
         :param index:
         :param wait: 默认 等待0.5 秒
+        :param notes: 帮助说明 /说明此步骤
         :return:
         """
 
         if types in ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'):
+            logger.info(notes)
             return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text, el=el,
                                                      index=index,
                                                      wait=wait)
+
         else:
             logger.error(f'输入的{operate}操作类型，暂时不支持！！')
             logger.error("""只支持 id,name,xpath,css,class,link,partlink,tag 定位方式""")

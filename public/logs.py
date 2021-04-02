@@ -4,12 +4,12 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2020/10/22  11:31
 
-import os
+import  os
 import time
 
 from loguru import logger
 
-from config.setting import LOG_DIR
+from config.ptahconf import LOG_DIR
 
 
 class SetLog:

@@ -19,11 +19,11 @@ POLL_FREQUENCY = 0.2   # 显示等待元素出现时 在此时间内检索一次
 
 
 ########## Web端配置
-URL = "http://192.168.7.51/portal/#"  # # 项目地址 web 时选择
+URL = "https://www.baidu.com/"  # # 项目地址 web 时选择
 
 BROWSERNAME = "Chrome"  # "Chrome" "Firefox" "Ie"  "Safari"  # 浏览器选择
 
-IS_COLONY = False  # 是否启动集群模式 True(启用)  False(不启用)
+IS_COLONY = False  # 是否启动集群模式 True(启用)  False(不启用) 需要配置集群  selenium-grid
 
 HUB_HOST = '192.168.7.101:4444'  # 集群hub地址和端口
 
@@ -50,9 +50,9 @@ IOS_CAPA = {
     "platformVersion": '14.1', # 系统版本 *
     "deviceName": 'Redad', #设备名称 *
     "automationName": "XCUITest",
-    "bundleId": "com.redaflight.RedaSkyPoint22a", # app包名 *
-    "udid": "5235c499f02839759fccc412fdb4c50920ef5244", # 手机UDID *
-    "xcodeOrgId": "J4397KG4TG", # 开发者id *
+    "bundleId": "", # app包名 *
+    "udid": "", # 手机UDID *
+    "xcodeOrgId": "", # 开发者id *
     "xcodeSigningId": "iPhone Developer",
     "useNewWDA": False,
     "noReset": True, # 启动app时不要清除app里的原有的数据

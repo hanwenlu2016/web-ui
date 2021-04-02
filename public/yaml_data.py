@@ -4,8 +4,9 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2020/10/27  10:33
 
-import  os
+import os
 import pickle
+from typing import List
 
 import yaml
 from faker import Factory
@@ -13,17 +14,18 @@ from faker import Factory
 from public.db import RedisPool
 from public.logs import logger
 from config.setting import IS_REDIS
-from config.ptahconf import YAML_DIR
+from config.ptahconf import LOCATORYMAL_DIR, CASEYMAL_DIR
 
 fake = Factory().create('zh_CN')
 
-# 读取yaml  和Redis数据
-class GetCaseData:
+
+# 读取  和Redis数据
+class GetLocatorYmal:
     """
-     获取测试用例 Yaml数据类
+     获取测试用例 locatorYaml数据类
     """
 
-    def __init__(self, yaml_name : str, case_name :str ) -> None:
+    def __init__(self, yaml_name: str, case_name: str) -> None:
         """
         :param yaml_name:  yaml 文件名称
         :param case_name:  用列名称 对应 yaml 用列
@@ -34,17 +36,7 @@ class GetCaseData:
         self.yaml_name = yaml_name  # yaml 文件名称 拼接后的路径
         self.case_name = case_name  # 用列名称 对应 yaml 用列
 
-        self.FLIE_PATH = os.path.join(YAML_DIR, f"{self.yaml_name}")
-
-        if self.isredis ==False:
-            try:
-                if os.path.exists(self.FLIE_PATH) :
-                    self.yaml_name = self.FLIE_PATH
-                else:
-                    logger.info("文件不存在")
-                self._all_data = None
-            except Exception as e:
-                logger.error(e)
+        self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
 
     def open_yaml(self):
         """
@@ -118,7 +110,7 @@ class GetCaseData:
                 return len(data.get('element'))
         return "casename 不存在！"
 
-    def get_param(self, value : str) -> str:
+    def get_param(self, value: str) -> str:
         """
         获取 yaml用列参数
         :param value:  传递参数值
@@ -132,7 +124,7 @@ class GetCaseData:
                 return yaml.get(value)
         return "casename 不存在！"
 
-    def get_set(self, index : int, vaule : str) :
+    def get_set(self, index: int, vaule: str):
         """
         获取 set 用列步骤数据
 
@@ -197,7 +189,7 @@ class GetCaseData:
 
         return "casename 不存在！"
 
-    def redis_param(self, value :str ) -> str:
+    def redis_param(self, value: str) -> str:
         """
         获取 redis用列参数
         :param value:  传递参数值
@@ -238,7 +230,6 @@ class GetCaseData:
             return self.redis_param('precond')
         return self.get_param('precond')
 
-
     def test_data_values(self, ):
         """
         读取yaml  测试数据的 values
@@ -251,24 +242,23 @@ class GetCaseData:
         else:
             dataList = self.get_yaml()
 
-        for data in dataList :
+        for data in dataList:
             # 如果用列等于当前 用列就返回 并且读取的是 yaml 数据
 
-            if data.get('casename') == self.case_name and  self.isredis == False :
+            if data.get('casename') == self.case_name and self.isredis == False:
                 data_list = data.get('testdata')
                 for i in data_list:
                     data_values_list.append(tuple(i.values()))
                 return data_values_list
 
-            elif data.get('casename') == self.case_name and  self.isredis:
+            elif data.get('casename') == self.case_name and self.isredis:
                 # 读取是redis 时  data.get('data') 是字符串需要转为字典 列表
                 data_list = eval(data.get('testdata'))
                 for i in data_list:
                     data_values_list.append(tuple(i.values()))
                 return data_values_list
 
-
-    def test_data(self, index:int, agrs:str)->str:
+    def test_data(self, index: int, agrs: str) -> str:
         """
         **** ！应该会弃用
         返回 用列 测试 data 数据列表
@@ -295,32 +285,31 @@ class GetCaseData:
 
         logger.error(f'{self.case_name}用列只有{self.dataCount()}条数据，你输入了第{index} 条！')
 
-
-    def casesteid(self, index:int )->str:
+    def casesteid(self, index: int) -> str:
         """
        返回 用列步骤 casesteid 参数
        """
         return self.get_set(index, 'casesteid')
 
-    def types(self,  index:int )->str:
+    def types(self, index: int) -> str:
         """
         返回 用列步骤 types 参数
         """
         return self.get_set(index, 'types')
 
-    def operate(self,  index:int )->str:
+    def operate(self, index: int) -> str:
         """
         返回 用列步骤 operate 参数
         """
         return self.get_set(index, 'operate')
 
-    def locate(self, index:int )->str:
+    def locate(self, index: int) -> str:
         """
         返回 用列步骤 locate 参数
         """
         return self.get_set(index, 'locate')
 
-    def info(self, index:int )->str:
+    def info(self, index: int) -> str:
         """
         返回 用列步骤 info 参数
         """
@@ -331,6 +320,33 @@ class GetCaseData:
         返回 用列步骤 expect 参数
         """
         return self.get_set(index, 'expect')
+
+
+class GetCaseYmal(GetLocatorYmal):
+    """
+    获取测试用例 caseYaml数据类
+    """
+
+    def __init__(self, yaml_name: str, case_name: str):
+        super(GetCaseYmal, self).__init__(yaml_name, case_name)
+        self.isredis = IS_REDIS  # 是否读取reds数据
+        self.modelname = yaml_name  # 模块名称 对应yaml 文件名
+
+        self.yaml_name = yaml_name  # yaml 文件名称 拼接后的路径
+        self.case_name = case_name  # 用列名称 对应 yaml 用列
+
+        self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
+
+
+def caseda(yamlname: str, casename: str) -> List:
+    """
+    款速获取测试数据 以元素方式返回
+    :param yamlname: yaml 名称
+    :param casename:   用例数据
+    :return:
+    """
+    testdata = GetCaseYmal(yamlname, casename).test_data_values()
+    return testdata
 
 
 # faker 信息数据
@@ -445,8 +461,7 @@ class TimeInfo:
         随机月份
         :return: str[0] -数字月  str[0] -英文月
         """
-        return (fake.month(),fake.month_name())
-
+        return (fake.month(), fake.month_name())
 
     @staticmethod
     def random_month():
@@ -455,7 +470,6 @@ class TimeInfo:
         :return: str
         """
         return fake.month()
-
 
     @staticmethod
     def random_date_this_month():
@@ -481,7 +495,6 @@ class TimeInfo:
         """
         return fake.date_time_this_century(before_now=True, after_now=False, tzinfo=None)
 
-
     @staticmethod
     def random_day_of_week():
         """
@@ -498,7 +511,6 @@ class TimeInfo:
         :return:  str
         """
         return fake.date_of_birth(tzinfo=None, minimum_age=0, maximum_age=age)
-
 
 # d = GetCaseData('common.yaml', 'login')
 # print(d.test_data(0,'info'))
