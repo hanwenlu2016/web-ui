@@ -31,10 +31,9 @@ from public.logs import logger
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
 
-yamlfile = os.path.basename(__file__).replace('py', 'yaml')
+
 
 class AppBase:
-    yamlfile = None
 
     def __init__(self, driver, ):
         self.driver = driver
@@ -845,7 +844,7 @@ class AccessibilityId(AppBase):
 
 class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUsed):
 
-    def __if_android_operate_uiautomator(self, locate, operate=None, text=None, el=None, index=None, wait=0.5):
+    def __if_android_operate_uiautomator(self, locate, operate=None, text=None, el=None, index=None):
         """
         * 私有不继承
         判断 uiautomator 执行操作
@@ -857,34 +856,33 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
          android_uiautomator_click 、android_uiautomator_text、android_uiautomator_input、android_uiautomator_clear、
          列表索引位置  find_element传递时 此值必填
          scroll_page_one_time index 传递滑动次数
-        :param wait: 默认 等待0.5 秒
+
         :return:
         """
         if operate is None:
-            time.sleep(wait)
+
             return self.android_uiautomator(locate=locate, el=el)
 
         elif operate == 'text':  # 提取文本
-            time.sleep(wait)
+
             return self.android_uiautomator_text(locate=locate, el=el, index=index)
 
         elif operate == 'click':  # 点击操作
-            time.sleep(wait)
+
             self.android_uiautomator_click(locate=locate, el=el, index=index)
 
         elif operate == 'input':  # 输入操作
             if text is not None:
-                time.sleep(wait)
+
                 return self.android_uiautomator_input(locate=locate, text=text, el=el, index=index)
             logger.error('android_uiautomator_input 函数必须传递 text 参数')
 
         elif operate == 'clear':  # 清除操作
-            time.sleep(wait)
+
             return self.android_uiautomator_clear(locate=locate, el=el, index=index)
 
         elif operate == 'clear_continue_input':  # 清除后在输入操作
             if text is not None:
-                time.sleep(wait)
                 return self.android_uiautomator_clear_continue_input(locate=locate, text=text, el=el, index=index)
             logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
 
@@ -898,7 +896,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 f""" 不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                 slide(滑动) """)
 
-    def __if_operate_ios_predicate(self, locate, operate=None, text=None, el=None, index=None, wait=0.5):
+    def __if_operate_ios_predicate(self, locate, operate=None, text=None, el=None, index=None):
         """
         * 私有不继承
         判断 ios_predicate操作执行
@@ -910,33 +908,32 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
          android_uiautomator_click 、android_uiautomator_text、android_uiautomator_input、android_uiautomator_clear、
          列表索引位置  find_element传递时 此值必填
          scroll_page_one_time index 传递滑动次数
-        :param wait: 默认 等待0.5 秒
         :return:
         """
         if operate is None:
-            time.sleep(wait)
+
             return self.ios_predicate(locate=locate, el=el)
 
         elif operate == 'text':  # 提取文本
-            time.sleep(wait)
+
             return self.ios_predicate_text(locate=locate, el=el, index=index)
 
         elif operate == 'click':  # 点击操作
-            time.sleep(wait)
+
             return self.ios_predicate_click(locate=locate, el=el, index=index)
 
         elif operate == 'input':  # 输入操作
             if text is not None:
-                time.sleep(wait)
+
                 self.ios_predicate_input(locate=locate, text=text, el=el, index=index)
             logger.error('ios_predicate_input 函数必须传递 text 参数')
 
         elif operate == 'clear':  # 清除操作
-            time.sleep(wait)
+
             self.ios_predicate_clear(locate=locate, el=el, index=index)
 
         elif operate == 'clear_continue_input':  # 清除后在输入操作
-            time.sleep(wait)
+
             self.ios_predicate_clear_continue_input(locate=locate, text=text, el=el, index=index)
 
         elif operate == 'slide':  # 滑动操作
@@ -950,7 +947,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 f""" 不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                     slide(滑动) """)
 
-    def __if_acceaaibilityid_predicate(self, locate, operate=None, text=None, el=None, index=None, wait=0.5):
+    def __if_acceaaibilityid_predicate(self, locate, operate=None, text=None, el=None, index=None):
         """
         * 私有不继承
         判断 accessibilityid执行操作
@@ -958,34 +955,34 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :param operate: 执行操作 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)
         :param text: 输入文本内容
         :param el: 输入文本内容
-        :param wait: 默认 等待0.5 秒
+
         :return:
         """
         if operate is None:
-            time.sleep(wait)
+
             return self.accessibility_id(locate=locate, el=el)
 
         elif operate == 'text':  # 提取文本、多个时需要传递index 参数
-            time.sleep(wait)
+
             self.accessibility_id_text(locate=locate, el=el, index=index)
 
         elif operate == 'click':  # 点击操作 、多个时需要传递index 参数
-            time.sleep(wait)
+
             self.accessibility_id_click(locate=locate, el=el, index=index)
 
         elif operate == 'input':  # 输入操作 、 多个时需要传递index 参数
             if text is not None:
-                time.sleep(wait)
+
                 self.accessibility_id_input(locate=locate, text=text, el=el, index=index)
             logger.error('accessibility_id_input 函数必须传递 text 参数')
 
         elif operate == 'clear':  # 清除操作
-            time.sleep(wait)
+
             self.accessibility_id_clear(locate=locate, el=el, index=index)
 
         elif operate == 'clear_continue_input':  # 清除后在输入操作
             if text is not None:
-                time.sleep(wait)
+                self.accessibility_id_clear_continue_input(locate=locate, text=text,el=el, index=index)
 
         elif operate == 'slide':  # 滑动操作
             if index is None:
@@ -999,7 +996,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             f""" 不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                 slide(滑动) """)
 
-    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5):
+    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None,):
         """
         * 私有不继承
         判断 CommonlyUsed 执行操作
@@ -1007,34 +1004,33 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :param operate: 执行操作 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)
         :param text: 输入文本内容
         :param el: 输入文本内容
-        :param wait: 默认 等待0.5 秒
         :return:
         """
         if operate is None:
-            time.sleep(wait)
+
             return self.used_operate(types=types, locate=locate, el=el)
 
         elif operate == 'text':  # 提取文本
-            time.sleep(wait)
+
             return self.used_text(types=types, locate=locate, el=el, index=index)
 
         elif operate == 'click':  # 点击操作
-            time.sleep(wait)
+
             self.used_click(types=types, locate=locate, el=el, index=index)
 
         elif operate == 'input':  # 输入操作
             if text is not None:
-                time.sleep(wait)
+
                 return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
             logger.error('android_uiautomator_input 函数必须传递 text 参数')
 
         elif operate == 'clear':  # 清除操作
-            time.sleep(wait)
+
             return self.used_clear(types=types, locate=locate, el=el, index=index)
 
         elif operate == 'clear_continue_input':  # 清除后在输入操作
             if text is not None:
-                time.sleep(wait)
+
                 return self.used_clear_continue_input(types=types, locate=locate, text=text, el=el, index=index)
             logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
 
@@ -1071,25 +1067,24 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             logger.warning('此方法只支持android系统！！')
             logger.info(notes)
             return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text, el=el, index=index,
-                                                         wait=wait)
+                                                         )
 
         # 只支持 iso
         elif PLATFORM.lower() == 'ios' and types == 'ios_predicate':
             logger.warning('此方法只支持ios系统！！')
             logger.info(notes)
             return self.__if_operate_ios_predicate(locate=locate, operate=operate, text=text, el=el, index=index,
-                                                   wait=wait)
+                                                   )
 
         elif types == 'accessibilityid':
             logger.info(notes)
-            return self.__if_acceaaibilityid_predicate(locate=locate, operate=operate, text=text, el=el, index=index,
-                                                       wait=wait)
+            return self.__if_acceaaibilityid_predicate(locate=locate, operate=operate, text=text, el=el, index=index
+                                                       )
 
         elif types in ('xpath', 'class', 'id'):
             logger.info(notes)
             return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text, el=el,
-                                                     index=index,
-                                                     wait=wait)
+                                                     index=index)
         else:
 
             logger.error(f"""输入的{operate}操作类型，暂时不支持！！

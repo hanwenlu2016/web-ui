@@ -54,22 +54,6 @@ def str_re_int(string: str) -> list:
     return findlist
 
 
-def value_division(mlist: List)-> str:
-    """
-    参数值划分  生成demo '{} or {} or {}  '.format(mlist[0], mlist[1], mlist[2]) 根据传递长度生成 {} or
-    """
-    if mlist is not None:
-        mdata = ''
-        for index, i in enumerate(mlist):
-            mdata += i
-            if index < len(mlist) - 1:
-                mdata += ' or '
-        return mdata
-    else:
-        logger.info('参数传递错误')
-        return 'NULL'
-
-
 def clean_report(filepath: str) -> None:
     """
     清除测试报告文件
@@ -100,8 +84,6 @@ def del_clean_report():
         dir_list = [PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR]
 
         for dir in dir_list:
-            # dir_file = Path(dir) # 判断路径是否存在
-            # if dir_file.is_file():
             clean_report(dir)
 
 
@@ -189,3 +171,7 @@ class CjyClient:
         r = requests.post(self.apiurl, data=params, files=files,
                           headers=self.headers)
         return r.json()
+
+# if __name__ == '__main__':
+#     x=value_division(['all',1,1,'demo'])
+#     print(x)

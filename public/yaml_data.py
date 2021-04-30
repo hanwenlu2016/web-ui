@@ -337,16 +337,29 @@ class GetCaseYmal(GetLocatorYmal):
 
         self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
 
-
+#d = self.get_locator(yamlfile, 'click_cancel_save')
 def caseda(yamlname: str, casename: str) -> List:
     """
-    款速获取测试数据 以元素方式返回
+    快速获取测试数据 以元素方式返回
     :param yamlname: yaml 名称
     :param casename:   用例数据
     :return:
     """
+
+    listdata = []
     testdata = GetCaseYmal(yamlname, casename).test_data_values()
-    return testdata
+
+    if len(testdata[0]) == 1:
+        # 当元组只有一个参数时 以列表方式返回 [(1,), (2,), (3,)] 转为 [1,2,3] 大于2个参数不影响
+        for i in testdata:
+            listdata.append(i[0])
+        return listdata
+    else:
+        return testdata
+
+
+
+# print(len(dd[0]))
 
 
 # faker 信息数据

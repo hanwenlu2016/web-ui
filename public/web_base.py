@@ -7,8 +7,8 @@
 
 import time
 import os
+import sys
 
-import pyautogui, pyperclip
 import allure
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
@@ -24,9 +24,18 @@ from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
 
 
 class Base:
-    yamlfile = None
+
     def __init__(self, driver):
         self.driver = driver
+
+    def sleep(self, s: float):
+        """
+        休眠秒数
+        :param s:
+        :return:
+        """
+        time.sleep(s)
+        logger.info('强制休眠{}'.format(s))
 
     def get_title(self):
         """
@@ -250,7 +259,7 @@ class Base:
         element = self.used_operate(types, locate)
         ActionChains(self.driver).move_to_element(element).perform()
         time.sleep(0.5)
-        self.used_double_click(types=types, locate=locate)
+        element.click()
         logger.info(f"鼠标悬停位置{locate}")
 
     def save_as_img(self, types, locate, filename, sleep=1):
@@ -262,25 +271,28 @@ class Base:
         :param sleep: 等待windo 窗口时间 默认 1 秒
         :return: str path 文件路径
         """
-        # 右键点击
-        self.used_right_click(types=types, locate=locate)
-        # 图片另存为
-        pyautogui.typewrite(['V'])
+        if sys.platform.lower() == 'win32':
+            import pyautogui, pyperclip
+            # 右键点击
+            self.used_right_click(types=types, locate=locate)
+            # 图片另存为
+            pyautogui.typewrite(['V'])
 
-        # 将地址以及文件名复制
-        pic_dir = os.path.join(PRPORE_SCREEN_DIR, f'{filename}.jpg')
-        pyperclip.copy(pic_dir)
+            # 将地址以及文件名复制
+            pic_dir = os.path.join(PRPORE_SCREEN_DIR, f'{filename}.jpg')
+            pyperclip.copy(pic_dir)
 
-        # 等待窗口打开，以免命令冲突，粘贴失败，试过很多次才有0.8，具体时间自己试
-        time.sleep(sleep)
+            # 等待窗口打开，以免命令冲突，粘贴失败，试过很多次才有0.8，具体时间自己试
+            time.sleep(sleep)
 
-        # 粘贴
-        pyautogui.hotkey('ctrlleft', 'V')
+            # 粘贴
+            pyautogui.hotkey('ctrlleft', 'V')
 
-        # 保存
-        pyautogui.press('enter')
-        logger.info(f'图片路径为{filename}！')
-        return pic_dir
+            # 保存
+            pyautogui.press('enter')
+            logger.info(f'图片路径为{filename}！')
+            return pic_dir
+        return None
 
     def upload_files(self, types, locate, filepath, sleep=1):
         """
@@ -291,19 +303,24 @@ class Base:
         :param sleep: 等待windo 窗口时间 默认 1 秒
         :return:
         """
-        self.used_right_click(types, locate)
-
-        time.sleep(sleep)
 
         # pyautogui.write(filepath)  # 不支持中文路径
 
         # 支持中文路径
-        pyperclip.copy(filepath)
-        time.sleep(sleep)
-        pyautogui.hotkey('ctrl', 'v')
+        if sys.platform.lower() == 'win32':
+            import pyautogui, pyperclip
 
-        pyautogui.press('enter', presses=2)
-        logger.info(f'上传文件路径{filepath}')
+            self.used_right_click(types, locate)
+            self.sleep(sleep)
+
+            pyperclip.copy(filepath)
+            self.sleep(sleep)
+            pyautogui.hotkey('ctrl', 'v')
+
+            pyautogui.press('enter', presses=2)
+            logger.info(f'上传文件路径{filepath}')
+            return True
+        return False
 
     def selcet_locat(self, types, locate, value):
         """
@@ -413,7 +430,7 @@ class Base:
         :return: driver 对象
         """
         types = self.get_by_type(types)
-        #logger.info(notes)
+        # logger.info(notes)
         if self.isElementExist(types, locate):
             if el is not None:
                 # find_element 不为空时 查询多个
@@ -538,12 +555,52 @@ class Base:
 
         self.driver.execute_script("arguments[0].value = '';", element)
 
+    def js_input(self, types, locate, text, index=0):
+        """
+        js 输入
+        :param types: js 类型 （支持 [class、tag、css 列表]、（id、name 唯一））
+        :param locate: 定位器
+        :param text: 输入内容
+        :param index: 列表索引
+        :return:
+        """
+        js_length = None
+        js = None
+
+        if types == 'class':
+            js_length = f'return document.getElementsByClassName("{locate}").length;'
+            js = f'document.getElementsByClassName("{locate}")[{index}].value="{text}"'
+
+        elif types == 'tag':
+            js_length = f'return document.getElementsByTagName("{locate}").length;'
+            js = f'document.getElementsByTagName("{locate}")[{index}].value="{text}"'
+
+        elif types == 'css':
+            js_length = f'return document.querySelectorAll("{locate}").length;'
+            js = f'document.querySelectorAll("{locate}")[{index}].value="{text}"'
+        elif types == 'name':
+            js_length = f'return document.getElementsByName("{locate}").length;'
+            js = f'document.getElementsByName("{locate}").value="{text}"'
+
+        elif types == 'id':
+            js_length = f'return document.getElementById("{locate}").length;'
+            js = f'document.getElementById("{locate}").value="{text}"'
+            self.execute_js(js)
+
+        #
+        js_length_num = self.execute_js(js_length)
+        if js_length_num is not None:
+            self.execute_js(js)
+        else:
+            logger.error('JS element does not exist')
+            raise ErrorExcep('JS element does not exist')
+
     def execute_js(self, js: str):
         """
         执行js
         :param js: js 语法
         """
-        self.driver.execute_script(js)
+        return self.driver.execute_script(js)
 
     def used_clear_continue_input(self, types, locate, text, el=None, index=None):
         """
@@ -556,7 +613,7 @@ class Base:
         :return:
         """
         self.used_clear(types=types, locate=locate, el=el, index=index)
-        time.sleep(3)
+        time.sleep(0.5)
         self.used_input(types=types, locate=locate, text=text, el=el, index=index)
 
 
@@ -592,7 +649,7 @@ class WebBase(Base):
         else:
             raise ErrorExcep('yaml路径不能为空！')
 
-    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5):
+    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None):
         """
         * 私有方法不继承
         判断 CommonlyUsed 执行操作
@@ -600,34 +657,32 @@ class WebBase(Base):
         :param operate: 执行操作 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,
         :param text: 输入文本内容
         :param el: 输入文本内容
-        :param wait: 默认 等待0.5 秒
         :return:
         """
         if operate is None:
-            time.sleep(wait)
             return self.used_operate(types=types, locate=locate, el=el)
 
         elif operate == 'text':  # 提取文本
-            time.sleep(wait)
             return self.used_text(types=types, locate=locate, el=el, index=index)
 
         elif operate == 'click':  # 点击操作
-            time.sleep(wait)
             self.used_click(types=types, locate=locate, el=el, index=index)
 
         elif operate == 'input':  # 输入操作
             if text is not None:
-                time.sleep(wait)
                 return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
             logger.error(' 函数必须传递 text 参数')
 
+        elif operate == 'jsinput':  # JS方式输入操作
+            if text is not None:
+                return self.js_input(types=types, locate=locate, text=text, index=index)
+            logger.error(' 函数必须传递 text 参数')
+
         elif operate == 'clear':  # 清除操作
-            time.sleep(wait)
             return self.used_clear(types=types, locate=locate, el=el, index=index)
 
         elif operate == 'clear_continue_input':  # 清除后在输入操作
             if text is not None:
-                time.sleep(wait)
                 return self.used_clear_continue_input(types=types, locate=locate, text=text, el=el, index=index)
             logger.info(' 函数必须传递 text 参数')
         else:
@@ -636,7 +691,7 @@ class WebBase(Base):
         目前只支持类型 ： input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) 
             """)
 
-    def web_expression(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5, notes=None):
+    def web_expression(self, types, locate, operate=None, text=None, el=None, index=None, notes=None):
         """
         web 执行操作判断
         :param types: 定位类型
@@ -645,7 +700,7 @@ class WebBase(Base):
         :param text : 输入文本内容
         :param el: 单个/多个  默认 el=None 单个  / 如果 el = 's' 代表多个
         :param index:
-        :param wait: 默认 等待0.5 秒
+
         :param notes: 帮助说明 /说明此步骤
         :return:
         """
@@ -653,9 +708,31 @@ class WebBase(Base):
         if types in ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'):
             logger.info(notes)
             return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text, el=el,
-                                                     index=index,
-                                                     wait=wait)
+                                                     index=index, )
 
         else:
             logger.error(f'输入的{operate}操作类型，暂时不支持！！')
             logger.error("""只支持 id,name,xpath,css,class,link,partlink,tag 定位方式""")
+
+    def execute(self, yamlfile, case, text=None, el=None, index=None, wait=0.1):
+        """
+        执行定位步骤
+        :param yamlfile:  yaml文件
+        :param case: yaml定位用例
+        :param text:  输入内容
+        :param el:  是否为多个  el='l' 多个
+        :param index:
+        :param wait:  等待多少
+        :return:
+        """
+        relust = None  # 断言结果  最后一步才返回
+
+        locator_data = self.get_locator(yamlfile, case)
+        locator_step = locator_data.stepCount()
+        for locator in range(0, locator_step):
+            relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                         operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                         text=text, el=el,
+                                         index=index)
+            self.sleep(wait)
+        return relust

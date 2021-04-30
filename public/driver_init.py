@@ -151,8 +151,6 @@ class WebInit:
         else:
             return self.setup()
 
-
-
     def browaer_setup_args(self, driver):
         """
         单机浏览器参数设置
@@ -202,7 +200,8 @@ class WebInit:
                         return drivers # 在linux下启用 火狐浏览器需要借助Display
 
                     else:
-                        raise ErrorExcep(f'linux系统不支持此浏览器: {self.browser}')
+                        logger.error(f'linux系统不支持此浏览器: {self.browser}')
+                        return False
 
                 elif current_sys == 'darwin':  # mac 系统
 
@@ -219,8 +218,8 @@ class WebInit:
                         return self.browaer_setup_args(driver)
 
                     else:
-                        raise ErrorExcep(f'mac系统不支持此浏览器: {self.browser}')
-
+                        logger.error(f'mac系统不支持此浏览器: {self.browser}')
+                        return False
                 elif current_sys == 'win32':
 
                     if self.browser == 'ie':
@@ -237,18 +236,19 @@ class WebInit:
                         return self.browaer_setup_args(driver, )
 
                     else:
-                        logger.info(f'windos系统不支持此浏览器: {self.browser}')
-                        raise ErrorExcep(f'windos系统不支持此浏览器: {self.browser}')
+                        logger.error(f'windos系统不支持此浏览器: {self.browser}')
+
+                        return False
                 else:
-                    logger.info(f'当前{current_sys}系统不支持！')
-                    raise ErrorExcep('当前{current_sys}系统不支持！')
+                    logger.error(f'当前{current_sys}系统不支持！')
+                    return False
             else:
                 logger.error('项目地址地址请求异常！！！')
-                raise ErrorExcep('项目地址地址请求异常！！！')
+                return False
 
         except Exception as e:
             logger.error(f'浏览器驱动启动失败 {e}')
-            raise Exception("浏览器驱动启动失败!!!!")
+            return False
 
     def setups(self):
         """
@@ -270,7 +270,7 @@ class WebInit:
                         return self.browaer_setups_args(descap, option=options)
                     else:
                         logger.error('linux不支持此浏览器')
-                        raise ErrorExcep(f'linux不支持此浏览器: {self.browser}')
+                        return False
 
                 elif current_sys == 'darwin':  # mac 系统
                     if self.browser == 'safari':
@@ -287,7 +287,7 @@ class WebInit:
 
                     else:
                         logger.error('mac不支持此浏览器')
-                        raise ErrorExcep(f'mac不支持此浏览器: {self.browser}')
+                        return False
 
                 elif current_sys == 'win32':
                     if self.browser == 'ie':
@@ -304,14 +304,16 @@ class WebInit:
 
                     else:
                         logger.error('windos不支持此浏览器')
-                        raise ErrorExcep(f'windos不支持此浏览器: {self.browser}')
+                        return False
 
                 else:
                     logger.info(f'当前{current_sys}系统不支持！')
-                    raise ErrorExcep('当前{current_sys}系统不支持！')
+                    return False
+
             else:
                 logger.error('项目地址或者集群地址请求异常！！！')
-                raise ErrorExcep('项目地址或者集群地址请求异常！！！')
+                return False
+
         except Exception as e:
             logger.error(f'浏览器驱动启动失败 {e}')
-            raise ErrorExcep("浏览器驱动启动失败!!!!")
+            return False
