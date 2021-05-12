@@ -1045,7 +1045,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 f""" 不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                """)
 
-    def app_expression(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.5, notes=None):
+    def app_expression(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.2, notes=None):
         """
 
         app  执行操作判断
@@ -1093,6 +1093,38 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             raise ErrorExcep(f"""输入的{operate}操作类型，暂时不支持！！
             uiautomator 、ios_predicate 、accessibilityid、xpath、class、id 定位类型
             """)
+
+    def appexe(self, yamlfile, case, text=None, el=None, index=None, wait=0.1):
+        """
+        自动执行定位步骤
+        :param yamlfile:  yaml文件
+        :param case: yaml定位用例
+        :param text:  输入内容
+        :param el:  是否为多个  el='l' 多个
+        :param index:
+        :param wait:  等待多少
+        :return:
+        """
+        relust = None  # 断言结果  最后一步才返回
+
+        locator_data = self.get_locator(yamlfile, case)
+        locator_step = locator_data.stepCount()
+
+        for locator in range(0, locator_step):
+            if isinstance(text,list)  and locator_data.operate(locator)=='input':
+                relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             text=text[locator], el=el,
+                                             index=index)
+            else:
+                relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             text=text, el=el,
+                                             index=index)
+            time.sleep(wait)
+
+        return relust
+
 
     def get_locator(self, yaml_names=None, case_names=None):
         """

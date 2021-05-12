@@ -5,5 +5,4 @@
   precond:        # 前置说明
   testdata:    # 测试数据 /列表
     - content: python
-    - content: java
-    - content: c++
+

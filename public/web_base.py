@@ -207,22 +207,25 @@ class Base:
         except Exception as e:
             logger.error("查找alert弹出框异常-> {0}".format(e))
 
-    def screen_shot(self, doc):
+    def screen_shot(self, doc,  imgreport=True):
         """
         截取当前界面图片
         :param doc:  str 名称
+        :param imgreport:  str 图片追加到测试报告 默认添加到报告
         :return:
         """
-        fileName = doc + "." + str(round(time.time() * 1000)) + ".png"
+        fileName = doc + "_" + str(round(time.time() * 1000)) + ".png"
         if len(fileName) >= 200:
             fileName = str(round(time.time() * 1000)) + ".png"
         filePath = os.path.join(PRPORE_SCREEN_DIR, fileName)
 
         self.driver.save_screenshot(filePath)
-        allure.attach(self.driver.get_screenshot_as_png(),
-                      name=fileName,
-                      attachment_type=allure.attachment_type.PNG)
+        if imgreport:
+            allure.attach(self.driver.get_screenshot_as_png(),
+                          name=fileName,
+                          attachment_type=allure.attachment_type.PNG)
         logger.info(f"截图成功已经存储在: {filePath}")
+        return filePath
 
     def get_dropdown_options_count(self, types, locate):
         """
@@ -259,7 +262,7 @@ class Base:
         element = self.used_operate(types, locate)
         ActionChains(self.driver).move_to_element(element).perform()
         time.sleep(0.5)
-        element.click()
+        self.used_double_click(types=types, locate=locate)
         logger.info(f"鼠标悬停位置{locate}")
 
     def save_as_img(self, types, locate, filename, sleep=1):
@@ -555,52 +558,12 @@ class Base:
 
         self.driver.execute_script("arguments[0].value = '';", element)
 
-    def js_input(self, types, locate, text, index=0):
-        """
-        js 输入
-        :param types: js 类型 （支持 [class、tag、css 列表]、（id、name 唯一））
-        :param locate: 定位器
-        :param text: 输入内容
-        :param index: 列表索引
-        :return:
-        """
-        js_length = None
-        js = None
-
-        if types == 'class':
-            js_length = f'return document.getElementsByClassName("{locate}").length;'
-            js = f'document.getElementsByClassName("{locate}")[{index}].value="{text}"'
-
-        elif types == 'tag':
-            js_length = f'return document.getElementsByTagName("{locate}").length;'
-            js = f'document.getElementsByTagName("{locate}")[{index}].value="{text}"'
-
-        elif types == 'css':
-            js_length = f'return document.querySelectorAll("{locate}").length;'
-            js = f'document.querySelectorAll("{locate}")[{index}].value="{text}"'
-        elif types == 'name':
-            js_length = f'return document.getElementsByName("{locate}").length;'
-            js = f'document.getElementsByName("{locate}").value="{text}"'
-
-        elif types == 'id':
-            js_length = f'return document.getElementById("{locate}").length;'
-            js = f'document.getElementById("{locate}").value="{text}"'
-            self.execute_js(js)
-
-        #
-        js_length_num = self.execute_js(js_length)
-        if js_length_num is not None:
-            self.execute_js(js)
-        else:
-            logger.error('JS element does not exist')
-            raise ErrorExcep('JS element does not exist')
-
     def execute_js(self, js: str):
         """
         执行js
         :param js: js 语法
         """
-        return self.driver.execute_script(js)
+        self.driver.execute_script(js)
 
     def used_clear_continue_input(self, types, locate, text, el=None, index=None):
         """
@@ -673,11 +636,6 @@ class WebBase(Base):
                 return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
             logger.error(' 函数必须传递 text 参数')
 
-        elif operate == 'jsinput':  # JS方式输入操作
-            if text is not None:
-                return self.js_input(types=types, locate=locate, text=text, index=index)
-            logger.error(' 函数必须传递 text 参数')
-
         elif operate == 'clear':  # 清除操作
             return self.used_clear(types=types, locate=locate, el=el, index=index)
 
@@ -714,9 +672,9 @@ class WebBase(Base):
             logger.error(f'输入的{operate}操作类型，暂时不支持！！')
             logger.error("""只支持 id,name,xpath,css,class,link,partlink,tag 定位方式""")
 
-    def execute(self, yamlfile, case, text=None, el=None, index=None, wait=0.1):
+    def webexe(self, yamlfile, case, text='', el=None, index=None, wait=0.1):
         """
-        执行定位步骤
+        自动执行定位步骤
         :param yamlfile:  yaml文件
         :param case: yaml定位用例
         :param text:  输入内容
@@ -729,10 +687,17 @@ class WebBase(Base):
 
         locator_data = self.get_locator(yamlfile, case)
         locator_step = locator_data.stepCount()
+
         for locator in range(0, locator_step):
-            relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
-                                         operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                         text=text, el=el,
-                                         index=index)
+            if isinstance(text, list) and locator_data.operate(locator) == 'input':
+                relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             text=text[locator], el=el,
+                                             index=index)
+            else:
+                relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             text=text, el=el,
+                                             index=index)
             self.sleep(wait)
         return relust

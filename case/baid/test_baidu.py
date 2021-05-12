@@ -11,6 +11,9 @@ import allure
 
 from pageobj.baidu import BaiDu
 from public.yaml_data import caseda
+from public.imgproce import Diff
+from config.ptahconf import DATA_FILE
+from public.logs import logger
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 
@@ -24,15 +27,24 @@ class TestBaiDu:
     @pytest.mark.testbaidu    # 用列标记
     @pytest.mark.parametrize('content', caseda(yamlfile, 'test_baidu_search'))   # 测试数据
     def test_baidu_search(self, webDriver,content):
+        baidu=BaiDu(webDriver)
 
         with allure.step('输入搜索内容'):
 
-            BaiDu(webDriver).input_search_content(content)
+            baidu.input_search_content(content)
+
 
         with allure.step('点击搜索'):
 
-            BaiDu(webDriver).click_search_button()
+            baidu.click_search_button()
 
+            baidu.sleep(3)
+
+            # 对比查询后图片结果
+            search_python=os.path.join(DATA_FILE,'python.png')
+            search_relust=baidu.screen_shot('search')
+            df=Diff.dHash(search_python,search_relust)
+            assert df < 10
 
 
 

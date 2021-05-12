@@ -5,8 +5,6 @@
   precond:        # 前置说明
   testdata:    # 测试数据 /列表
     - content: python
-    - content: java
-    - content: c++
   element:    # 操作步骤 /列表
     - casesteid: 1      # 操作步骤
       types: name      # 定位类型  支持 id/name/xpath/css/class/link/partlink/tag 对应源码web_base.p 325行
