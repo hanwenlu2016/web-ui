@@ -5,6 +5,12 @@
 # @Time: 2020/11/4  14:40
 
 
+'''
+webexe
+定位方式支持  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
+操作方式支持 input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)
+'''
+
 import time
 import os
 import sys
@@ -207,7 +213,7 @@ class Base:
         except Exception as e:
             logger.error("查找alert弹出框异常-> {0}".format(e))
 
-    def screen_shot(self, doc,  imgreport=True):
+    def screen_shot(self, doc, imgreport=True):
         """
         截取当前界面图片
         :param doc:  str 名称
@@ -625,29 +631,31 @@ class WebBase(Base):
         if operate is None:
             return self.used_operate(types=types, locate=locate, el=el)
 
-        elif operate == 'text':  # 提取文本
-            return self.used_text(types=types, locate=locate, el=el, index=index)
+        if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input'):
+            if operate == 'text':  # 提取文本
+                return self.used_text(types=types, locate=locate, el=el, index=index)
 
-        elif operate == 'click':  # 点击操作
-            self.used_click(types=types, locate=locate, el=el, index=index)
+            elif operate == 'click':  # 点击操作
+                self.used_click(types=types, locate=locate, el=el, index=index)
 
-        elif operate == 'input':  # 输入操作
-            if text is not None:
-                return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
-            logger.error(' 函数必须传递 text 参数')
+            elif operate == 'input':  # 输入操作
+                if text is not None:
+                    return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
+                logger.error(' 函数必须传递 text 参数')
 
-        elif operate == 'clear':  # 清除操作
-            return self.used_clear(types=types, locate=locate, el=el, index=index)
+            elif operate == 'clear':  # 清除操作
+                return self.used_clear(types=types, locate=locate, el=el, index=index)
 
-        elif operate == 'clear_continue_input':  # 清除后在输入操作
-            if text is not None:
-                return self.used_clear_continue_input(types=types, locate=locate, text=text, el=el, index=index)
-            logger.info(' 函数必须传递 text 参数')
+            elif operate == 'clear_continue_input':  # 清除后在输入操作
+                if text is not None:
+                    return self.used_clear_continue_input(types=types, locate=locate, text=text, el=el, index=index)
+                logger.info(' 函数必须传递 text 参数')
         else:
-            logger.info('暂时不支持此操作！！！')
+            logger.error(f'输入的{operate}暂时不支持此操作！！！')
             logger.error("""
         目前只支持类型 ： input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) 
             """)
+            raise ErrorExcep(f'输入的{operate}暂时不支持此操作！！！')
 
     def web_expression(self, types, locate, operate=None, text=None, el=None, index=None, notes=None):
         """
@@ -669,10 +677,11 @@ class WebBase(Base):
                                                      index=index, )
 
         else:
-            logger.error(f'输入的{operate}操作类型，暂时不支持！！')
+            logger.error(f'输入的{types}操作类型，暂时不支持！！')
             logger.error("""只支持 id,name,xpath,css,class,link,partlink,tag 定位方式""")
+            raise ErrorExcep(f'输入的{types}操作类型，暂时不支持！！')
 
-    def webexe(self, yamlfile, case, text='', el=None, index=None, wait=0.1):
+    def webexe(self, yamlfile, case, text=None, el=None, index=None, wait=0.1):
         """
         自动执行定位步骤
         :param yamlfile:  yaml文件
@@ -689,7 +698,9 @@ class WebBase(Base):
         locator_step = locator_data.stepCount()
 
         for locator in range(0, locator_step):
-            if isinstance(text, list) and locator_data.operate(locator) == 'input':
+            if isinstance(text, list) and (
+                    locator_data.operate(locator) == 'input' or locator_data.operate(
+                locator) == 'clear_continue_input'):
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
                                              text=text[locator], el=el,
