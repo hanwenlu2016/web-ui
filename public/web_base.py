@@ -694,8 +694,11 @@ class WebBase(Base):
         """
         relust = None  # 断言结果  最后一步才返回
 
+        if index is not  None:
+            el='l'
         locator_data = self.get_locator(yamlfile, case)
         locator_step = locator_data.stepCount()
+
 
         for locator in range(0, locator_step):
             if isinstance(text, list) and (

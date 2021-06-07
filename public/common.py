@@ -54,6 +54,7 @@ def str_re_int(string: str) -> list:
     return findlist
 
 
+
 def clean_report(filepath: str) -> None:
     """
     清除测试报告文件
@@ -73,7 +74,6 @@ def clean_report(filepath: str) -> None:
                 os.path.isdir(file_path)
                 shutil.rmtree(file_path)
 
-
 def del_clean_report():
     """
     执行删除测试报告记录
@@ -85,6 +85,26 @@ def del_clean_report():
 
         for dir in dir_list:
             clean_report(dir)
+
+class ErrorExcep(Exception):
+    """
+    自定义异常类
+    """
+
+    def __init__(self, message):
+        super().__init__(message)
+
+
+class Get:
+    """
+    获取测试数据
+    """
+
+    @staticmethod
+    def test_data(yamlname: str, casename: str) -> List:
+        testdata = GetCaseYmal(yamlname, casename).test_data_values()
+        return testdata
+
 
 
 def imgContent(img_path, img_type=1902):
@@ -119,26 +139,6 @@ def imgContent(img_path, img_type=1902):
         img_text = rep.postPic(im, img_type)
 
     return img_text.get('pic_str')
-
-
-class ErrorExcep(Exception):
-    """
-    自定义异常类
-    """
-
-    def __init__(self, message):
-        super().__init__(message)
-
-
-class Get:
-    """
-    获取测试数据
-    """
-
-    @staticmethod
-    def test_data(yamlname: str, casename: str) -> List:
-        testdata = GetCaseYmal(yamlname, casename).test_data_values()
-        return testdata
 
 
 class CjyClient:

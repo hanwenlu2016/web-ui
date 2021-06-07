@@ -353,7 +353,7 @@ def caseda(yamlname: str, casename: str) -> List:
         # 当元组只有一个参数时 以列表方式返回 [(1,), (2,), (3,)] 转为 [1,2,3] 大于2个参数不影响
         for i in testdata:
             listdata.append(i[0])
-        return listdata
+        return listdata    # 单个参数返回列表
     else:
         return testdata
 
