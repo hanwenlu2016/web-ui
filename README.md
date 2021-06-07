@@ -110,3 +110,7 @@ yaml文件定位用例数据分离，代码优化！
 2021 -05 -12 
 
 增加imgproce图片对比算法，支持图片相似度处理。增加appexe、webexe函数
+
+2021 -06 -07
+
+修复 app_base、web_basr、 BUG。优化appexe、webexe 函数功能.
