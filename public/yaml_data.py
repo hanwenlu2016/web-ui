@@ -230,6 +230,28 @@ class GetLocatorYmal:
             return self.redis_param('precond')
         return self.get_param('precond')
 
+    def reqtype(self):
+        """
+        ** HTTP 接口请求参数
+        返回用列 reqtype  请类型
+        :return: str
+        """
+        # 如果isredis Ture 就读取redis 参数值 否则读取yaml
+        if self.isredis:
+            return self.redis_param('reqtype')
+        return self.get_param('reqtype')
+
+    def urlpath(self):
+        """
+        ** HTTP 接口请求参数
+        返回用列 urlpath  接口请求路径
+        :return: str
+        """
+        # 如果isredis Ture 就读取redis 参数值 否则读取yaml
+        if self.isredis:
+            return self.redis_param('urlpath')
+        return self.get_param('urlpath')
+
     def test_data_values(self, ):
         """
         读取yaml  测试数据的 values
@@ -258,7 +280,7 @@ class GetLocatorYmal:
                     data_values_list.append(tuple(i.values()))
                 return data_values_list
 
-    def test_data(self, index: int, agrs: str) -> str:
+    def test_data_list(self, index: int, agrs: str) -> str:
         """
         **** ！应该会弃用
         返回 用列 测试 data 数据列表
@@ -284,6 +306,15 @@ class GetLocatorYmal:
                     return eval(data.get('testdata'))[index].get(agrs)
 
         logger.error(f'{self.case_name}用列只有{self.dataCount()}条数据，你输入了第{index} 条！')
+
+    def test_data(self):
+        """
+        返回yanl  testdat 全部数据 列表字段
+        :return:
+        """
+        if self.isredis:
+            return self.redi_all().get('testdata')
+        return self.get_current_data().get('testdata')
 
     def casesteid(self, index: int) -> str:
         """
@@ -337,7 +368,8 @@ class GetCaseYmal(GetLocatorYmal):
 
         self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
 
-#d = self.get_locator(yamlfile, 'click_cancel_save')
+
+# d = self.get_locator(yamlfile, 'click_cancel_save')
 def caseda(yamlname: str, casename: str) -> List:
     """
     快速获取测试数据 以元素方式返回
@@ -353,13 +385,20 @@ def caseda(yamlname: str, casename: str) -> List:
         # 当元组只有一个参数时 以列表方式返回 [(1,), (2,), (3,)] 转为 [1,2,3] 大于2个参数不影响
         for i in testdata:
             listdata.append(i[0])
-        return listdata    # 单个参数返回列表
+        return listdata  # 单个参数返回列表
     else:
         return testdata
 
+def reda_data(yamlname: str, casename: str):
+    """
+    读取测试数据 HTTP 专用
+    :return:
+    """
+    testdata = GetCaseYmal(yamlname, casename)
+    if IS_REDIS:
+        return testdata.test_data()
+    return testdata.test_data()
 
-
-# print(len(dd[0]))
 
 
 # faker 信息数据
@@ -525,6 +564,7 @@ class TimeInfo:
         """
         return fake.date_of_birth(tzinfo=None, minimum_age=0, maximum_age=age)
 
+
 # d = GetCaseData('common.yaml', 'login')
 # print(d.test_data(0,'info'))
 
@@ -535,3 +575,9 @@ class TimeInfo:
 # d=testdata.test_data_values()
 #
 # print(d)
+
+
+# d = GetLocatorYmal('/Users/reda-flight/Desktop/svn/reda-ui-auto/database/locatorYAML/http.yaml', 'post_out')
+# print(d.test_data())
+# print(d.urlpath())
+# print(d.reqtype())

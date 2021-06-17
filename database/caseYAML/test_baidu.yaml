@@ -6,3 +6,12 @@
   testdata:    # 测试数据 /列表
     - content: python
 
+- casename: test_http_baidu
+  title: 请求百度
+  precond:
+  reqtype: GET
+  urlpath: https://www.baidu.com/
+  testdata:
+    - demo1: "root"
+      assertion: "access"  # 必填断言预期参数  请求时不传递
+

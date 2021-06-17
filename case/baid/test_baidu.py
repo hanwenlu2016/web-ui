@@ -13,6 +13,7 @@ from pageobj.baidu import BaiDu
 from public.yaml_data import caseda
 from public.imgproce import Diff
 from config.ptahconf import DATA_FILE
+from public.api_base import apiexe
 from public.logs import logger
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
@@ -46,5 +47,12 @@ class TestBaiDu:
             df=Diff.dHash(search_python,search_relust)
             assert df < 10
 
+    @allure.feature("API百度搜索")  # 测试用例特性（主要功能模块）
+    @allure.description('http请求')  # 用例描述
+    @pytest.mark.test_http_baidu    # 用列标记
+    def test_http_baidu(self,):
+        with allure.step('请求百度'):
+            ret=apiexe(yamlfile,'test_http_baidu')
+            assert ret.status_code == 200
 
 

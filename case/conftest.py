@@ -21,7 +21,7 @@ from public.driver_init import WebInit,if_linux_firefox
 #         display.stop()
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope='function')
 def webDriver():
     wb = WebInit()
     driver = wb.enable
