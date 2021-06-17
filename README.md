@@ -114,3 +114,7 @@ yaml文件定位用例数据分离，代码优化！
 2021 -06 -07
 
 修复 app_base、web_basr、 BUG。优化appexe、webexe 函数功能.
+
+2021 -06 -17
+
+增加http接口测试功能！！修复已知BUG!
