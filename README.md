@@ -2,7 +2,7 @@
 
 ###### 设计思路
 
-web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+vue *M端暂未开源功能还未开发完成) 做用例管理，定时任务分配，测试工具集合。
+web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成) 做用例管理，定时任务分配，测试工具集合。
 
 ###### 使用说明
 
