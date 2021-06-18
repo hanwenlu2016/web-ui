@@ -4,7 +4,10 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2021/6/17  10:42
 
+
+from urllib3 import encode_multipart_formdata
 import json
+
 import requests
 
 from public.logs import logger
@@ -20,7 +23,19 @@ class ApiBase:
         self.headers = HEADERS
         self.timeout = TIMEOUT
 
-    def post(self, urlpath, params, verify=False):
+    def gourl(self, urlpath):
+        """
+        判断url
+        :param urlpath:  url路径
+        :return:
+        """
+        if urlpath is not None:
+            if ('http' or 'https') in urlpath:
+                return urlpath
+            else:
+                return self.url + urlpath
+
+    def post(self, urlpath, params, filePath=None, filename=None, verify=False):
         """
         post 请求
         :param urlpath:  url 路径
@@ -28,21 +43,21 @@ class ApiBase:
         :param verify:   https 请求时忽略证书
         :return:
         """
-        if ('http' or 'https') in urlpath:
-            self.url = urlpath
-        else:
-            self.url = self.url + urlpath
-        logger.info(f'当前请求接口: {self.url} ,请求类型: POST')
+        url = self.gourl(urlpath)
+        logger.info(f'当前请求接口: {url} ,请求类型: POST')
 
         try:
-            if params is not None:
-                with requests.post(self.url, data=json.dumps(params), headers=self.headers,
-                                   timeout=self.timeout,
+            if params is not None and filePath is not None:
+                # 处理文件上传
+                params['file'] = (filename, open(filePath, 'rb').read())
+                encode_data = encode_multipart_formdata(params)
+                params = encode_data[0]
+                self.headers['Content-Type'] = encode_data[1]
+                with requests.post(url, data=params, headers=self.headers, timeout=self.timeout,
                                    verify=verify) as rep:
                     return rep
 
-            with requests.post(self.url, data=json.dumps(params), headers=self.headers, timeout=self.timeout,
-                               verify=verify) as rep:
+            with requests.post(url, json=params, headers=self.headers, timeout=self.timeout, verify=verify) as rep:
                 return rep
         except Exception as e:
             logger.error(f'请求异常，异常原因:{e}')
@@ -55,22 +70,16 @@ class ApiBase:
         :param verify:   https 请求时忽略证书
         :return:
         """
-        if ('http' or 'https') in urlpath:
-            self.url = urlpath
-        else:
-            self.url = self.url + urlpath
+        url = self.gourl(urlpath)
 
-        logger.info(f'当前请求接口: {self.url} ,请求类型: GET')
+        logger.info(f'当前请求接口: {url} ,请求类型: GET')
 
         try:
             if params is not None:
-                with requests.get(self.url, params=json.dumps(params), headers=self.headers,
-                                  timeout=self.timeout,
+                with requests.get(url, params=json.dumps(params), headers=self.headers, imeout=self.timeout,
                                   verify=verify) as rep:
                     return rep
-
-            with requests.get(self.url, headers=self.headers, timeout=self.timeout,
-                              verify=verify) as rep:
+            with requests.get(url, headers=self.headers, timeout=self.timeout, verify=verify) as rep:
                 return rep
 
         except Exception as e:
@@ -84,87 +93,82 @@ class ApiBase:
         :param verify:   https 请求时忽略证书
         :return:
         """
-        if ('http' or 'https') in urlpath:
-            self.url = urlpath
-        else:
-            self.url = self.url + urlpath
-        logger.info(f'当前请求接口{self.url} ,请求类型: GET')
+        url = self.gourl(urlpath)
+        logger.info(f'当前请求接口{url} ,请求类型: PUT')
 
         try:
             if params is not None:
-                with requests.put(self.url, data=json.dumps(params), headers=self.headers,
-                                  timeout=self.timeout,
+                with requests.put(url, data=json.dumps(params), headers=self.headers, timeout=self.timeout,
                                   verify=verify) as rep:
                     return rep
-
-            with requests.put(self.url, headers=self.headers, timeout=self.timeout,
-                              verify=verify) as rep:
-                return rep
+            else:
+                logger.warning('put方法必须传递参数！！')
 
         except Exception as e:
             logger.error(f'请求异常，异常原因:{e}')
 
-    def delete(self, urlpath, params=None, verify=False):
+    def delete(self, urlpath, verify=False):
         """
         delete 请求
         :param urlpath:  url 路径
-        :param params:  传递参数
         :param verify:   https 请求时忽略证书
         :return:
         """
-        if ('http' or 'https') in urlpath:
-            self.url = urlpath
-        else:
-            self.url = self.url + urlpath
-        logger.info(f'当前请求接口: {self.url} ,请求类型: DELETE')
+        url = self.gourl(urlpath)
+        logger.info(f'当前请求接口: {url} ,请求类型: DELETE')
 
         try:
-            if params is not None:
-                with requests.delete(self.url, params=json.dumps(params), headers=self.headers,
-                                     timeout=self.timeout,
-                                     verify=verify) as rep:
-                    return rep
-
-            with requests.delete(self.url, headers=self.headers, timeout=self.timeout,
-                                 verify=verify) as rep:
+            with requests.delete(url, headers=self.headers, timeout=self.timeout, verify=verify) as rep:
                 return rep
         except Exception as e:
             logger.error(f'请求出错，出错原因:{e}')
 
 
-def apiexe(yamlfile, case, params=None, verify=True):
+def apiexe(yamlfile, case, params=None,  verify=True):
     """
-    api 请求执行参数
-    :param yamlfile:  yaml路径
+    api 请求执行函数
+    :param yamlfile:  yaml 文件
     :param case:  用例
-    :param params:  测试参数
-    :param verify:  https 请求时忽略证书
+    :param params:  请求参数
+    :param filePath:  请求文件路径
+    :param filename:  上传文件名称
+    :param verify:  忽略https
     :return:
     """
+
     api = ApiBase()
     yaml_data = GetCaseYmal(yaml_name=yamlfile, case_name=case)
     requests_type = yaml_data.reqtype().upper()
     requests_url = yaml_data.urlpath()
 
-    # 传递参数时 移除断言参数
-    if params is not None and "assertion" in params:
-        del params["assertion"]
+
+    filepath = params.get('filepath') # 临时接收传递数据主要 处理 filepath filename
+    filename = params.get('filename')
+
+    # 传递参数时 移除多余参数参数
+    if params is not None and ("assertion" in params or "filename" in params or "filepath" in params):
+        try:
+            del params["assertion"]
+            del params["filename"]
+            del params["filepath"]
+        except Exception:
+            pass
 
     # 判断请求类型是否支持
     if requests_type not in ('POST', 'GET', 'PUT', 'DELETE'):
         raise ErrorExcep('请求类型不支持！！！')
 
     if requests_type == 'POST':
-        return api.post(requests_url, params, verify=verify)
+        return api.post(requests_url, params, filePath=filepath, filename=filename, verify=verify)
 
     elif requests_type == 'GET':
         return api.get(requests_url, params, verify=verify)
 
     elif requests_type == 'PUT':
-        api.put(requests_url, params, verify=verify)
+        return api.put(requests_url, params, verify=verify)
 
     elif requests_type == 'DELETE':
-        api.delete(requests_url, params, verify=verify)
+        return api.delete(requests_url, verify=verify)
     else:
         raise ErrorExcep(f'暂时不支持请求类型{requests_type}！！！')
 
