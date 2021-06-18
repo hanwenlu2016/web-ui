@@ -1,17 +1,19 @@
-- model: TestBaiDu  # ¶ÔÓ¦caseµÄÀàÃû³Æ
+- model: TestBaiDu  # å¯¹åº”caseçš„ç±»åç§°
 
-- casename: test_baidu_search     # ¶ÔÓ¦ÀàµÄ º¯Êı
-  title: ÊäÈëËÑË÷ÄÚÈİ            # ²Ù×÷±êÌâ
-  precond:        # Ç°ÖÃËµÃ÷
-  testdata:    # ²âÊÔÊı¾İ /ÁĞ±í
+- casename: test_baidu_search     # å¯¹åº”ç±»çš„ å‡½æ•°
+  title: è¾“å…¥æœç´¢å†…å®¹            # æ“ä½œæ ‡é¢˜
+  precond:        # å‰ç½®è¯´æ˜
+  testdata:    # æµ‹è¯•æ•°æ® /åˆ—è¡¨
     - content: python
 
 - casename: test_http_baidu
-  title: ÇëÇó°Ù¶È
+  title: è¯·æ±‚ç™¾åº¦
   precond:
   reqtype: GET
   urlpath: https://www.baidu.com/
   testdata:
     - demo1: "root"
-      assertion: "access"  # ±ØÌî¶ÏÑÔÔ¤ÆÚ²ÎÊı  ÇëÇóÊ±²»´«µİ
+      assertion: "access"  # å¿…å¡«æ–­è¨€é¢„æœŸå‚æ•°  è¯·æ±‚æ—¶ä¸ä¼ é€’
+      filename: "demo.yaml"  # æ–‡ä»¶ä¸Šä¼ æ—¶å¿…å¡«  ä¸Šä¼ æ–‡ä»¶åç§°
+      filepath: "/Users/reda-flight/Desktop/svn/reda-ui-auto/database/file/user_infos.yaml"  ## æ–‡ä»¶ä¸Šä¼ æ—¶å¿…å¡«  ä¸Šä¼ ä¸Šä¼ è·¯å¾„
 
