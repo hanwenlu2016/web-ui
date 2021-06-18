@@ -14,4 +14,5 @@
   testdata:
     - demo1: "root"
       assertion: "access"  # 必填断言预期参数  请求时不传递
-
+      filename: "demo.yaml"  # 文件上传时必填  上传文件名称
+      filepath: "/Users/reda-flight/Desktop/svn/reda-ui-auto/database/file/user_infos.yaml"  ## 文件上传时必填  上传上传路径
