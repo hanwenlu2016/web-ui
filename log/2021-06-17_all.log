@@ -1,0 +1,13 @@
+2021-06-17 17:50:21.479 | INFO     | public.web_base:web_expression:675 - 点击输入框收入
+2021-06-17 17:50:21.584 | INFO     | public.web_base:waitForElement:427 - 等待页面元素 wd name  存在
+2021-06-17 17:50:21.742 | INFO     | public.web_base:isElementExist:408 - 找到元素 wd
+2021-06-17 17:50:21.925 | INFO     | public.web_base:sleep:44 - 强制休眠0.1
+2021-06-17 17:50:21.952 | INFO     | public.web_base:web_expression:675 - 点击搜索按钮
+2021-06-17 17:50:22.145 | INFO     | public.web_base:waitForElement:427 - 等待页面元素 su id  存在
+2021-06-17 17:50:22.163 | INFO     | public.web_base:isElementExist:408 - 找到元素 su
+2021-06-17 17:50:22.362 | INFO     | public.web_base:sleep:44 - 强制休眠0.1
+2021-06-17 17:50:25.363 | INFO     | public.web_base:sleep:44 - 强制休眠3
+2021-06-17 17:50:25.811 | INFO     | public.web_base:screen_shot:233 - 截图成功已经存储在: C:\Users\hanwenlu\Documents\GitHub\web-ui\output\report_screen\search_1623923425364.png
+2021-06-17 17:50:26.405 | INFO     | public.imgproce:dHash:192 - 差值哈希算法相似度:1
+2021-06-17 17:50:28.654 | INFO     | public.api_base:get:63 - 当前请求接口: https://www.baidu.com/ ,请求类型: GET
+2021-06-17 17:50:35.785 | INFO     | __main__:run_bebug:174 - 测试报告生成完成！

@@ -1,0 +1,13 @@
+- model: OpenWeChatPage  # 对应当前文件的 类名称
+
+- casename: click_login_button
+  title: 点击登录按钮
+  precond:
+  testdata:
+  element:
+    - casesteid: 1
+      types: uiautomator
+      operate: click
+      locate: new UiSelector().text("登录")
+      info: 点击登录按钮
+      expect:

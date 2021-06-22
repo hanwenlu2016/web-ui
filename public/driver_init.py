@@ -7,13 +7,11 @@ import sys
 
 sys.path.append('../')
 import os, time
-
 import requests
-from appium import webdriver
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.chrome.service import Service
 
 from public.logs import logger
 from public.common import ErrorExcep
@@ -27,17 +25,20 @@ from config.setting import PLATFORM, IOS_CAPA, ANDROID_CAPA, APIUMHOST
 DAY = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
 
-def if_linux_firefox(self):
+def if_linux_firefox():
     """
     当系统是 luinx 和火狐流量浏览器时 需要做特殊处理
     :browsername 浏览器名称
     :return:
     """
     # 如果不是集群 并且linx firfo
-    if IS_COLONY == False and sys.platform.lower() == 'linux' and self.browser == 'firefox':
+    if IS_COLONY == False and sys.platform.lower() == 'linux' and BROWSERNAME.lower() == 'firefox':
+
         return True
+
     else:
         return False
+
 
 class AppInit:
     """
@@ -47,7 +48,6 @@ class AppInit:
     def __init__(self):
         self.appos = PLATFORM.lower()
 
-    @property
     def decide_appos(self):  # 判断移动系统选择参数
 
         if self.appos == 'ios':
@@ -56,13 +56,15 @@ class AppInit:
         elif self.appos == 'android':
             return ANDROID_CAPA
         else:
-            logger.info('不支持此移动系统！')
-            return None
+            logger.error('不支持此移动系统！')
+            raise ErrorExcep("不支持此移动系统!!!!")
 
     def setup(self):
         try:
-            webdrivers = webdriver.Remote("http://" + APIUMHOST + "/wd/hub", self.decide_appos)
-            return webdrivers
+            from appium import webdriver
+            decide = self.decide_appos()
+            return webdriver.Remote("http://" + APIUMHOST + "/wd/hub", decide)
+
         except Exception as e:
             logger.error(f'初始app失败 {e}')
             raise ErrorExcep("初始app失败!!!!")
@@ -98,21 +100,6 @@ class WebInit:
     @url.setter
     def url(self, value):
         self.baseurl = value
-
-    # @property
-    # def linux_firefox_args(self):
-    #     """
-    #     linux os firefox browser parameter  只能在 linux 调试
-    #     :return:
-    #     """
-    #     display = Display(visible=0, size=(800, 600))
-    #     display.start()
-    #
-    #     options = webdriver.FirefoxOptions()
-    #     options.add_argument('--headless')
-    #     options.add_argument('--disable-gpu')
-    #     options.add_argument('window-size=1200x600')
-    #     return display, options
 
     @property
     def linux_firefox_args(self):
@@ -197,7 +184,7 @@ class WebInit:
                         driver = webdriver.Firefox(executable_path=LUINX_FIREFOXDRIVER, options=options,
                                                    service_log_path=log_path)
                         drivers = self.browaer_setup_args(driver)
-                        return drivers # 在linux下启用 火狐浏览器需要借助Display
+                        return drivers  # 在linux下启用 火狐浏览器需要借助Display
 
                     else:
                         logger.error(f'linux系统不支持此浏览器: {self.browser}')
@@ -317,3 +304,4 @@ class WebInit:
         except Exception as e:
             logger.error(f'浏览器驱动启动失败 {e}')
             return False
+

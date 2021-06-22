@@ -5,9 +5,8 @@
 # @Time: 2020/10/26  20:16
 
 import pytest
-#from pyvirtualdisplay import Display
 
-from public.driver_init import WebInit,if_linux_firefox
+from public.driver_init import WebInit,AppInit
 
 
 
@@ -25,6 +24,13 @@ from public.driver_init import WebInit,if_linux_firefox
 def webDriver():
     wb = WebInit()
     driver = wb.enable
+    yield driver
+    driver.quit()
+
+
+@pytest.fixture(scope='function')
+def appDriver():
+    driver = AppInit().setup()
     yield driver
     driver.quit()
 

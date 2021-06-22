@@ -25,7 +25,7 @@ class TestBaiDu:
     @allure.story("所搜验证")  # 模块说明
     @allure.title("输入内容并搜索")  # 用例标题
     @allure.description('输入多参数搜索')  # 用例描述
-    @pytest.mark.testbaidu    # 用列标记
+    @pytest.mark.testbaidu_web    # 用列标记
     @pytest.mark.parametrize('content', caseda(yamlfile, 'test_baidu_search'))   # 测试数据
     def test_baidu_search(self, webDriver,content):
         baidu=BaiDu(webDriver)
@@ -49,7 +49,7 @@ class TestBaiDu:
 
     @allure.feature("API百度搜索")  # 测试用例特性（主要功能模块）
     @allure.description('http请求')  # 用例描述
-    @pytest.mark.test_http_baidu    # 用列标记
+    @pytest.mark.test_http_baidu_api    # 用列标记
     def test_http_baidu(self,):
         with allure.step('请求百度'):
             ret=apiexe(yamlfile,'test_http_baidu')

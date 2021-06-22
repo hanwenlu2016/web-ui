@@ -19,8 +19,6 @@
 操作方式支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、slide(滑动)
 """
 
-
-
 import os
 import time
 import allure
@@ -37,7 +35,7 @@ from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
 
 
-class AppBase:
+class Base:
 
     def __init__(self, driver, ):
         self.driver = driver
@@ -45,6 +43,15 @@ class AppBase:
     @property
     def dri(self):
         return self.driver
+
+    def sleep(self, s: float):
+        """
+        休眠秒数
+        :param s:
+        :return:
+        """
+        time.sleep(s)
+        logger.info('强制休眠{}'.format(s))
 
     def device_x_get(self):
         """
@@ -324,7 +331,7 @@ class AppBase:
         return filePath
 
 
-class CommonlyUsed(AppBase):
+class CommonlyUsed(Base):
     """
      常用定位方式  class(安卓对应 ClassName / iso对应 type) 、 xpath 、 id、
     """
@@ -513,7 +520,7 @@ class CommonlyUsed(AppBase):
             raise ErrorExcep('等待元素错误,元素在等待时间内未出现！')
 
 
-class AndroidUiautomatorBase(AppBase):
+class AndroidUiautomatorBase(Base):
     """
      安卓  find_elements_by_android_uiautomator 操作封装类
     """
@@ -531,18 +538,17 @@ class AndroidUiautomatorBase(AppBase):
             if el is not None:
                 # 多个定位
                 # android_uiautomator_driver = self.driver.find_elements_by_android_uiautomator(locate)
-                android_uiautomator_driver = WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
-                                                           poll_frequency=POLL_FREQUENCY).until(
+                return WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
+                                     poll_frequency=POLL_FREQUENCY).until(
                     lambda x: x.find_elements_by_android_uiautomator(locate))
 
             else:
                 # 单个定位
-                # android_uiautomator_driver = self.driver.find_element_by_android_uiautomator(locate)
-                android_uiautomator_driver = WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
-                                                           poll_frequency=POLL_FREQUENCY).until(
+                #return self.driver.find_element_by_android_uiautomator(locate)
+                return WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
+                                     poll_frequency=POLL_FREQUENCY).until(
                     lambda x: x.find_element_by_android_uiautomator(locate))
 
-            return android_uiautomator_driver
         except Exception as e:
             logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！')
 
@@ -627,7 +633,7 @@ class AndroidUiautomatorBase(AppBase):
         self.android_uiautomator_input(locate=locate, text=text, el=el, index=index)
 
 
-class IosPredicate(AppBase):
+class IosPredicate(Base):
     """
     iso 封装 find_elements_by_ios_predicate 操作封装类
     """
@@ -737,7 +743,7 @@ class IosPredicate(AppBase):
         self.ios_predicate_input(locate=locate, text=text, el=el, index=index)
 
 
-class AccessibilityId(AppBase):
+class AccessibilityId(Base):
     """
     AccessibilityId 类封装
     """
@@ -915,7 +921,6 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :return:
         """
         if operate is None:
-
             return self.ios_predicate(locate=locate, el=el)
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本
@@ -962,7 +967,6 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :return:
         """
         if operate is None:
-
             return self.accessibility_id(locate=locate, el=el)
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本、多个时需要传递index 参数
@@ -1009,7 +1013,6 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :return:
         """
         if operate is None:
-
             return self.used_operate(types=types, locate=locate, el=el)
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本
@@ -1062,12 +1065,13 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :param notes: 注释操作说明
         :return:
         """
-        if types in ('uiautomator','ios_predicate','accessibilityid','xpath', 'class', 'id'):
+        if types in ('uiautomator', 'ios_predicate', 'accessibilityid', 'xpath', 'class', 'id'):
             # 只支持安卓
             if PLATFORM.lower() == 'android' and types == 'uiautomator':
                 logger.warning('此方法只支持android系统！！')
                 logger.info(notes)
-                return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text, el=el, index=index,
+                return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text, el=el,
+                                                             index=index,
                                                              )
 
             # 只支持 iso
@@ -1108,8 +1112,8 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         """
         relust = None  # 断言结果  最后一步才返回
 
-        if index is not  None:
-            el='l'
+        if index is not None:
+            el = 'l'
 
         locator_data = self.get_locator(yamlfile, case)
         locator_step = locator_data.stepCount()
