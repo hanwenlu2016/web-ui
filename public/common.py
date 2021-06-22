@@ -53,6 +53,15 @@ def str_re_int(string: str) -> list:
     findlist = re.findall(r'[1-9]+\.?[0-9]*', string)
     return findlist
 
+def png_path(imgname):
+    """
+    返回img测试图片路径
+    :param imgname: imgname 图片名称 默认png格式
+    :return:
+    """
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    IMG_FILE = os.path.join(BASE_DIR, "database", "file", "img", f"{imgname}.png")
+    return IMG_FILE
 
 
 def clean_report(filepath: str) -> None:
