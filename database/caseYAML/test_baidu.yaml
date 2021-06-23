@@ -1,3 +1,12 @@
+# web 测试用例模板说明
+#- casename: test_login_and_logout  #测试用例 对应测试函数
+#  title: 用户登录登出                 # 用例标题
+#  precond:                          # 前置条件
+#  testdata:                         # 测试数据
+#    - loginname: "admin"
+#      password: "fdr**2020"
+#      assertion: "管理员"    # *断言时必填
+
 - model: TestBaiDu  # 对应case的类名称
 
 - casename: test_baidu_search     # 对应类的 函数
@@ -6,13 +15,3 @@
   testdata:    # 测试数据 /列表
     - content: python
 
-- casename: test_http_baidu
-  title: 请求百度
-  precond:
-  reqtype: GET
-  urlpath: https://www.baidu.com/
-  testdata:
-    - demo1: "root"
-      assertion: "access"  # 必填断言预期参数  请求时不传递
-      filename: "demo.yaml"  # 文件上传时必填  上传文件名称
-      filepath: "/Users/reda-flight/Desktop/svn/reda-ui-auto/database/file/user_infos.yaml"  ## 文件上传时必填  上传上传路径

@@ -202,6 +202,7 @@ class GetLocatorYmal:
                 return redis.get(value)
         return "casename 不存在！"
 
+    @property
     def get_model(self):
         """
         返回yaml
@@ -210,6 +211,7 @@ class GetLocatorYmal:
         data = self.open_yaml()
         return data[0].get('model')  #
 
+    @property
     def title(self):
         """
         返回用列 title 标题
@@ -220,6 +222,7 @@ class GetLocatorYmal:
             return self.redis_param('title')
         return self.get_param('title')
 
+    @property
     def precond(self):
         """
         返回用列 precond  前置条件
@@ -230,6 +233,7 @@ class GetLocatorYmal:
             return self.redis_param('precond')
         return self.get_param('precond')
 
+    @property
     def reqtype(self):
         """
         ** HTTP 接口请求参数
@@ -241,6 +245,19 @@ class GetLocatorYmal:
             return self.redis_param('reqtype')
         return self.get_param('reqtype')
 
+    @property
+    def header(self):
+        """
+        ** HTTP 接口请求参数
+        返回用列 header  请求头
+        :return: str
+        """
+        # 如果isredis Ture 就读取redis 参数值 否则读取yaml
+        if self.isredis:
+            return self.redis_param('header')
+        return self.get_param('header')
+
+    @property
     def urlpath(self):
         """
         ** HTTP 接口请求参数
@@ -577,7 +594,15 @@ class TimeInfo:
 # print(d)
 
 
-# d = GetLocatorYmal('/Users/reda-flight/Desktop/svn/reda-ui-auto/database/locatorYAML/http.yaml', 'post_out')
-# print(d.test_data())
+# d = GetLocatorYmal('/Users/reda-flight/Desktop/svn/reda-ui-auto/database/locatorYAML/web.yaml', 'input_name')
+# print(d.types(0))
 # print(d.urlpath())
 # print(d.reqtype())
+#
+# testdata = GetLocatorYmal(yaml_name='/Users/reda-flight/Desktop/svn/reda-ui-auto/database/caseYAML/test_api.yaml',case_name= 'test_getmodule')
+#
+# import json
+# d=testdata.test_data_values()
+#
+# json.loads(testdata.header)
+

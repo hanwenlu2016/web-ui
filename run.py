@@ -166,7 +166,7 @@ class RunPytest:
         del_clean_report()
 
         pytest.main(
-            ['-s', '-v', '-n=1','--reruns=0', '-W', 'ignore:Module already imported:pytest.PytestWarning',
+            ['-s', '-v',  '-m', 'test_api','-n=1','--reruns=0', '-W', 'ignore:Module already imported:pytest.PytestWarning',
              '--alluredir',
              f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 

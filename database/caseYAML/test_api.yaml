@@ -1,0 +1,26 @@
+# api 用例模板说明：
+#- casename: test_upflie   # 测试用例 对应测试函数
+#  title: 文件上传接口        # 用例标题
+#  precond: login          # 前置条件
+#  header:              # 如果为空取配置文件默认
+#  reqtype: POST           # 请求类型
+#  urlpath: /par/          # 请求地址
+#  testdata:               # 测试数据
+#    - moduleid: 45
+#      isdone: true
+#      assertion: "demo"  # *必填断言预期参数  请求时不传递
+#      filename: "demo.yaml"  # *文件上传时必填  上传文件名称
+#      filepath: "/Users/reda-flight/Desktop/svn/reda-ui-auto/database/file/user_infos.yaml"  #*文件上传时必填  上传上传路径
+
+
+- model: TestApiDemo
+
+- casename: test_api  # 测试用例 对应测试函数
+  title: 登录接口        # 用例标题
+  precond: 前置条件      # 前置条件
+  header:              # 如果为空取配置文件默认
+  reqtype: GET         # 请求类型
+  urlpath: https://www.163.com/      # 请求地址
+  testdata:             # 测试数据
+    - assertion: 200
+

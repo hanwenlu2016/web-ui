@@ -43,6 +43,7 @@ class Base:
         time.sleep(s)
         logger.info('强制休眠{}'.format(s))
 
+    @property
     def get_title(self):
         """
         获取当前页面  title
@@ -52,6 +53,7 @@ class Base:
         logger.info(f"获取当前title {title}")
         return title
 
+    @property
     def get_url(self):
         """
         获取当前页面的URL
@@ -61,6 +63,7 @@ class Base:
         logger.info(f"获取当前url {currentURL}")
         return currentURL
 
+    @property
     def get_url_html(self):
         """
         获取当前页面 html内容

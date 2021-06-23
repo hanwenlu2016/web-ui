@@ -1,3 +1,23 @@
+
+#web 定位模板
+#- casename: # 测试用例
+#  title: #用例标题
+#  precond: #前置
+#  testdata:
+#    - loginname: "admin"
+#      password: "fdr**2020"
+#      assertion: "管理员"
+#    - loginname: "18268"
+#      password: "123456a?"
+#      assertion: "18268"
+#  element:
+#    - casesteid:  # 步骤id
+#      types:   # 定位类型
+#      operate:    # 操作类型
+#      locate: # 定位器
+#      info:    # 步骤说明
+#      expect:        # 步骤预期
+
 - model: BaiDu  # 对应pageobj 的类名称
 
 - casename: input_search_content     # 对应类的 函数

@@ -1,0 +1,7 @@
+- model: TestAndroidDemo  # 对应当前文件的 类名称
+
+- casename: test_open_wechat
+  title: 打开微信点击登录
+  precond:
+  testdata:
+    - test:
