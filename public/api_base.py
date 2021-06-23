@@ -51,6 +51,10 @@ class ApiBase:
         url = self.gourl(urlpath)
         logger.info(f'当前请求接口: {url} ,请求类型: POST')
 
+        if url is not None:
+            logger.error('url is not null ！！')
+            raise('url is not null ！！')
+
         if header is None:  # 如果yaml 里面没有 headers就使用默认配置的
             header = self.headers
 
@@ -93,6 +97,10 @@ class ApiBase:
 
         logger.info(f'当前请求接口: {url} ,请求类型: GET')
 
+         if url is not None:
+            logger.error('url is not null ！！')
+            raise('url is not null ！！')
+
         if header is None:  # 如果yaml 里面没有 headers就使用默认配置的
             header = self.headers
 
@@ -128,6 +136,10 @@ class ApiBase:
         url = self.gourl(urlpath)
         logger.info(f'当前请求接口{url} ,请求类型: PUT')
 
+        if url is not None:
+            logger.error('url is not null ！！')
+            raise('url is not null ！！')
+
         if header is None:  # 如果yaml 里面没有 headers就使用默认配置的
             header = self.headers
 
@@ -160,6 +172,10 @@ class ApiBase:
         """
         url = self.gourl(urlpath)
         logger.info(f'当前请求接口: {url} ,请求类型: DELETE')
+
+        if url is not None:
+            logger.error('url is not null ！！')
+            raise('url is not null ！！')
 
         if header is None:  # 如果yaml 里面没有 headers就使用默认配置的
             header = self.headers
