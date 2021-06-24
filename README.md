@@ -1,11 +1,21 @@
 # web-ui-auto 自动化框架
 
+```css 
+ * 各位有兴小伙伴麻烦点下start 谢谢 😁
+``` 
+
+
 ###### 设计思路
 
-web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成) 做用例管理，定时任务分配，测试工具集合。
+
+
+  web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成) 
+做用例管理，定时任务分配，测试工具集合。
+
+
 
 ###### 使用说明
-
+ 
 1 本架构元素定位 数据依赖为yaml文件
 
 2 使用前需要对 读取yaml函数(yaml_data.py) ，yaml对应说明仔细阅读 文件内代码处有注释！
