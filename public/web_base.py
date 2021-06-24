@@ -433,7 +433,7 @@ class Base:
             logger.error('等待元素错误,元素在等待时间内未出现！')
             logger.error(e)
 
-    def used_operate(self, types, locate, el=None, notes=None):
+    def used_operate(self, types, locate, el=None, ):
         """
         获取元素  此函数配合 isElementExist 检查元素是否存在
         :param types: 定位类型
@@ -441,8 +441,8 @@ class Base:
         :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :return: driver 对象
         """
+
         types = self.get_by_type(types)
-        # logger.info(notes)
         if self.isElementExist(types, locate):
             if el is not None:
                 # find_element 不为空时 查询多个
@@ -454,14 +454,16 @@ class Base:
         else:
             logger.error('定位元素错误未找到！')
 
-    def used_text(self, types, locate, el=None, index=None):
+    def used_text(self, types, locate, index=None):
         """
         获取元素  提取文本内容
         :param types: 定位类型
         :param locate: 定位元素
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :return: driver 对象
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             # 多个定位
@@ -470,15 +472,17 @@ class Base:
             # 单个定位提取文本元素必须是唯一 如果多个时默认返回第一个
             return self.used_operate(types=types, locate=locate).text
 
-    def used_click(self, types, locate, el=None, index=None):
+    def used_click(self, types, locate, index=None):
         """
         获取元素后  点击
         :param types: 定位类型
         :param locate: 定位元素
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             # 多个定位定位 利用index 列表索引点击
@@ -487,15 +491,17 @@ class Base:
             # 单个定位点击
             self.used_operate(types=types, locate=locate).click()
 
-    def used_right_click(self, types, locate, el=None, index=None):
+    def used_right_click(self, types, locate, index=None):
         """
         获取元素后 右键点击
         :param types: 定位类型
         :param locate: 定位元素
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             element = self.used_operate(types=types, locate=locate, el=el)[index].click()
@@ -505,13 +511,16 @@ class Base:
             element = self.used_operate(types=types, locate=locate, ).click()
             ActionChains(self.driver).context_click(element).perform()
 
-    def used_double_click(self, types, locate, el=None, index=None):
+    def used_double_click(self, types, locate, index=None):
         """
         获取元素后 双击击
         :param locatorType: 定位类型
         :param locate: 定位器
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             element = self.used_operate(types=types, locate=locate, el=el)[index]
@@ -521,44 +530,51 @@ class Base:
             element = self.used_operate(types=types, locate=locate)
             ActionChains(self.driver).double_click(element).perform()
 
-    def used_input(self, types, locate, text, el=None, index=None):
+    def used_input(self, types, locate, text, index=None):
         """
         获取元素后输入 并支持键盘操作
         :param types: 定位类型
         :param locate:  定位元素或者 表达式
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             self.used_operate(types=types, locate=locate, el=el)[index].send_keys(text)
         else:
             self.used_operate(types=types, locate=locate, ).send_keys(text)
 
-    def used_clear(self, types, locate, el=None, index=None):
+    def used_clear(self, types, locate, index=None):
         """
         清除输入框  * 此方法不适用时 请用js_clear
         :param types: 定位类型
         :param locate: 定位元素
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+
         :param index: 列表索引位置  find_element传递时 此值必填
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             self.used_operate(types=types, locate=locate, el=el)[index].clear()
         else:
             self.used_operate(types=types, locate=locate).clear()
 
-    def js_clear(self, types, locate, el=None, index=None):
+    def js_clear(self, types, locate, index=None):
         """
         js方式清除 输入框
         :param types: 定位类型
         :param locate: 定位元素
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             element = self.used_operate(types=types, locate=locate, el=el)[index]
@@ -574,7 +590,7 @@ class Base:
         """
         self.driver.execute_script(js)
 
-    def used_clear_continue_input(self, types, locate, text, el=None, index=None):
+    def used_clear_continue_input(self, types, locate, text, index=None):
         """
         清除数据在输入
         :param types: 定位类型
@@ -584,9 +600,10 @@ class Base:
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
-        self.used_clear(types=types, locate=locate, el=el, index=index)
+
+        self.used_clear(types=types, locate=locate, index=index)
         time.sleep(0.5)
-        self.used_input(types=types, locate=locate, text=text, el=el, index=index)
+        self.used_input(types=types, locate=locate, text=text, index=index)
 
 
 class WebBase(Base):
@@ -621,7 +638,7 @@ class WebBase(Base):
         else:
             raise ErrorExcep('yaml路径不能为空！')
 
-    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None):
+    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, index=None):
         """
         * 私有方法不继承
         判断 CommonlyUsed 执行操作
@@ -631,27 +648,29 @@ class WebBase(Base):
         :param el: 输入文本内容
         :return:
         """
+
         if operate is None:
+            el = index  # 如果index 为空默认多个
             return self.used_operate(types=types, locate=locate, el=el)
 
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input'):
             if operate == 'text':  # 提取文本
-                return self.used_text(types=types, locate=locate, el=el, index=index)
+                return self.used_text(types=types, locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作
-                self.used_click(types=types, locate=locate, el=el, index=index)
+                self.used_click(types=types, locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作
                 if text is not None:
-                    return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
+                    return self.used_input(types=types, locate=locate, text=text, index=index)
                 logger.error(' 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
-                return self.used_clear(types=types, locate=locate, el=el, index=index)
+                return self.used_clear(types=types, locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
-                    return self.used_clear_continue_input(types=types, locate=locate, text=text, el=el, index=index)
+                    return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
                 logger.info(' 函数必须传递 text 参数')
         else:
             logger.error(f'输入的{operate}暂时不支持此操作！！！')
@@ -660,23 +679,21 @@ class WebBase(Base):
             """)
             raise ErrorExcep(f'输入的{operate}暂时不支持此操作！！！')
 
-    def web_expression(self, types, locate, operate=None, text=None, el=None, index=None, notes=None):
+    def web_expression(self, types, locate, operate=None, text=None, index=None, notes=None, ):
         """
         web 执行操作判断
         :param types: 定位类型
         :param locate: 表达 或者定位元素
         :param operate: 执行操作  input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)  * 只支持 5种
         :param text : 输入文本内容
-        :param el: 单个/多个  默认 el=None 单个  / 如果 el = 's' 代表多个
         :param index:
-
         :param notes: 帮助说明 /说明此步骤
         :return:
         """
 
         if types in ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'):
             logger.info(notes)
-            return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text, el=el,
+            return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text,
                                                      index=index, )
 
         else:
@@ -684,7 +701,7 @@ class WebBase(Base):
             logger.error("""只支持 id,name,xpath,css,class,link,partlink,tag 定位方式""")
             raise ErrorExcep(f'输入的{types}操作类型，暂时不支持！！')
 
-    def webexe(self, yamlfile, case, text=None, el=None, index=None, wait=0.1):
+    def webexe(self, yamlfile, case, text=None, wait=0.1):
         """
         自动执行定位步骤
         :param yamlfile:  yaml文件
@@ -697,11 +714,8 @@ class WebBase(Base):
         """
         relust = None  # 断言结果  最后一步才返回
 
-        if index is not  None:
-            el='l'
         locator_data = self.get_locator(yamlfile, case)
         locator_step = locator_data.stepCount()
-
 
         for locator in range(0, locator_step):
             if isinstance(text, list) and (
@@ -709,12 +723,10 @@ class WebBase(Base):
                 locator) == 'clear_continue_input'):
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text[locator], el=el,
-                                             index=index)
+                                             text=text[locator], index=locator_data.listindex(locator))
             else:
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text, el=el,
-                                             index=index)
+                                             text=text, index=locator_data.listindex(locator))
             self.sleep(wait)
         return relust

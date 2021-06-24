@@ -357,6 +357,12 @@ class GetLocatorYmal:
         """
         return self.get_set(index, 'locate')
 
+    def listindex(self, index: int) -> int:
+        """
+        返回 用列步骤 listindex 参数
+        """
+        return self.get_set(index, 'listindex')
+
     def info(self, index: int) -> str:
         """
         返回 用列步骤 info 参数
@@ -581,28 +587,4 @@ class TimeInfo:
         """
         return fake.date_of_birth(tzinfo=None, minimum_age=0, maximum_age=age)
 
-
-# d = GetCaseData('common.yaml', 'login')
-# print(d.test_data(0,'info'))
-
-
-# testdata = GetCaseData(yaml_name='test_login_and_out',case_name= 'test_login')
-#
-#
-# d=testdata.test_data_values()
-#
-# print(d)
-
-
-# d = GetLocatorYmal('/Users/reda-flight/Desktop/svn/reda-ui-auto/database/locatorYAML/web.yaml', 'input_name')
-# print(d.types(0))
-# print(d.urlpath())
-# print(d.reqtype())
-#
-# testdata = GetLocatorYmal(yaml_name='/Users/reda-flight/Desktop/svn/reda-ui-auto/database/caseYAML/test_api.yaml',case_name= 'test_getmodule')
-#
-# import json
-# d=testdata.test_data_values()
-#
-# json.loads(testdata.header)
 

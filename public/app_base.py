@@ -380,7 +380,7 @@ class CommonlyUsed(Base):
         else:
             logger.error('定位元素错误未找到！')
 
-    def used_text(self, types, locate, el=None, index=None):
+    def used_text(self, types, locate, index=None):
         """
         获取元素  提取文本内容
         :param types: 定位类型
@@ -388,6 +388,9 @@ class CommonlyUsed(Base):
         :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :return: driver 对象
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         types = self.get_by_type(types)
 
@@ -402,7 +405,7 @@ class CommonlyUsed(Base):
         else:
             logger.error('定位元素错误未找到！')
 
-    def used_click(self, types, locate, el=None, index=None):
+    def used_click(self, types, locate, index=None):
         """
         获取元素后  点击
         :param types: 定位类型
@@ -411,6 +414,9 @@ class CommonlyUsed(Base):
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         if el is not None and index is not None:
             # 多个定位定位 利用index 列表索引点击
@@ -419,7 +425,7 @@ class CommonlyUsed(Base):
             # 单个定位点击
             self.used_operate(types=types, locate=locate).click()
 
-    def used_input(self, types, locate, text, el=None, index=None):
+    def used_input(self, types, locate, text, index=None):
         """
         获取元素后输入 并支持键盘操作
         :param types: 定位类型
@@ -428,41 +434,44 @@ class CommonlyUsed(Base):
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
-
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
         if el is not None and index is not None:
             self.used_operate(types=types, locate=locate, el=el)[index].send_keys(text)
         else:
             self.used_operate(types=types, locate=locate, ).send_keys(text)
 
-    def used_clear(self, types, locate, el=None, index=None):
+    def used_clear(self, types, locate, index=None):
         """
         清除输入框
         :param types: 定位类型
         :param locator: 定位元素
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :param index: 列表索引位置  find_element传递时 此值必填
         """
 
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
         if el is not None and index is not None:
             self.used_operate(types=types, locate=locate, el=el)[index].clear()
         else:
             self.used_operate(types=types, locate=locate).clear()
         logger.warning('此定位方法只android系统！！！')
 
-    def used_clear_continue_input(self, types, locate, text, el=None, index=None):
+    def used_clear_continue_input(self, types, locate, text, index=None):
         """
         清除数据在输入
         :param types: 定位类型
         :param locator: 定位元素
         :param text: 输入文本
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
         :param index: 列表索引位置  find_element传递时 此值必填
         :return:
         """
 
-        self.used_clear(types=types, locate=locate, el=el, index=index)
+        self.used_clear(types=types, locate=locate, index=index)
         time.sleep(0.5)
-        self.used_input(types=types, locate=locate, text=text, el=el, index=index)
+        self.used_input(types=types, locate=locate, text=text, index=index)
 
     def isElementDisplayed(self, types, locate):
         """
@@ -544,7 +553,7 @@ class AndroidUiautomatorBase(Base):
 
             else:
                 # 单个定位
-                #return self.driver.find_element_by_android_uiautomator(locate)
+                # return self.driver.find_element_by_android_uiautomator(locate)
                 return WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                      poll_frequency=POLL_FREQUENCY).until(
                     lambda x: x.find_element_by_android_uiautomator(locate))
@@ -552,15 +561,17 @@ class AndroidUiautomatorBase(Base):
         except Exception as e:
             logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！')
 
-    def android_uiautomator_text(self, locate, el=None, index=None):
+    def android_uiautomator_text(self, locate, index=None):
         """
          更具表达式 查询页面元素 并获取文本内容
         此方法 只能安卓可用
         :param locate:  expression 表达式 如 :new UiSelector().text("显示")
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
         :param index: 列表索引位置  find_element传递时 此值必填
         :return: str  text 文本内容
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             # 多个定位
@@ -569,15 +580,17 @@ class AndroidUiautomatorBase(Base):
             # 单个定位提取文本元素必须是唯一 如果多个时默认返回第一个
             return self.android_uiautomator(locate=locate, el=el).text
 
-    def android_uiautomator_click(self, locate, el=None, index=None):
+    def android_uiautomator_click(self, locate, index=None):
         """
         更具表达式 查询页面元素 并点击
         此方法 只能安卓可用
        :param locate:  locate 表达式 如 :new UiSelector().text("显示")
-       :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
        :param index: 列表索引位置  find_element传递时 此值必填
        :return: str drive对象
        """
+        el = None
+        if index is not None:
+            el = 'l'
 
         if el is not None and index is not None:
             # 多个定位定位 利用index 列表索引点击
@@ -586,15 +599,17 @@ class AndroidUiautomatorBase(Base):
             # 单个定位点击
             self.android_uiautomator(locate).click()
 
-    def android_uiautomator_input(self, locate, text, el=None, index=None):
+    def android_uiautomator_input(self, locate, text, index=None):
         """
         更具表达式 查询页面元素 并输入 文本
         此方法 只能安卓可用
        :param locate:  locate 表达式 如 :new UiSelector().text("显示")
-       :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
        :param index: 列表索引位置  find_element传递时 此值必填
        :return: str drive对象
        """
+        el = None
+        if index is not None:
+            el = 's'  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
 
         if el is not None and index is not None:
             self.android_uiautomator(locate, el=el)[index].send_keys(text)
@@ -602,15 +617,17 @@ class AndroidUiautomatorBase(Base):
             self.android_uiautomator(locate).send_keys(text)
         logger.warning('此定位方法只android系统！！！')
 
-    def android_uiautomator_clear(self, locate, el=None, index=None):
+    def android_uiautomator_clear(self, locate, index=None):
         """
         更具表达式 查询页面元素 并 清除操作
         此方法 只能安卓可用
        :param locate:  expression 表达式 如 :new UiSelector().text("显示")
-        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
        :param index: 列表索引位置  find_element传递时 此值必填
        :return: str drive对象
        """
+        el = None
+        if index is not None:
+            el = 's'  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 代表多个
 
         if el is not None and index is not None:
             self.android_uiautomator(locate, el=el)[index].clear()
@@ -618,7 +635,7 @@ class AndroidUiautomatorBase(Base):
             self.android_uiautomator(locate).clear()
         logger.warning('此定位方法只android系统！！！')
 
-    def android_uiautomator_clear_continue_input(self, locate, text, el=None, index=None):
+    def android_uiautomator_clear_continue_input(self, locate, text, index=None):
         """
         更具表达式 查询页面元素 并 清除内容 在进行输入
         此方法 只能安卓可用
@@ -628,9 +645,9 @@ class AndroidUiautomatorBase(Base):
        :return:
        """
 
-        self.android_uiautomator_clear(locate=locate, el=el, index=index)
+        self.android_uiautomator_clear(locate=locate, index=index)
         time.sleep(0.5)
-        self.android_uiautomator_input(locate=locate, text=text, el=el, index=index)
+        self.android_uiautomator_input(locate=locate, text=text, index=index)
 
 
 class IosPredicate(Base):
@@ -662,7 +679,7 @@ class IosPredicate(Base):
         except Exception as e:
             logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！ {e}')
 
-    def ios_predicate_text(self, locate, el=None, index=None):
+    def ios_predicate_text(self, locate, index=None):
         """
          更具表达式 查询页面元素
         此方法 只能 iso 可用
@@ -671,6 +688,9 @@ class IosPredicate(Base):
         :param index: 列表索引位置  find_element传递时 此值必填
         :return: str drive对象
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         logger.warning('此定位方法只ios系统！！！')
         if el is not None and index is not None:
@@ -678,7 +698,7 @@ class IosPredicate(Base):
         else:
             return self.driver.find_element_by_ios_predicate(locate=locate, el=el).text
 
-    def ios_predicate_click(self, locate, el=None, index=None):
+    def ios_predicate_click(self, locate, index=None):
         """
          更具表达式 查询页面元素 并且点击该元素
         此方法 只能 iso 可用
@@ -687,6 +707,9 @@ class IosPredicate(Base):
        :param index: 列表索引位置  find_element传递时 此值必填
        :return: str drive对象
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         logger.warning('此定位方法只ios系统！！！')
         if el is not None and index is not None:
@@ -696,7 +719,7 @@ class IosPredicate(Base):
             # 单个定位点击
             self.ios_predicate(locate=locate).click()
 
-    def ios_predicate_input(self, locate, text, el=None, index=None):
+    def ios_predicate_input(self, locate, text, index=None):
         """
          更具表达式 查询页面元素 并且输入文本
         此方法 只能 iso 可用
@@ -705,14 +728,16 @@ class IosPredicate(Base):
        :param index: 列表索引位置  find_element传递时 此值必填
        :return: str drive对象
         """
-
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
         logger.warning('此定位方法只ios系统！！！')
         if el is not None and index is not None:
             self.ios_predicate(locate=locate, el=el)[index].send_keys(text)
         else:
             self.ios_predicate(locate=locate).send_keys(text)
 
-    def ios_predicate_clear(self, locate, el=None, index=None):
+    def ios_predicate_clear(self, locate, index=None):
         """
          更具表达式 查询页面元素 并且清除输入文本
         此方法 只能 iso 可用
@@ -721,14 +746,16 @@ class IosPredicate(Base):
         :param index: 列表索引位置  find_element传递时 此值必填
         :return: str drive对象
         """
-
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
         logger.warning('此定位方法只ios系统！！！')
         if el is not None and index is not None:
             self.ios_predicate(locate=locate, el=el)[index].clear()
         else:
             self.ios_predicate(locate=locate, el=el).clear()
 
-    def ios_predicate_clear_continue_input(self, locate, text, el=None, index=None):
+    def ios_predicate_clear_continue_input(self, locate, text, index=None):
         """
          更具表达式 查询页面元素  先清除 后输入
         此方法 只能 iso 可用
@@ -738,9 +765,9 @@ class IosPredicate(Base):
        :return:
         """
 
-        self.ios_predicate_clear(locate=locate, el=el, index=index)
+        self.ios_predicate_clear(locate=locate, index=index)
         time.sleep(0.5)
-        self.ios_predicate_input(locate=locate, text=text, el=el, index=index)
+        self.ios_predicate_input(locate=locate, text=text, index=index)
 
 
 class AccessibilityId(Base):
@@ -773,7 +800,7 @@ class AccessibilityId(Base):
         except Exception as e:
             logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！ {e}')
 
-    def accessibility_id_text(self, locate, el=None, index=None):
+    def accessibility_id_text(self, locate, index=None):
         """
         AccessibilityId 元素定位
         Android ：  Android的content-desc属性对应AccessibilityId
@@ -783,13 +810,16 @@ class AccessibilityId(Base):
         :param index: 列表索引位置  find_element传递时 此值必填
         :return: str  text 文本内容r
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         if el is not None and index is not None:
             return self.driver.find_elements_by_accessibility_id(locate=locate, el=el)[index].text
         else:
             return self.driver.find_element_by_accessibility_id(locate=locate, el=el).text
 
-    def accessibility_id_click(self, locate, el=None, index=None):
+    def accessibility_id_click(self, locate, index=None):
         """
         AccessibilityId 元素定位  并点击该元素
         Android ：  Android的content-desc属性对应AccessibilityId
@@ -800,12 +830,16 @@ class AccessibilityId(Base):
         :return:
         """
 
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
+
         if el is not None and index is not None:
             self.accessibility_id(locate=locate, el=el)[index].click()
         else:
             self.accessibility_id(locate).click()
 
-    def accessibility_id_input(self, locate, text, el=None, index=None):
+    def accessibility_id_input(self, locate, text, index=None):
         """
         AccessibilityId 元素定位  并点击该元素
         Android ：  Android的content-desc属性对应AccessibilityId
@@ -813,13 +847,16 @@ class AccessibilityId(Base):
         :param locate: 定位元素
         :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         if el is not None and index is not None:
             self.accessibility_id(locate=locate, el=el)[index].send_keys(text)
         else:
             self.accessibility_id(locate).send_keys(text)
 
-    def accessibility_id_clear(self, locate, el=None, index=None):
+    def accessibility_id_clear(self, locate, index=None):
         """
         AccessibilityId 元素定位  并清除文本内容
         Android ：  Android的content-desc属性对应AccessibilityId
@@ -829,13 +866,16 @@ class AccessibilityId(Base):
        :param index: 列表索引位置  find_element传递时 此值必填
        :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
         if el is not None and index is not None:
             self.accessibility_id(locate, el=el)[index].clear()
         else:
             self.accessibility_id(locate).clear()
 
-    def accessibility_id_clear_continue_input(self, locate, text, el=None, index=None):
+    def accessibility_id_clear_continue_input(self, locate, text, index=None):
         """
         AccessibilityId 元素定位  并清除文本内容 继续输入
         Android ：  Android的content-desc属性对应AccessibilityId
@@ -845,22 +885,24 @@ class AccessibilityId(Base):
        :param index: 列表索引位置  find_element传递时 此值必填
        :return:
         """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 's'
 
-        self.accessibility_id_clear(locate=locate, el=el, index=index)
+        self.accessibility_id_clear(locate=locate, index=index)
         time.sleep(0.5)
-        self.accessibility_id_input(locate=locate, text=text, el=el, index=index)
+        self.accessibility_id_input(locate=locate, text=text, index=index)
 
 
 class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUsed):
 
-    def __if_android_operate_uiautomator(self, locate, operate=None, text=None, el=None, index=None):
+    def __if_android_operate_uiautomator(self, locate, operate=None, text=None, index=None):
         """
         * 私有不继承
         判断 uiautomator 执行操作
         :param locate:  表达 或者定位元素
         :param operate: 执行操作、 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)
         :param text: 输入文本内容
-        :param el:  单个/多个  默认 el=None 单个  / 如果 el = 's' 代表多个
         :param index:
          android_uiautomator_click 、android_uiautomator_text、android_uiautomator_input、android_uiautomator_clear、
          列表索引位置  find_element传递时 此值必填
@@ -869,29 +911,30 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :return:
         """
         if operate is None:
+            el = index  # 如果index 为空默认多个
             return self.android_uiautomator(locate=locate, el=el)
 
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本
 
-                return self.android_uiautomator_text(locate=locate, el=el, index=index)
+                return self.android_uiautomator_text(locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作
 
-                self.android_uiautomator_click(locate=locate, el=el, index=index)
+                self.android_uiautomator_click(locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作
                 if text is not None:
-                    return self.android_uiautomator_input(locate=locate, text=text, el=el, index=index)
+                    return self.android_uiautomator_input(locate=locate, text=text, index=index)
                 logger.error('android_uiautomator_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
-                return self.android_uiautomator_clear(locate=locate, el=el, index=index)
+                return self.android_uiautomator_clear(locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
-                    return self.android_uiautomator_clear_continue_input(locate=locate, text=text, el=el, index=index)
+                    return self.android_uiautomator_clear_continue_input(locate=locate, text=text, index=index)
                 logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
 
             elif operate == 'slide':  # 滑动操作
@@ -906,14 +949,14 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 f""" uiautomator不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                 slide(滑动) """)
 
-    def __if_operate_ios_predicate(self, locate, operate=None, text=None, el=None, index=None):
+    def __if_operate_ios_predicate(self, locate, operate=None, text=None, index=None):
         """
         * 私有不继承
         判断 ios_predicate操作执行
         :param locate:  expression 表达式 如 :ios_predicate  name=="个人统计"
         :param operate: 执行操作、 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)
         :param text: 输入文本内容
-        :param el:  单个/多个  默认 el=None 单个  / 如果 el = 's' 代表多个
+
         :param index:
          android_uiautomator_click 、android_uiautomator_text、android_uiautomator_input、android_uiautomator_clear、
          列表索引位置  find_element传递时 此值必填
@@ -921,28 +964,29 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         :return:
         """
         if operate is None:
+            el = index  # 如果index 为空默认多个
             return self.ios_predicate(locate=locate, el=el)
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本
 
-                return self.ios_predicate_text(locate=locate, el=el, index=index)
+                return self.ios_predicate_text(locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作
 
-                return self.ios_predicate_click(locate=locate, el=el, index=index)
+                return self.ios_predicate_click(locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作
                 if text is not None:
-                    self.ios_predicate_input(locate=locate, text=text, el=el, index=index)
+                    self.ios_predicate_input(locate=locate, text=text, index=index)
                 logger.error('ios_predicate_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
-                self.ios_predicate_clear(locate=locate, el=el, index=index)
+                self.ios_predicate_clear(locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
 
-                self.ios_predicate_clear_continue_input(locate=locate, text=text, el=el, index=index)
+                self.ios_predicate_clear_continue_input(locate=locate, text=text, index=index)
 
             elif operate == 'slide':  # 滑动操作
                 if index is None:
@@ -955,40 +999,39 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 f""" ios_predicate不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                     slide(滑动) """)
 
-    def __if_acceaaibilityid_predicate(self, locate, operate=None, text=None, el=None, index=None):
+    def __if_acceaaibilityid_predicate(self, locate, operate=None, text=None, index=None):
         """
         * 私有不继承
         判断 accessibilityid执行操作
         :param locate:  表达 或者定位元素
         :param operate: 执行操作 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)
         :param text: 输入文本内容
-        :param el: 输入文本内容
-
         :return:
         """
         if operate is None:
+            el = index  # 如果index 为空默认多个
             return self.accessibility_id(locate=locate, el=el)
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本、多个时需要传递index 参数
 
-                self.accessibility_id_text(locate=locate, el=el, index=index)
+                self.accessibility_id_text(locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作 、多个时需要传递index 参数
 
-                self.accessibility_id_click(locate=locate, el=el, index=index)
+                self.accessibility_id_click(locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作 、 多个时需要传递index 参数
                 if text is not None:
-                    self.accessibility_id_input(locate=locate, text=text, el=el, index=index)
+                    self.accessibility_id_input(locate=locate, text=text, index=index)
                 logger.error('accessibility_id_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
-                self.accessibility_id_clear(locate=locate, el=el, index=index)
+                self.accessibility_id_clear(locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
-                    self.accessibility_id_clear_continue_input(locate=locate, text=text, el=el, index=index)
+                    self.accessibility_id_clear_continue_input(locate=locate, text=text, index=index)
 
             elif operate == 'slide':  # 滑动操作
                 if index is None:
@@ -1002,39 +1045,39 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             f""" accessibilityid不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、
                 slide(滑动) """)
 
-    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, el=None, index=None, ):
+    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, index=None, ):
         """
         * 私有不继承
         判断 CommonlyUsed 执行操作
         :param locate:  表达 或者定位元素
         :param operate: 执行操作 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)
         :param text: 输入文本内容
-        :param el: 输入文本内容
         :return:
         """
         if operate is None:
+            el = index  # 如果index 为空默认多个
             return self.used_operate(types=types, locate=locate, el=el)
         if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input', 'slide'):
             if operate == 'text':  # 提取文本
 
-                return self.used_text(types=types, locate=locate, el=el, index=index)
+                return self.used_text(types=types, locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作
 
-                self.used_click(types=types, locate=locate, el=el, index=index)
+                self.used_click(types=types, locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作
                 if text is not None:
-                    return self.used_input(types=types, locate=locate, text=text, el=el, index=index)
+                    return self.used_input(types=types, locate=locate, text=text, index=index)
                 logger.error('android_uiautomator_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
-                return self.used_clear(types=types, locate=locate, el=el, index=index)
+                return self.used_clear(types=types, locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
-                    return self.used_clear_continue_input(types=types, locate=locate, text=text, el=el, index=index)
+                    return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
                 logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
 
             elif operate == 'slide':  # 滑动操作
@@ -1048,7 +1091,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 f""" CommonlyUsed不支持输入参数{operate}！！ 目前只支持：input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、slide(滑动)
                """)
 
-    def app_expression(self, types, locate, operate=None, text=None, el=None, index=None, wait=0.2, notes=None):
+    def app_expression(self, types, locate, operate=None, text=None, index=None, wait=0.2, notes=None):
         """
 
         app  执行操作判断
@@ -1059,7 +1102,6 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         iOS  "type == 'XCUIElementTypeButton' AND value == 'ClearEmail'"
         :param operate: 执行操作  input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) , slide(滑动)   * 只支持 6种
         :param text : 输入文本内容
-        :param el: 单个/多个  默认 el=None 单个  / 如果 el = 's' 代表多个
         :param index:
         :param wait: 默认 等待0.5 秒
         :param notes: 注释操作说明
@@ -1070,7 +1112,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             if PLATFORM.lower() == 'android' and types == 'uiautomator':
                 logger.warning('此方法只支持android系统！！')
                 logger.info(notes)
-                return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text, el=el,
+                return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text,
                                                              index=index,
                                                              )
 
@@ -1078,17 +1120,17 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             elif PLATFORM.lower() == 'ios' and types == 'ios_predicate':
                 logger.warning('此方法只支持ios系统！！')
                 logger.info(notes)
-                return self.__if_operate_ios_predicate(locate=locate, operate=operate, text=text, el=el, index=index,
+                return self.__if_operate_ios_predicate(locate=locate, operate=operate, text=text, index=index,
                                                        )
 
             elif types == 'accessibilityid':
                 logger.info(notes)
-                return self.__if_acceaaibilityid_predicate(locate=locate, operate=operate, text=text, el=el, index=index
+                return self.__if_acceaaibilityid_predicate(locate=locate, operate=operate, text=text, index=index
                                                            )
 
             elif types in ('xpath', 'class', 'id'):
                 logger.info(notes)
-                return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text, el=el,
+                return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text,
                                                          index=index)
         else:
 
@@ -1099,7 +1141,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             uiautomator 、ios_predicate 、accessibilityid、xpath、class、id 定位类型
             """)
 
-    def appexe(self, yamlfile, case, text=None, el=None, index=None, wait=0.1):
+    def appexe(self, yamlfile, case, text=None, index=None, wait=0.1):
         """
         自动执行定位步骤
         :param yamlfile:  yaml文件
@@ -1112,9 +1154,6 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         """
         relust = None  # 断言结果  最后一步才返回
 
-        if index is not None:
-            el = 'l'
-
         locator_data = self.get_locator(yamlfile, case)
         locator_step = locator_data.stepCount()
 
@@ -1124,12 +1163,12 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                 locator) == 'clear_continue_input'):
                 relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text[locator], el=el,
+                                             text=text[locator],
                                              index=index)
             else:
                 relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text, el=el,
+                                             text=text,
                                              index=index)
             time.sleep(wait)
 
