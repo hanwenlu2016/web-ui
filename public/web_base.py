@@ -8,7 +8,7 @@
 '''
 webexe
 定位方式支持  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
-操作方式支持 input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)
+操作方式支持 input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本),scroll(滚动到指定位置)
 '''
 
 import time
@@ -115,7 +115,7 @@ class Base:
 
     def web_scroll(self, direction):
         """
-        网页滚动
+        网页滚动 部分网页不可用时轻请使用  web_scroll_to_ele
         :param direction: str   up 向上   Down 向下
         :return:
         """
@@ -126,7 +126,26 @@ class Base:
             logger.info('滚动到底部')
             self.driver.execute_script("window.scrollBy(0, 10000)")
 
+    def web_scroll_to_ele(self, types, locate, index=None):
+        """
+        滚动至元素ele可见位置
+        :param types: 定位类型
+        :param locate: 定位器
+        :param index: 多个标签索引
+        :return:
+        """
+        el = None
+        if index is not None:
+            el = 's'
+        target = self.used_operate(types, locate, el=el)
+
+        if index is not None:
+            self.driver.execute_script("arguments[0].scrollIntoView();", target[index])
+        else:
+            self.driver.execute_script("arguments[0].scrollIntoView();", target)
+
     def current_window(self):
+
         """
         获取当前窗口句柄 不能单一使用 实际获取的不是当前句柄
         :return:
@@ -653,7 +672,7 @@ class WebBase(Base):
             el = index  # 如果index 为空默认多个
             return self.used_operate(types=types, locate=locate, el=el)
 
-        if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input'):
+        if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input','scroll'):
             if operate == 'text':  # 提取文本
                 return self.used_text(types=types, locate=locate, index=index)
 
@@ -667,6 +686,9 @@ class WebBase(Base):
 
             elif operate == 'clear':  # 清除操作
                 return self.used_clear(types=types, locate=locate, index=index)
+
+            elif operate == 'scroll':  # 滚动下拉到指定位置
+                return self.web_scroll_to_ele(types=types, locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:

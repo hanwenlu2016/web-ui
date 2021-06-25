@@ -28,7 +28,7 @@
   element:    # 操作步骤 /列表
     - casesteid: 1      # 操作步骤
       types: name      # 定位类型  支持 id/name/xpath/css/class/link/partlink/tag 对应源码web_base.p 325行
-      operate: input     # 操作类型   input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)
+      operate: input    # 操作类型   input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、滚动下拉到指定位置(scroll)
       locate: wd    # 定位元素
       info: 点击输入框收入    # 操作说明
       expect:         # 预期结果

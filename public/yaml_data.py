@@ -43,15 +43,18 @@ class GetLocatorYmal:
         读取yaml文件
         :return: dict
         """
-
         try:
-            with open(self.FLIE_PATH, encoding='gbk') as f:
+            with open(self.FLIE_PATH, encoding='utf-8') as f:
                 data = yaml.load(f, Loader=yaml.FullLoader)
                 f.close()
                 return data
-        except Exception as e:
-            logger.error(e)
-            logger.error(f'读取yaml失败！{e}')
+        except UnicodeDecodeError:
+            with open(self.FLIE_PATH, encoding='GBK') as f:
+                data = yaml.load(f, Loader=yaml.FullLoader)
+                f.close()
+                return data
+        except  Exception:
+            logger.error('Error opening ymal file')
 
     def get_yaml(self):
         """
@@ -59,7 +62,11 @@ class GetLocatorYmal:
         :return: dict
         """
         yaml_data = self.open_yaml()
-        return yaml_data[1:]  # 返回用列数据不包含 - model : login 部分 从列表1位置索引
+        if yaml_data is not None:
+            return yaml_data[1:]  # 返回用列数据不包含 - model : login 部分 从列表1位置索引
+        else:
+            logger.error('The ymal file is empty')
+            raise ('The ymal file is empty')
 
     def get_current_data(self):
         """
@@ -412,6 +419,7 @@ def caseda(yamlname: str, casename: str) -> List:
     else:
         return testdata
 
+
 def reda_data(yamlname: str, casename: str):
     """
     读取测试数据 HTTP 专用
@@ -421,7 +429,6 @@ def reda_data(yamlname: str, casename: str):
     if IS_REDIS:
         return testdata.test_data()
     return testdata.test_data()
-
 
 
 # faker 信息数据
