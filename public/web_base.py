@@ -624,6 +624,21 @@ class Base:
         time.sleep(0.5)
         self.used_input(types=types, locate=locate, text=text, index=index)
 
+    def used_jsclear_continue_input(self, types, locate, text, index=None):
+        """
+        js清除数据在输入
+        :param types: 定位类型
+        :param locate: 定位元素
+        :param text: 输入文本
+        :param el: 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        :param index: 列表索引位置  find_element传递时 此值必填
+        :return:
+        """
+
+        self.js_clear(types=types, locate=locate, index=index)
+        time.sleep(0.5)
+        self.used_input(types=types, locate=locate, text=text, index=index)
+
 
 class WebBase(Base):
     """
@@ -662,7 +677,7 @@ class WebBase(Base):
         * 私有方法不继承
         判断 CommonlyUsed 执行操作
         :param locate:  表达 或者定位元素
-        :param operate: 执行操作 类型input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,
+        :param operate: 执行操作 类型input(输入) , clear(清除) , jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
         :param text: 输入文本内容
         :param el: 输入文本内容
         :return:
@@ -672,7 +687,7 @@ class WebBase(Base):
             el = index  # 如果index 为空默认多个
             return self.used_operate(types=types, locate=locate, el=el)
 
-        if operate in ('text', 'click', 'input', 'clear', 'clear_continue_input','scroll'):
+        if operate in ('text', 'click', 'input', 'clear', 'jsclear','clear_continue_input','jsclear_continue_input','scroll'):
             if operate == 'text':  # 提取文本
                 return self.used_text(types=types, locate=locate, index=index)
 
@@ -687,6 +702,9 @@ class WebBase(Base):
             elif operate == 'clear':  # 清除操作
                 return self.used_clear(types=types, locate=locate, index=index)
 
+            elif operate=='jsclear': # js清除操作
+                return self.js_clear(types=types, locate=locate, index=index)
+
             elif operate == 'scroll':  # 滚动下拉到指定位置
                 return self.web_scroll_to_ele(types=types, locate=locate, index=index)
 
@@ -694,10 +712,15 @@ class WebBase(Base):
                 if text is not None:
                     return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
                 logger.info(' 函数必须传递 text 参数')
+
+            elif operate == 'jsclear_continue_input':  # js清除后在输入操作
+                if text is not None:
+                    return self.used_jsclear_continue_input(types=types, locate=locate, text=text, index=index)
+                logger.info(' 函数必须传递 text 参数')
         else:
             logger.error(f'输入的{operate}暂时不支持此操作！！！')
             logger.error("""
-        目前只支持类型 ： input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) 
+        目前只支持类型 ： 类型input(输入) , clear(清除) , jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
             """)
             raise ErrorExcep(f'输入的{operate}暂时不支持此操作！！！')
 
@@ -706,7 +729,7 @@ class WebBase(Base):
         web 执行操作判断
         :param types: 定位类型
         :param locate: 表达 或者定位元素
-        :param operate: 执行操作  input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)  * 只支持 5种
+        :param operate: 执行操作  类型input(输入) , clear(清除) , jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉) * 只支持 7种
         :param text : 输入文本内容
         :param index:
         :param notes: 帮助说明 /说明此步骤
