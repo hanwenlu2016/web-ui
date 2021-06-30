@@ -8,7 +8,7 @@
 '''
 webexe
 定位方式支持  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
-操作方式支持 input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本),scroll(滚动到指定位置)
+操作方式支持 input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
 '''
 
 import time
@@ -510,6 +510,25 @@ class Base:
             # 单个定位点击
             self.used_operate(types=types, locate=locate).click()
 
+    def used_submit(self, types, locate, index=None):
+        """
+        获取元素后  提交 * 前提是input元素的type为submit
+        :param types: 定位类型
+        :param locate: 定位元素
+        :param index: 列表索引位置  find_element传递时 此值必填
+        :return:
+        """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
+
+        if el is not None and index is not None:
+            # 多个定位定位 利用index 列表索引点击
+            self.used_operate(types=types, locate=locate, el=el)[index].submit()
+        else:
+            # 单个定位点击
+            self.used_operate(types=types, locate=locate).submit()
+
     def used_right_click(self, types, locate, index=None):
         """
         获取元素后 右键点击
@@ -677,7 +696,7 @@ class WebBase(Base):
         * 私有方法不继承
         判断 CommonlyUsed 执行操作
         :param locate:  表达 或者定位元素
-        :param operate: 执行操作 类型input(输入) , clear(清除) , jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
+        :param operate: 执行操作 类型input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
         :param text: 输入文本内容
         :param el: 输入文本内容
         :return:
@@ -687,12 +706,15 @@ class WebBase(Base):
             el = index  # 如果index 为空默认多个
             return self.used_operate(types=types, locate=locate, el=el)
 
-        if operate in ('text', 'click', 'input', 'clear', 'jsclear','clear_continue_input','jsclear_continue_input','scroll'):
+        if operate in ('text', 'click', 'input', 'clear', 'jsclear','submit','clear_continue_input','jsclear_continue_input','scroll'):
             if operate == 'text':  # 提取文本
                 return self.used_text(types=types, locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作
                 self.used_click(types=types, locate=locate, index=index)
+
+            elif operate == 'submit':  # 提交操作
+                self.used_submit(types=types, locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作
                 if text is not None:
@@ -720,7 +742,7 @@ class WebBase(Base):
         else:
             logger.error(f'输入的{operate}暂时不支持此操作！！！')
             logger.error("""
-        目前只支持类型 ： 类型input(输入) , clear(清除) , jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
+        目前只支持类型 ： 类型input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
             """)
             raise ErrorExcep(f'输入的{operate}暂时不支持此操作！！！')
 
@@ -729,7 +751,7 @@ class WebBase(Base):
         web 执行操作判断
         :param types: 定位类型
         :param locate: 表达 或者定位元素
-        :param operate: 执行操作  类型input(输入) , clear(清除) , jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉) * 只支持 7种
+        :param operate: 执行操作  input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉) * 只支持 8种
         :param text : 输入文本内容
         :param index:
         :param notes: 帮助说明 /说明此步骤
