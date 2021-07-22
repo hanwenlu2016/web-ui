@@ -16,6 +16,7 @@ import os
 import sys
 
 import allure
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -280,7 +281,7 @@ class Base:
         logger.info(f"鼠标悬停位置{locate}")
         return hover
 
-    def element_hover_clicks(self, types, locate):
+    def element_hover_clicks(self, types, locate, index=None):
         """
         获取元素后悬停到元素位置 后点击该元素
         :param locatorType: 定位类型
@@ -290,7 +291,7 @@ class Base:
         element = self.used_operate(types, locate)
         ActionChains(self.driver).move_to_element(element).perform()
         time.sleep(0.5)
-        self.used_double_click(types=types, locate=locate)
+        self.used_click(types=types, locate=locate, index=index)
         logger.info(f"鼠标悬停位置{locate}")
 
     def save_as_img(self, types, locate, filename, sleep=1):
@@ -451,6 +452,70 @@ class Base:
         except Exception as e:
             logger.error('等待元素错误,元素在等待时间内未出现！')
             logger.error(e)
+
+    def used_sendkeyENTER(self, types, locate, index=None):
+        """
+        发送回车键
+        :param types:
+        :param locate:
+        :param index:
+        :return:
+        """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
+
+        if el is not None and index is not None:
+            # 多个定位
+            return self.used_operate(types=types, locate=locate, el=el)[index].send_keys(Keys.ENTER)
+        else:
+            # 单个定位提取文本元素必须是唯一 如果多个时默认返回第一个
+            return self.used_operate(types=types, locate=locate).send_keys(Keys.ENTER)
+
+    def used_sendkeyUP(self, types, locate,index=None):
+        """
+        按下 键盘 上
+        :param types:
+        :param locate:
+        :param index:
+        :return:
+        """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
+
+        if el is not None and index is not None:
+            # 多个定位
+
+            self.used_operate(types=types, locate=locate, el=el)[index].send_keys(Keys.UP)
+        else:
+            # 单个定位提取文本元素必须是唯一 如果多个时默认返回第一个
+
+            self.used_operate(types=types, locate=locate).send_keys(Keys.UP)
+
+    def used_sendkeyDOWN(self, types, locate,index=None):
+        """
+        按下 键盘 下
+        :param types: 定位类型
+        :param locate: 定位元素
+        :param index:  列表索引
+        :param repeat: 重复的次数 *默认一次
+        :return:
+        """
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+        if index is not None:
+            el = 'l'
+
+        if el is not None and index is not None:
+            # 多个定位
+
+            self.used_operate(types=types, locate=locate, el=el)[index].send_keys(Keys.DOWN)
+        else:
+            # 单个定位提取文本元素必须是唯一 如果多个时默认返回第一个
+
+            self.used_operate(types=types, locate=locate).send_keys(Keys.DOWN)
+
+
 
     def used_operate(self, types, locate, el=None, ):
         """
@@ -706,7 +771,10 @@ class WebBase(Base):
             el = index  # 如果index 为空默认多个
             return self.used_operate(types=types, locate=locate, el=el)
 
-        if operate in ('text', 'click', 'input', 'clear', 'jsclear','submit','clear_continue_input','jsclear_continue_input','scroll'):
+        if operate in (
+                'text', 'click', 'input', 'clear', 'jsclear', 'submit', 'clear_continue_input',
+                'jsclear_continue_input',
+                'scroll'):
             if operate == 'text':  # 提取文本
                 return self.used_text(types=types, locate=locate, index=index)
 
@@ -724,7 +792,7 @@ class WebBase(Base):
             elif operate == 'clear':  # 清除操作
                 return self.used_clear(types=types, locate=locate, index=index)
 
-            elif operate=='jsclear': # js清除操作
+            elif operate == 'jsclear':  # js清除操作
                 return self.js_clear(types=types, locate=locate, index=index)
 
             elif operate == 'scroll':  # 滚动下拉到指定位置
@@ -774,8 +842,6 @@ class WebBase(Base):
         :param yamlfile:  yaml文件
         :param case: yaml定位用例
         :param text:  输入内容
-        :param el:  是否为多个  el='l' 多个
-        :param index:
         :param wait:  等待多少
         :return:
         """
@@ -784,10 +850,9 @@ class WebBase(Base):
         locator_data = self.get_locator(yamlfile, case)
         locator_step = locator_data.stepCount()
 
-        for locator in range(0, locator_step):
+        for locator in range(locator_step):
             if isinstance(text, list) and (
-                    locator_data.operate(locator) == 'input' or locator_data.operate(
-                locator) == 'clear_continue_input'):
+                    locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
                                              text=text[locator], index=locator_data.listindex(locator))

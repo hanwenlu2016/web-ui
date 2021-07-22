@@ -5,6 +5,7 @@
 # @Time: 2020/10/26  19:04
 
 import os, sys
+
 sys.path.append(os.pardir)
 
 from typing import List
@@ -12,8 +13,17 @@ from typing import List
 import pytest
 from config.ptahconf import *
 from public.logs import logger
-from public.common import del_clean_report,ErrorExcep
+from public.common import del_clean_report, ErrorExcep
 
+
+OUT_TITLE = """
+══════════════════════════════════════════
+║            WEB-UI-AUTO                 ║
+║       No one can put out the stars !   ║
+══════════════════════════════════════════
+"""
+
+logger.info(OUT_TITLE)
 
 
 
@@ -48,29 +58,23 @@ class RunPytest:
         if m == 'all':  # all 运行所有模块用例
             logger.info('运行当前项目所有用例开始！！！')
             pytest.main(
-                ['-s', '-v', f'-n={n}', f'--reruns={reruns}', '-W', 'ignore:Module already imported:pytest.PytestWarning',
-                 '--alluredir', f'{JSON_DIR}', f'{CASE_DIR}'])
+                [f'-n={n}', f'--reruns={reruns}', '--alluredir', f'{JSON_DIR}', f'{CASE_DIR}'])
             return True
 
         elif ',' not in m and m != 'all' and m.startswith('test'):  # 传递1个模块时执行
             logger.info(f'运行当前项目模块用例{m}开始！！！')
-            pytest.main(['-s', '-v', '-m', f'{m}', f'-n={n}', f'--reruns={reruns}', '-W',
-                         'ignore:Module already imported:pytest.PytestWarning', '--alluredir', f'{JSON_DIR}',
-                         f'{CASE_DIR}'])
+            pytest.main(['-m', f'{m}', f'-n={n}', f'--reruns={reruns}', '--alluredir', f'{JSON_DIR}', f'{CASE_DIR}'])
             return True
 
         elif ',' in m and len(mlist) <= 5:  # 传递2个模块时执行
             logger.info(f'运行当前项目模块用例{mlist}开始！！！')
             pytest.main(
-                ['-s', '-v', '-m', f'{var}', f'-n={n}', f'--reruns={reruns}', '-W',
-                 'ignore:Module already imported:pytest.PytestWarning', '--alluredir', f'{JSON_DIR}',
-                 f'{CASE_DIR}'])
+                ['-m', f'{var}', f'-n={n}', f'--reruns={reruns}', '--alluredir', f'{JSON_DIR}', f'{CASE_DIR}'])
             return True
 
         else:  # 运行传递模块用例
             logger.info(f'模块名称错误！！！')
             return False
-
 
     @classmethod
     def output_path(cls, dir):
@@ -130,12 +134,12 @@ class RunPytest:
     @classmethod
     def run(cls):
         """
-        正式运行所有脚本
+        正式运行所有脚本 配置django 管理
         :return:
         """
 
         # 执行前检查是否清除报告
-        #del_clean_report()
+        del_clean_report()
 
         # 接收参数
         results_dir, module_name, mlist, thread_num, reruns = cls.receiving_argv()
@@ -144,7 +148,7 @@ class RunPytest:
         prpore_json_dir, prpore_allure_dir = cls.output_path(results_dir)
 
         # 判断运行模块
-        run_modle=cls.run_modle(module_name, thread_num, reruns, mlist, prpore_json_dir)
+        run_modle = cls.run_modle(module_name, thread_num, reruns, mlist, prpore_json_dir)
 
         # 生成测试报告
         if run_modle:
@@ -158,7 +162,7 @@ class RunPytest:
     @staticmethod
     def run_bebug():
         """
-        bebug 时调试试验
+        bebug 调试
         :return:
         """
 
@@ -166,23 +170,17 @@ class RunPytest:
         del_clean_report()
 
         pytest.main(
-            ['-s', '-v',  '-m', 'test_api','-n=1','--reruns=0', '-W', 'ignore:Module already imported:pytest.PytestWarning',
-             '--alluredir',
-             f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+            ['-m', 'test_api','-n=1','--reruns=0', '--alluredir',f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
         os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
         logger.info('测试报告生成完成！')
 
 
+
+
 if __name__ == '__main__':
+
     #RunPytest.run()
     RunPytest.run_bebug()
 
 # Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称)
-# 执行用列
-# parameter_set()
-# pytest.main(['-s', '-v', '-n=0', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
-# pytest.main(['-s', '-v', '-m', 'test_cc ', f'-n=1', f'--reruns=1', '--alluredir', f'{PRPORE_JSON_DIR}',f'{CASE_DIR}'])
-# pytest.main(['-s', '-v', '-m', 'test_cc ', f'-n=1', f'--reruns=1', '--alluredir', f'{outpath[0]}', f'{CASE_DIR}'])
-# 生成测试报告
-# os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
