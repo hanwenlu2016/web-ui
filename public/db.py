@@ -114,14 +114,14 @@ class RedisPool:
         except Exception as e:
             logger.error(f'连接错误！{e}')
 
-    def set(self,key,value):
+    def set(self, key, value):
         """
         redis  set 操作
         :param key: 键
         :param value: 值
         :return:
         """
-        ret = self.session.set(key,value)
+        ret = self.session.set(key, value)
         self.session.close()
         return ret
 
@@ -141,13 +141,16 @@ class RedisPool:
             return None
 
 
-class RedisClusterDb():
+class RedisPoolCluster:
     """
     redsi 集群操作类
     """
 
-    @staticmethod
-    def redis_connect():
+    def __init__(self):
+
+        self.session = self.connect()
+
+    def connect(self):
         """
         连接redis集群
         :return: object
@@ -157,25 +160,42 @@ class RedisClusterDb():
             return redisconn
         except Exception as e:
             logger.error(f"错误,连接redis 集群失败 {e}")
-            return False
+            return None
 
-    @staticmethod
-    def set(key: T, value: T) -> T:
+    def set(self, key: T, value: T) -> T:
         """
         redis  set 操作
         :param key: 键
         :param value: 值
         :return:
         """
-        ret = RedisClusterDb.redis_connect().set(key, value)
-        ret.close()
-        return ret
+        set_key = self.session.set(key, value)
+        self.session.close()
+        return set_key
 
-    @staticmethod
-    def get(key: T) -> T:
-        vlaue = RedisClusterDb.redis_connect().get(key)
-        if vlaue != None:
-            vlaue.close()
-            return vlaue
-        else:
-            return '无此键！'
+    def get(self, key: T) -> T:
+        """
+         获取指定键
+        :param key:  key
+        :return:
+        """
+        get_key = self.session.get(key)
+        self.session.close()
+        return get_key
+
+    def keys(self):
+        """
+        获取所有键
+        :return:
+        """
+        keys_all = self.session.keys()
+        self.session.close()
+        return keys_all
+
+    @property
+    def opt(self):
+        """
+        reis 操作   RedisPoolCluster.opt.xxxx
+        :return:
+        """
+        return self.session
