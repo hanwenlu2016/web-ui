@@ -84,7 +84,7 @@ python3 run.py
 
 管理端用户页面
 
-
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage0.png)
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage1.png)
 
