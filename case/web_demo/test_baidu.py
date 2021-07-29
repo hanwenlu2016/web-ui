@@ -10,11 +10,10 @@ import pytest
 import allure
 
 from pageobj.baidu import BaiDu
-from public.yaml_data import caseda
-from public.imgproce import Diff
-from config.ptahconf import DATA_FILE
+from public.reda_data import reda_web_casedata
+from public.common import ImgDiff
 from public.api_base import apiexe
-from public.common import png_path
+
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 
@@ -26,7 +25,7 @@ class TestBaiDu:
     @allure.title("输入内容并搜索")  # 用例标题
     @allure.description('输入多参数搜索')  # 用例描述
     @pytest.mark.testbaidu_web  # 用列标记
-    @pytest.mark.parametrize('content', caseda(yamlfile, 'test_baidu_search'))  # 测试数据
+    @pytest.mark.parametrize('content', reda_web_casedata(yamlfile, 'test_baidu_search'))  # 测试数据
     def test_baidu_search(self, webDriver, content):
         baidu = BaiDu(webDriver)
 
@@ -39,8 +38,7 @@ class TestBaiDu:
             baidu.sleep(3)
 
             # 对比查询后图片结果
-            search_python = png_path('python.png')
             search_relust = baidu.screen_shot('search')
-            df = Diff.dHash(search_python, search_relust)
+            df = ImgDiff.ahaDiff('python.png', search_relust)
             assert df < 10
 

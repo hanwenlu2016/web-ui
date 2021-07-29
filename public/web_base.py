@@ -23,9 +23,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from public.common import ErrorExcep
-from public.yaml_data import GetLocatorYmal, GetCaseYmal
-from public.logs import logger
+from public.common import ErrorExcep,logger
+from public.reda_data import GetLocatorYmal, GetCaseYmal
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
 

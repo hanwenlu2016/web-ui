@@ -28,9 +28,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from appium.webdriver.common.touch_action import TouchAction
 
-from public.yaml_data import GetLocatorYmal, GetCaseYmal
-from public.common import ErrorExcep
-from public.logs import logger
+from public.reda_data import GetLocatorYmal, GetCaseYmal
+from public.common import ErrorExcep,logger
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
 

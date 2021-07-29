@@ -25,7 +25,7 @@ TIMEOUT = 5  # 接口请求超时时间 /S
 HEADERS = {'Content-Type': 'application/json',}
 
 ########## Web端配置
-URL = "http://192.168.7.95/caac/#/login"  # # 项目地址 web 时选择
+URL = "https://www.baidu.com/"  # # 项目地址 web 时选择
 
 BROWSERNAME = "Chrome"  # "Chrome" "Firefox" "Ie"  "Safari"  # 浏览器选择
 
@@ -57,8 +57,8 @@ IOS_CAPA = {
     "deviceName": 'Redad',  # 设备名称 *
     "automationName": "XCUITest",
     "bundleId": "com.redaflight.RedaSkyPoint22a",  # app包名 *
-    "udid": "5235c499f02839759fccc412fdb4c50920ef5244",  # 手机UDID *
-    "xcodeOrgId": "J4397KG4TG",  # 开发者id *
+    "udid": "xxxxxxxx",  # 手机UDID *
+    "xcodeOrgId": "xxx",  # 开发者id *
     "xcodeSigningId": "iPhone Developer",
     "useNewWDA": False,
     "noReset": True,  # 启动app时不要清除app里的原有的数据

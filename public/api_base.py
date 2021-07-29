@@ -10,10 +10,9 @@ import json
 
 import requests
 
-from public.logs import logger
 from config.setting import API_URL, TIMEOUT, HEADERS
-from public.yaml_data import GetCaseYmal
-from public.common import ErrorExcep
+from public.reda_data import GetCaseYmal
+from public.common import ErrorExcep, logger
 
 
 class ApiBase:
@@ -178,25 +177,6 @@ class ApiBase:
             raise ('headers is not null ！！')
 
 
-def params_clean(params):
-    """
-    # 传递参数时 移除多余参数参数
-    :param params: 传递参数
-    :return:
-    """
-    if params is not None and ("assertion" in params or "filename" in params or "filepath" in params):
-        try:
-            del params["assertion"]
-            del params["filename"]
-            del params["filepath"]
-
-            filepath = params.get('filepath')  # 临时接收传递数据主要 处理 filepath filename
-            filename = params.get('filename')
-            return filepath, filename
-        except Exception:
-            pass
-
-
 def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
     """
     api 请求执行函数
@@ -214,14 +194,24 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
     requests_url = yaml_data.urlpath  # url地址
     requests_header = yaml_data.header  # 请求头
 
-    file = params_clean(params)  # 移除多余参数
+    filename = None
+    filepath = None
+
+    # 删除多余参数
+    if params is not None and ("assertion" in params or "filename" in params or "filepath" in params):
+        try:
+            params.pop('assertion')
+            filename = params.pop('filename')
+            filepath = params.pop('filepath')
+        except Exception :
+            pass
 
     # 判断请求类型是否支持
     if requests_type not in ('POST', 'GET', 'PUT', 'DELETE'):
         raise ErrorExcep('请求类型不支持！！！')
 
     if requests_type == 'POST':
-        return api.post(requests_url, params, filePath=file[0], filename=file[1], verify=verify,
+        return api.post(requests_url, params, filePath=filepath, filename=filename, verify=verify,
                         header=requests_header, upheader=upheader)
 
     elif requests_type == 'GET':
@@ -235,13 +225,14 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
     else:
         raise ErrorExcep(f'暂时不支持请求类型{requests_type}！！！')
 
-# a = ApiBase()
-# a.apiexe('/Users/reda-flight/Desktop/svn/reda-ui-auto/database/locatorYAML/http.yaml', 'post_login')
+#
 # if __name__ == '__main__':
 #     a = ApiBase()
 #     d = {
-#         "username": "root",
-#         "password": "root"
+#         "username": "root1",
+#         "password": "root",
+#         "finame":"nm",
 #     }
 #
-#     a.post('/login', d)
+#     ss = apiexe(r'C:\Users\hanwe\Desktop\reda-ui-auto\database\caseYAML\test_api.yaml', 'test_login', params=d)
+#     print(ss.json())

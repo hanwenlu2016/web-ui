@@ -11,9 +11,9 @@ sys.path.append(os.pardir)
 from typing import List
 
 import pytest
+
 from config.ptahconf import *
-from public.logs import logger
-from public.common import del_clean_report, ErrorExcep
+from public.common import DelReport, ErrorExcep,logger
 
 
 OUT_TITLE = """
@@ -139,7 +139,7 @@ class RunPytest:
         """
 
         # 执行前检查是否清除报告
-        del_clean_report()
+        DelReport().run_del_report()
 
         # 接收参数
         results_dir, module_name, mlist, thread_num, reruns = cls.receiving_argv()
@@ -167,13 +167,13 @@ class RunPytest:
         """
 
         # 执行前检查是否清除报告
-        del_clean_report()
+        DelReport().run_del_report()
 
         pytest.main(
-            ['-m', 'test_api','-n=1','--reruns=0', '--alluredir',f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+            ['-m', 'testbaidu_web','-n=1','--reruns=0', '--alluredir',f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
-        os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
-        logger.info('测试报告生成完成！')
+        # os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
+        # logger.info('测试报告生成完成！')
 
 
 
@@ -184,3 +184,19 @@ if __name__ == '__main__':
     RunPytest.run_bebug()
 
 # Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称)
+# addopts 参数说明
+# -s：输出调试信息，包括print打印的信息。
+# -v：显示更详细的信息。
+# -q：显示简略的结果 与-v相反
+# -p no:warnings 过滤警告
+# -n=num：启用多线程或分布式运行测试用例。需要安装 pytest-xdist 插件模块。
+# -k=value：用例的nodeid包含value值则用例被执行。
+# -m=标签名：执行被 @pytest.mark.标签名 标记的用例。
+# -x：只要有一个用例执行失败就停止当前线程的测试执行。
+# --maxfail=num：与-x功能一样，只是用例失败次数可自定义。
+# --reruns=num：失败用例重跑num次。需要安装 pytest-rerunfailures 插件模块。
+# -l: 展示运行过程中的全局变量和局部变量
+# --collect-only: 罗列出所有当前目录下所有的测试模块，测试类及测试函数
+# --ff: 如果上次测试用例出现失败的用例，当使用--ff后，失败的测试用例会首先执行，剩余的用例也会再次执行一次 *基于生成了.pytest_cache文件
+# --lf: 当一个或多个用例失败后，定位到最后一个失败的用例重新运行，后续用例会停止运行。*基于生成了.pytest_cache文件
+# --html=report.html: 在当前目录生成名为report.html的测试报告 需要安装 pytest-html 插件模块。

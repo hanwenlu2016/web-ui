@@ -4,21 +4,18 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2021/2/1  16:11
 
-import os, sys
-import re
-from typing import List
-import time
+import os, sys, time,re
 import shutil
 
-import requests
-from hashlib import md5
+import cv2
+import numpy as np
+from loguru import logger
 
 from config.setting import IS_CLEAN_REPORT
-from public.yaml_data import GetCaseYmal
-from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR
-from public.logs import logger
+from config.ptahconf import  PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR,LOG_DIR,DIFF_IMGPATH
 
 
+# 获取运行函数名称
 def get_run_func_name():
     """
     获取运行函数名称
@@ -33,18 +30,8 @@ def get_run_func_name():
         Upframe = frameObj.f_back
         return Upframe.f_code.co_name
 
-
-def sleep(s: float):
-    """
-    休眠秒数
-    :param s:
-    :return:
-    """
-    time.sleep(s)
-    logger.info('强制休眠{}'.format(s))
-
-
-def str_re_int(string: str) -> list:
+# 提取字符中的整数
+def extract_str_in_int(string: str) -> list:
     """
     提取字符中的整数
     :param string: 字符串
@@ -53,48 +40,7 @@ def str_re_int(string: str) -> list:
     findlist = re.findall(r'[1-9]+\.?[0-9]*', string)
     return findlist
 
-def png_path(imgname):
-    """
-    返回img测试图片路径
-    :param imgname: imgname 图片名称 默认png格式
-    :return:
-    """
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    IMG_FILE = os.path.join(BASE_DIR, "database", "file", "img", f"{imgname}.png")
-    return IMG_FILE
-
-
-def clean_report(filepath: str) -> None:
-    """
-    清除测试报告文件
-    :param filepath:  str  清除路径
-    :return:
-    """
-    del_list = os.listdir(filepath)
-    if del_list:
-        for f in del_list:
-            file_path = os.path.join(filepath, f)
-
-            # 判断是不是文件
-            if os.path.isfile(file_path):
-                if not file_path.endswith('.xml'):  # 不删除.xml文件
-                    os.remove(file_path)
-            else:
-                os.path.isdir(file_path)
-                shutil.rmtree(file_path)
-
-def del_clean_report():
-    """
-    执行删除测试报告记录
-    :return:
-    """
-    if IS_CLEAN_REPORT == True:  # 如果为 True 清除 PRPORE_ALLURE_DIR、 PRPORE_JSON_DIR 、PRPORE_SCREEN_DIR 路径下报告
-
-        dir_list = [PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR]
-
-        for dir in dir_list:
-            clean_report(dir)
-
+#自定义异常类
 class ErrorExcep(Exception):
     """
     自定义异常类
@@ -103,84 +49,286 @@ class ErrorExcep(Exception):
     def __init__(self, message):
         super().__init__(message)
 
-
-class Get:
+#日志设置类
+class SetLog:
     """
-    获取测试数据
+    日志设置类  使用 logger 请从此logs目录导入
     """
 
-    @staticmethod
-    def test_data(yamlname: str, casename: str) -> List:
-        testdata = GetCaseYmal(yamlname, casename).test_data_values()
-        return testdata
+    DAY = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
+    LOG_PATH = os.path.join(LOG_DIR, f'{DAY}_all.log')
 
+    ERR_LOG_PATH = os.path.join(LOG_DIR, f'{DAY}_err.log')
 
-def imgContent(img_path, img_type=1902):
-    """
-    云打码验证码
-    :param img_path: 图片路径
-    :param img_type:  图片类型 默认 1902
-    :return: str
-    """
-    '''
-    https://www.chaojiying.com/price.html
-    1902	常见4~6位英文数字(急速)	
-    1101	1位英文数字	
-    1004	1~4位英文数字	
-    1005	1~5位英文数字	
-    1006	1~6位英文数字	
-    1007	1~7位英文数字	
-    1008	1~8位英文数字	
-    1009	1~9位英文数字	
-    1010	1~10位英文数字	
-    1012	1~12位英文数字	
-    1020	1~20位英文数字	
-    '''
-    IMG_INFO = {'username': 'redaflifht', 'password': 'qar2000!', 'code_id': 909536,
-                'api_url': 'http://upload.chaojiying.net/Upload/Processing.php'}
+    logger.add(LOG_PATH, rotation="00:00", encoding='utf-8')
 
-    rep = CjyClient(IMG_INFO.get('username'), IMG_INFO.get('password'), IMG_INFO.get('code_id'),
-                    IMG_INFO.get('api_url'))
+    logger.add(ERR_LOG_PATH, rotation="00:00", encoding='utf-8', level='ERROR', )
 
-    with open(img_path, 'rb') as f:
-        im = f.read()
-        img_text = rep.postPic(im, img_type)
+# 删除测试报告
+class DelReport:
 
-    return img_text.get('pic_str')
-
-
-class CjyClient:
-
-    def __init__(self, username, password, soft_id, apiurl):
-        self.username = username
-        password = password.encode('utf8')
-        self.password = md5(password).hexdigest()
-        self.soft_id = soft_id
-        self.apiurl = apiurl
-        self.base_params = {
-            'user': self.username,
-            'pass2': self.password,
-            'softid': self.soft_id, }
-        self.headers = {
-            'Connection': 'Keep-Alive',
-            'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)',
-        }
-
-    def postPic(self, im, codetype):
+    def clean_report(self, filepath: str) -> None:
         """
-        im: 图片字节
-        codetype: 题目类型 参考 http://www.chaojiying.com/price.html
+        清除测试报告文件
+        :param filepath:  str  清除路径
+        :return:
         """
-        params = {
-            'codetype': codetype,
-        }
-        params.update(self.base_params)
-        files = {'userfile': ('ccc.jpg', im)}
-        r = requests.post(self.apiurl, data=params, files=files,
-                          headers=self.headers)
-        return r.json()
+        del_list = os.listdir(filepath)
+        if del_list:
+            try:
+                for f in del_list:
+                    file_path = os.path.join(filepath, f)
 
-# if __name__ == '__main__':
-#     x=value_division(['all',1,1,'demo'])
-#     print(x)
+                    # 判断是不是文件
+                    if os.path.isfile(file_path):
+                        if not file_path.endswith('.xml'):  # 不删除.xml文件
+                            os.remove(file_path)
+                    else:
+                        os.path.isdir(file_path)
+                        shutil.rmtree(file_path)
+            except Exception as e:
+                logger.error(e)
+
+    def run_del_report(self, ) -> None:
+        """
+        执行删除测试报告记录
+        :return:
+        """
+        if IS_CLEAN_REPORT == True:  # 如果为 True 清除 PRPORE_ALLURE_DIR、 PRPORE_JSON_DIR 、PRPORE_SCREEN_DIR 路径下报告
+
+            try:
+                dir_list = [PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR]
+                for dir in dir_list:
+                    self.clean_report(dir)
+            except Exception as e:
+                logger.error(e)
+
+# 图片算法类
+class AlgorithmClassify:
+    """
+    图片算法类
+    """
+
+    @classmethod
+    def aHash(cls, img: str) -> str:
+        """
+        均值哈希算法
+        :param img: 图片名称
+        :return:
+        """
+
+        # 缩放为8*8
+        img = cv2.resize(img, (8, 8))
+        # 转换为灰度图
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # s为像素和初值为0，hash_str为hash值初值为''
+        s = 0
+        hash_str = ''
+        # 遍历累加求像素和
+        for i in range(8):
+            for j in range(8):
+                s = s + gray[i, j]
+        # 求平均灰度
+        avg = s / 64
+        # 灰度大于平均值为1相反为0生成图片的hash值
+        for i in range(8):
+            for j in range(8):
+                if gray[i, j] > avg:
+                    hash_str = hash_str + '1'
+                else:
+                    hash_str = hash_str + '0'
+        return hash_str
+
+    @classmethod
+    def dHash(cls, img: str) -> str:
+        """
+        差值感知算法
+        :param img:  图片名称
+        :return:
+        """
+        # 缩放8*8
+        img = cv2.resize(img, (9, 8))
+        # 转换灰度图
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        hash_str = ''
+        # 每行前一个像素大于后一个像素为1，相反为0，生成哈希
+        for i in range(8):
+            for j in range(8):
+                if gray[i, j] > gray[i, j + 1]:
+                    hash_str = hash_str + '1'
+                else:
+                    hash_str = hash_str + '0'
+        return hash_str
+
+    @classmethod
+    def pHash(cls, img: str) -> list:
+        """
+        感知哈希算法(pHash)
+        :param img:  图片名称
+        :return:
+        """
+        # 缩放32*32
+        img = cv2.resize(img, (32, 32))  # , interpolation=cv2.INTER_CUBIC
+
+        # 转换为灰度图
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # 将灰度图转为浮点型，再进行dct变换
+        dct = cv2.dct(np.float32(gray))
+        # opencv实现的掩码操作
+        dct_roi = dct[0:8, 0:8]
+
+        hash = []
+        avreage = np.mean(dct_roi)
+        for i in range(dct_roi.shape[0]):
+            for j in range(dct_roi.shape[1]):
+                if dct_roi[i, j] > avreage:
+                    hash.append(1)
+                else:
+                    hash.append(0)
+        return hash
+
+    @classmethod
+    def calculate(cls, image1: str, image2: str) -> str:
+        """
+         计算单通道的直方图的相似值
+        :param image1:
+        :param image2:
+        :return:
+        """
+        hist1 = cv2.calcHist([image1], [0], None, [256], [0.0, 255.0])
+        hist2 = cv2.calcHist([image2], [0], None, [256], [0.0, 255.0])
+        # 计算直方图的重合度
+        degree = 0
+        for i in range(len(hist1)):
+            if hist1[i] != hist2[i]:
+                degree = degree + (1 - abs(hist1[i] - hist2[i]) / max(hist1[i], hist2[i]))
+            else:
+                degree = degree + 1
+        degree = degree / len(hist1)
+        return degree
+
+# 图片对比类
+class ImgDiff:
+    """
+    图片对比运用类
+    图片算法对比  推荐 差值哈希算法/ahaDiff
+    """
+
+    @classmethod
+    def sampleIMG(CLS, imgname):
+        """
+        * 样本数据 检查与路径返回
+        返回img测试图片路径  * 断言图片时使用
+        :param imgname: imgname 图片名称 默认png格式
+        :return:
+        """
+
+        # 获取准备测试图片路径的名称
+        img_list = [i[2] for i in os.walk(DIFF_IMGPATH)]
+
+        if imgname not in img_list[0]:
+            logger.error('样本图片不存在')
+            raise ErrorExcep('样本图片不存在')
+        return os.path.join(DIFF_IMGPATH, f"{imgname}")
+
+    @classmethod
+    def cmpHash(cls, hash1: str, hash2: str) -> int:
+        """
+        Hash值对比函数
+        :param hash1: 哈希值1
+        :param hash2: 哈希值2
+        :return:
+        """
+        n = 0
+        # hash长度不同则返回-1代表传参出错
+        if len(hash1) != len(hash2):
+            return -1
+        # 遍历判断
+        for i in range(len(hash1)):
+            # 不相等则n计数+1，n最终为相似度
+            if hash1[i] != hash2[i]:
+                n = n + 1
+        return n
+
+    @classmethod
+    def classify_hist_with_split(cls, image1: str, image2: str, size=(256, 256)) -> float:
+        """
+        通过得到RGB每个通道的直方图来计算相似度
+         将图像resize后，分离为RGB三个通道，再计算每个通道的相似值
+        :param image1: 图片1 样本数据
+        :param image2: 图片2 需要对比的图片
+        :param size:
+        :return:
+        """
+        image1 = cv2.resize(cv2.imread(cls.sampleIMG(image1)), size)
+        image2 = cv2.resize(cv2.imread(image2), size)
+        sub_image1 = cv2.split(image1)
+        sub_image2 = cv2.split(image2)
+        sub_data = 0
+        for im1, im2 in zip(sub_image1, sub_image2):
+            sub_data += AlgorithmClassify.calculate(im1, im2)
+        sub_data = sub_data / 3
+        logger.info(f'三直方图算法相似度:{sub_data}')
+        return sub_data
+
+    @classmethod
+    def ahaDiff(cls, img1: str, img2: str) -> int:
+        """
+        均值哈希算法对比
+        :param img1: 图片1  样本数据
+        :param img2: 图片2  需要对比的数据
+        :return:
+        """
+        img1 = cls.sampleIMG(img1)  # 获取样本数据路径
+        try:
+            hash1 = AlgorithmClassify.aHash(cv2.imread(img1))
+            hash2 = AlgorithmClassify.aHash(cv2.imread(img2))
+            n = cls.cmpHash(hash1, hash2)
+            logger.info(f'均值哈希算法相似度:{n}')
+            return n
+        except Exception as e:
+            logger.error(f'对比均值哈希错误:{e}')
+
+    @classmethod
+    def dhaDiff(cls, img1: str, img2: str) -> int:
+        """
+        差值哈希算法对比
+        :param img1: 图片1 样本数据
+        :param img2: 图片2 需要对比的数据
+        :return:
+        """
+        img1 = cls.sampleIMG(img1)  # 获取样本数据路径
+        try:
+            hash1 = AlgorithmClassify.dHash(cv2.imread(img1))
+            hash2 = AlgorithmClassify.dHash(cv2.imread(img2))
+            n = cls.cmpHash(hash1, hash2)
+            logger.info(f'差值哈希算法相似度:{n}')
+            return n
+        except Exception as e:
+            logger.error(f'对比差值哈希错误:{e}')
+
+    @classmethod
+    def phaDiff(cls, img1: str, img2: str) -> int:
+        """
+        感知哈希算法对比
+        :param img1: 图片1 样本数据
+        :param img2: 图片2 需要对比的数据
+        :return:
+        """
+        img1 = cls.sampleIMG(img1)  # 获取样本数据路径
+        try:
+            hash1 = AlgorithmClassify.pHash(cv2.imread(img1))
+            hash2 = AlgorithmClassify.pHash(cv2.imread(img2))
+            n = cls.cmpHash(str(hash1), str(hash2))
+            logger.info(f'感知哈希算法相似度:{n}')
+            return n
+        except Exception as e:
+            logger.error(f'对比差感知哈希错误:{e}')
+
+
+#
+# d = ImgDiff.dhaDiff('test.png1',
+#                     r'/Users/reda-flight/Desktop/svn/reda-ui-auto/output/report_screen/test_login_1624331940125.png')
+#
+# print(d)

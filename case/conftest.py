@@ -10,15 +10,6 @@ from public.driver_init import WebInit,AppInit
 
 
 
-# luinx 服务器时需要特殊处理
-#@pytest.fixture(scope='session', autouse=True)
-# def webDriver():
-#     display = Display(visible=0, size=(800, 600))
-#
-#     if if_linux_firefox:
-#         yield display.start()
-#         display.stop()
-
 
 @pytest.fixture(scope='function')
 def webDriver():

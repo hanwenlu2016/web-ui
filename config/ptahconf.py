@@ -38,6 +38,10 @@ LOCATORYMAL_DIR = os.path.join(BASE_DIR, "database", "locatorYAML", )  # 定位�
 ### 测试文件路径
 DATA_FILE = os.path.join(BASE_DIR, "database", "file")
 
+#测试图片断言路径
+DIFF_IMGPATH= os.path.join(BASE_DIR, "database", "file", "img")
+
+
 # 测试用例结果目录
 PRPORE_JSON_DIR = os.path.join(BASE_DIR, "output", "report_json")
 

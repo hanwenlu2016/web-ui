@@ -13,8 +13,7 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.service import Service
 
-from public.logs import logger
-from public.common import ErrorExcep
+from public.common import ErrorExcep,logger
 from config.ptahconf import WIN_CHROMEDRIVER, LUINX_CHROMEDRIVER, MAC_CHROMEDRIVER
 from config.ptahconf import WIN_FIREFOXDRIVER, LUINX_FIREFOXDRIVER, MAC_FIREFOXDRIVER
 from config.ptahconf import IE_PATH

@@ -11,7 +11,7 @@ import cx_Oracle
 import redis
 from rediscluster import RedisCluster
 
-from public.logs import logger
+from public.common import logger
 from config.setting import MYSQL, ORACLE, REDIS, REDIS_CLUSTER, REDIS_CLUSTER_PASWORD
 
 T = TypeVar('T')  # 可以是任何类型。
