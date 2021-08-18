@@ -14,6 +14,18 @@
 
 
 
+~~M端(django+rest_framework+react）此部分由于设计到公司的业务暂时不做了开源
+
+
+-- 不过本人目前找时间在重新写一个M端管理平台 (django+mtv模式前端技术)
+
+初步效果如下：
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/001.png)
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/003.png)
+
+
 ###### 使用说明
  
 1 本架构元素定位 数据依赖为yaml文件
@@ -78,7 +90,9 @@ python3 run.py
 
 
 
-管理技术由 django+rest_framework+react实际 主要来管理C端用列，定时任务自动跑任务，工具集成等！
+~~管理技术由 django+rest_framework+react实际 主要来管理C端用列，定时任务自动跑任务，工具集成等！ 此部分由于设计到公司的业务暂时不做了开源
+
+
 
 
 
