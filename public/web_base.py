@@ -850,7 +850,7 @@ class WebBase(Base):
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
-            if isinstance(text, list) and (
+            if isinstance(text, （list， tuple)) and (
                     locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
