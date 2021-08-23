@@ -1,6 +1,10 @@
 # web-ui-auto 自动化框架
 
 ```css 
+推荐一个便宜还不错的梯子 [VPN](https://eatpeach.top/auth/register?code=3p0I)
+``` 
+
+```css 
  * 各位有兴小伙伴麻烦点下start 谢谢 😁
 ``` 
 
