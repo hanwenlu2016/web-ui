@@ -1,0 +1,34 @@
+- model: TestBaiDu                  # 对应pageobj 的类名称
+
+- casename: test_baidu_search     # 对应类的 函数
+  title: 输入搜索内容               # 操作标题
+  precond:                        # 前置说明
+  testdata:                       # 测试数据 /列表
+    - content: python
+      assertion: "python"             # *断言时必填
+      assertype: 'in'                # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
+    - content: C++
+      assertion: "C++"             # *断言时必填
+      assertype: 'in'                # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
+  element:                    # 操作步骤 /列表
+    - casesteid: 1            # 操作步骤
+      types: name             # 定位类型  支持('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function')
+      operate: input          # 操作类型 支持 input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉) get_html(获取当前网页信息) get_url(获取当前url)* 注意 types = function  时  operate类型必须为 get_html get_url  locate可为空
+      locate: wd              # 定位元素
+      info: 点击输入框收入       # 操作说明
+      expect:                 # 预期结果
+    - casesteid: 2
+      types: id
+      operate: click
+      locate: su
+      info: 点击搜索按钮
+      expect:
+    - casesteid: 3
+      types: function
+      operate: get_html
+      locate:
+      info: 获取当前HTML页面 # 此步骤断言
+      expect:
+
+
+

@@ -23,7 +23,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from public.common import ErrorExcep,logger
+from public.common import ErrorExcep, logger, is_assertion
 from public.reda_data import GetLocatorYmal, GetCaseYmal
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
@@ -471,7 +471,7 @@ class Base:
             # 单个定位提取文本元素必须是唯一 如果多个时默认返回第一个
             return self.used_operate(types=types, locate=locate).send_keys(Keys.ENTER)
 
-    def used_sendkeyUP(self, types, locate,index=None):
+    def used_sendkeyUP(self, types, locate, index=None):
         """
         按下 键盘 上
         :param types:
@@ -492,7 +492,7 @@ class Base:
 
             self.used_operate(types=types, locate=locate).send_keys(Keys.UP)
 
-    def used_sendkeyDOWN(self, types, locate,index=None):
+    def used_sendkeyDOWN(self, types, locate, index=None):
         """
         按下 键盘 下
         :param types: 定位类型
@@ -514,7 +514,8 @@ class Base:
 
             self.used_operate(types=types, locate=locate).send_keys(Keys.DOWN)
 
-
+    def used_open_url(self):
+        pass
 
     def used_operate(self, types, locate, el=None, ):
         """
@@ -772,8 +773,7 @@ class WebBase(Base):
 
         if operate in (
                 'text', 'click', 'input', 'clear', 'jsclear', 'submit', 'clear_continue_input',
-                'jsclear_continue_input',
-                'scroll'):
+                'jsclear_continue_input', 'scroll', 'get_html','get_url'):
             if operate == 'text':  # 提取文本
                 return self.used_text(types=types, locate=locate, index=index)
 
@@ -806,11 +806,18 @@ class WebBase(Base):
                 if text is not None:
                     return self.used_jsclear_continue_input(types=types, locate=locate, text=text, index=index)
                 logger.info(' 函数必须传递 text 参数')
+
+            elif operate == 'get_html':  # 获取当前html信息 操作类型必须是 types必须是 function 时
+                self.sleep(1)
+                return self.get_url_html
+            elif operate == 'get_url':  # 获取当前url  types必须是 function 时
+                self.sleep(1)
+                return self.get_url
         else:
             logger.error(f'输入的{operate}暂时不支持此操作！！！')
             logger.error("""
         目前只支持类型 ： 类型input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
-            """)
+            ,get_html(获取当前网页信息) get_url(获取当前url)""")
             raise ErrorExcep(f'输入的{operate}暂时不支持此操作！！！')
 
     def web_expression(self, types, locate, operate=None, text=None, index=None, notes=None, ):
@@ -825,7 +832,7 @@ class WebBase(Base):
         :return:
         """
 
-        if types in ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'):
+        if types in ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function'):
             logger.info(notes)
             return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text,
                                                      index=index, )
@@ -850,6 +857,7 @@ class WebBase(Base):
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
+            # if isinstance(text, list) 多步骤链接时
             if isinstance(text, list) and (
                     locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
@@ -861,3 +869,51 @@ class WebBase(Base):
                                              text=text, index=locator_data.listindex(locator))
             self.sleep(wait)
         return relust
+
+
+class AutoRunCase(WebBase):
+    """
+    自动执行测试用列
+    """
+
+    def run(self, yamlfile, case, test_date=None, assertion=None, assertype=None, wait=0.1):
+        """
+        自动执行定位步骤
+        :param yamlfile:  yaml文件
+        :param case: yaml定位用例
+        :param test_date:  测试数据
+        :param assertion:  断言预期内容
+        :param assertype:  断言预期类型
+        :param wait:  没步骤等待多少秒
+        :return:
+        """
+
+        if assertion is not None and assertype is None:
+            logger.error('assertion有值时assertype不能为空')
+            raise ErrorExcep('assertion有值时assertype不能为空')
+
+        relust = None
+
+        locator_data = self.get_case(yamlfile, case)
+        locator_step = locator_data.stepCount()
+
+        for locator in range(locator_step):
+
+            if isinstance(test_date, (list, tuple)) and (
+                    locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
+
+                self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                    operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                    text=test_date[locator], index=locator_data.listindex(locator))
+            else:
+                relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             index=locator_data.listindex(locator))
+            self.sleep(wait)
+
+        if assertion is not None and assertype is not None and relust is not None:
+            logger.info('开始断言参数！！！')
+            is_assertion(expect=assertion, actual=relust, types=assertype)
+            logger.info('执行用列断言成功！！！')
+        else:
+            logger.info('执行用列完成！！！')

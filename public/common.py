@@ -15,6 +15,59 @@ from config.setting import IS_CLEAN_REPORT
 from config.ptahconf import  PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR,LOG_DIR,DIFF_IMGPATH
 
 
+def is_assertion(expect, actual, types):
+    """
+    断言参数
+    :param expect: 预期
+    :param actual: 实际
+    :param types: 断言类型
+    :return:
+    """
+    if types == '==':
+        assert expect == actual
+    elif types == '!=':
+        assert expect != actual
+    elif types == 'in':
+        assert expect in actual
+    elif types == 'notin':
+        assert expect not in actual
+    else:
+        logger.error('输入的类型不支持！！')
+
+def facename(func):
+    """
+    获取函数名称 *装饰器
+    :param func:
+    :return:
+    """
+
+    def wrapper(*args, **kwargs):
+        name = func.__name__
+        return name
+
+    return wrapper
+
+
+def ymal(*args, **kwargs):
+    """
+    装饰器
+    获取当前运行文件的py文件并转为yaml
+    :param args:
+    :param kwargs:
+    :return:
+    """
+
+    def getyaml(func):
+        def yaml():
+            # name=func.__name__
+            yamlfile = args[0](__file__).name.replace('py', 'yaml')
+            return yamlfile  # ,name
+
+        return yaml
+
+    return getyaml
+
+
 # 获取运行函数名称
 def get_run_func_name():
     """

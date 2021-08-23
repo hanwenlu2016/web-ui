@@ -79,7 +79,7 @@ class GetLocatorYmal:
      获取测试用例 locatorYaml数据类
     """
 
-    def __init__(self, yaml_name: str, case_name: str) -> None:
+    def __init__(self, yaml_name: str, case_name: str,ymalpath=False) -> None:
         """
         :param yaml_name:  yaml 文件名称
         :param case_name:  用列名称 对应 yaml 用列
@@ -455,6 +455,7 @@ class GetCaseYmal(GetLocatorYmal):
         self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
 
 
+
 # faker 随机数据类
 class RandomData:
     """
@@ -625,6 +626,7 @@ def reda_web_casedata(yamlname, casename):
         return listdata  # 单个参数返回列表
     else:
         return testdata
+
 
 
 #  快速获取测试数据 *字典 API
