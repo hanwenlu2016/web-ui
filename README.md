@@ -8,10 +8,23 @@
 ###### 设计思路
 
 
-
   web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成) 
 做用例管理，定时任务分配，测试工具集合。
 
+
+```css 
+！！！ M端(django+rest_framework+react）此部分由于设计到公司的业务暂时不做了开源！！！
+```
+
+```css 
+-- 不过本人目前找时间在重新写一个M端管理平台 (django+mtv模式)
+```
+
+初步效果如下：
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/001.png)
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/003.png)
 
 
 ###### 使用说明
@@ -78,7 +91,9 @@ python3 run.py
 
 
 
-管理技术由 django+rest_framework+react实际 主要来管理C端用列，定时任务自动跑任务，工具集成等！
+~~管理技术由 django+rest_framework+react实际 主要来管理C端用列，定时任务自动跑任务，工具集成等！ 此部分由于设计到公司的业务暂时不做了开源
+
+
 
 
 
@@ -131,6 +146,6 @@ yaml文件定位用例数据分离，代码优化！
 
 增加http接口测试功能！！修复已知BUG!
 
-2021 -06 -22
+2021 -07 -29
 
-修复已知BUG!增加demo用例。。
+优化沉余代码，调整部分类结构修复BUG。
