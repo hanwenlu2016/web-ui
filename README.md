@@ -22,7 +22,7 @@
 -- 不过本人目前找时间在重新写一个M端管理平台 (django+mtv模式)
 ```
 
-初步效果如下：
+初步效果如下 [对应项目](https://github.com/hanwenlu2016/Salvation) 有时间持续更新！：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/001.png)
 
