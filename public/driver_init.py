@@ -13,7 +13,7 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.service import Service
 
-from public.common import ErrorExcep,logger
+from public.common import ErrorExcep, logger
 from config.ptahconf import WIN_CHROMEDRIVER, LUINX_CHROMEDRIVER, MAC_CHROMEDRIVER
 from config.ptahconf import WIN_FIREFOXDRIVER, LUINX_FIREFOXDRIVER, MAC_FIREFOXDRIVER
 from config.ptahconf import IE_PATH
@@ -303,4 +303,3 @@ class WebInit:
         except Exception as e:
             logger.error(f'浏览器驱动启动失败 {e}')
             return False
-

@@ -14,7 +14,6 @@ from public.reda_data import reda_web_casedata
 from public.common import ImgDiff
 from public.api_base import apiexe
 
-
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 
 
@@ -41,4 +40,3 @@ class TestBaiDu:
             search_relust = baidu.screen_shot('search')
             df = ImgDiff.ahaDiff('python.png', search_relust)
             assert df < 10
-

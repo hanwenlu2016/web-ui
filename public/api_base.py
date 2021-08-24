@@ -203,7 +203,7 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
             params.pop('assertion')
             filename = params.pop('filename')
             filepath = params.pop('filepath')
-        except Exception :
+        except Exception:
             pass
 
     # 判断请求类型是否支持

@@ -13,8 +13,7 @@ from typing import List
 import pytest
 
 from config.ptahconf import *
-from public.common import DelReport, ErrorExcep,logger
-
+from public.common import DelReport, ErrorExcep, logger
 
 OUT_TITLE = """
 ══════════════════════════════════════════
@@ -24,7 +23,6 @@ OUT_TITLE = """
 """
 
 logger.info(OUT_TITLE)
-
 
 
 class RunPytest:
@@ -170,17 +168,14 @@ class RunPytest:
         DelReport().run_del_report()
 
         pytest.main(
-            ['-m', 'testbaidu_web1','-n=1','--reruns=0', '--alluredir',f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+            ['-m', 'testbaidu_web1', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
         # os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
         # logger.info('测试报告生成完成！')
 
 
-
-
 if __name__ == '__main__':
-
-    #RunPytest.run()
+    # RunPytest.run()
     RunPytest.run_bebug()
 
 # Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称)

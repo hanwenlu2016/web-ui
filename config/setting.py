@@ -12,8 +12,7 @@ IS_CLEAN_REPORT = False  # 是否清除 测试历史测试报告结果 * 默认�
 
 IS_REDIS = False  # 是否读取redis 数据 (完成代码用列后导入管理平台时使用) 默认不读取 #False/True
 
-
-LEVEL=  'DEBUG'  #'INFO'  #'DEBUG'  # INFO 日志级别
+LEVEL = 'DEBUG'  # 'INFO'  #'DEBUG'  # INFO 日志级别
 ########## selenium/appium配置
 IMPLICITLY_WAIT_TIME = 10  # 显示等待最长时间 /s
 
@@ -24,7 +23,7 @@ API_URL = "https://github.com/"  # "https://github.com/" #'"http://192.168.7.101
 
 TIMEOUT = 5  # 接口请求超时时间 /S
 
-HEADERS = {'Content-Type': 'application/json',}
+HEADERS = {'Content-Type': 'application/json', }
 
 ########## Web端配置
 URL = "https://www.baidu.com/"  # # 项目地址 web 时选择
@@ -49,7 +48,7 @@ ANDROID_CAPA = {"platformName": PLATFORM,
                 "autoGrantPermissions": True,  # 让appium自动授权app权限，如果noReset为True，则该条不生效。
                 "newCommandTimeout": 60,  # 为了结束Appium会话，会设置一个等待从客户端发送命令的超时时间，默认为60秒，一般不需要设置
                 "deviceReadyTimeout": 60,  # 等待设备就绪的时间
-                "unicodeKeyboard": True, # 使用 unicodeKeyboard 的编码方式来发送字符串
+                "unicodeKeyboard": True,  # 使用 unicodeKeyboard 的编码方式来发送字符串
                 "noReset": True,  # 启动app时不要清除app里的原有的数据
                 }  # 安卓参数
 

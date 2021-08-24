@@ -17,10 +17,7 @@ import pytest
 
 from pageobj.android import OpenWeChatPage
 
-
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
-
-
 
 
 class TestAndroidDemo:
@@ -35,4 +32,3 @@ class TestAndroidDemo:
             op = OpenWeChatPage(appDriver)
             op.click_login_button()
             op.sleep(3)
-

@@ -15,6 +15,5 @@ yamlfile = os.path.basename(__file__).replace('py', 'yaml')
 
 class OpenWeChatPage(AppBase):
 
-    def click_login_button(self,):
-
-        self.appexe(yamlfile, 'click_login_button',)
+    def click_login_button(self, ):
+        self.appexe(yamlfile, 'click_login_button', )

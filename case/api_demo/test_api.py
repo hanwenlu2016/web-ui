@@ -12,9 +12,7 @@ from public.common import logger
 from public.api_base import apiexe
 from public.reda_data import reda_api_casedata
 
-
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
-
 
 
 class TestApiDemo:
@@ -31,8 +29,5 @@ class TestApiDemo:
     def test_api(self, data):
         with allure.step('登录接口'):
             ret = apiexe(yamlfile, 'test_api')
-            assertion=data.get('assertion')
+            assertion = data.get('assertion')
             assert assertion == ret.status_code
-
-
-

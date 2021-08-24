@@ -14,7 +14,6 @@ from public.reda_data import reda_web_casedata
 from public.common import ImgDiff
 from public.api_base import apiexe
 
-
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 
 
@@ -27,9 +26,7 @@ class TestBaiDu:
     @pytest.mark.testbaidu_web1  # 用列标记
     @pytest.mark.parametrize('testdate', reda_web_casedata(yamlfile, 'test_baidu_search'))  # 测试数据
     def test_baidu_search(self, webDriver, testdate):
-
         with allure.step('输入搜索内容'):
             baidu = AutoRunCase(webDriver)
 
-            baidu.run(yamlfile,'test_baidu_search',test_date=testdate,forwait=1)
-
+            baidu.run(yamlfile, 'test_baidu_search', test_date=testdate, forwait=1)

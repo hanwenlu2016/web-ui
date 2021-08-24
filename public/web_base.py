@@ -735,7 +735,7 @@ class WebBase(Base):
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
 
-    def get_loca(self, yaml_names=None, case_names=None,):
+    def get_loca(self, yaml_names=None, case_names=None, ):
         """
         获取定位步骤用例数据
         :param yaml_names: ymal 路径
@@ -900,7 +900,6 @@ class AutoRunCase(WebBase):
         :param locawait:  多步骤定位操作等待 /s
         :return:
         """
-
 
         relust = None
 

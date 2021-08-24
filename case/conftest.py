@@ -6,9 +6,7 @@
 
 import pytest
 
-from public.driver_init import WebInit,AppInit
-
-
+from public.driver_init import WebInit, AppInit
 
 
 @pytest.fixture(scope='function')
@@ -24,4 +22,3 @@ def appDriver():
     driver = AppInit().setup()
     yield driver
     driver.quit()
-

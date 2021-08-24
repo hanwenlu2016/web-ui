@@ -28,8 +28,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from appium.webdriver.common.touch_action import TouchAction
 
-from public.reda_data import  GetCaseYmal
-from public.common import ErrorExcep,logger
+from public.reda_data import GetCaseYmal
+from public.common import ErrorExcep, logger
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
 
@@ -1173,7 +1173,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
 
         return relust
 
-    def get_loca(self, yaml_names=None, case_names=None,):
+    def get_loca(self, yaml_names=None, case_names=None, ):
         """
         获取定位步骤用例数据
         :param yaml_names: ymal 路径

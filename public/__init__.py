@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
+
 class Action():
     def __init__(self):
         # 驱动配置
@@ -13,7 +14,7 @@ class Action():
             'appPackage': 'com.jingdong.app.mall',
             'appActivity': 'main.MainActivity'
         }
-        self.driver = webdriver.Remote("http://192.168.203.5:4723" + "/wd/hub",self.desired_caps)
+        self.driver = webdriver.Remote("http://192.168.203.5:4723" + "/wd/hub", self.desired_caps)
         self.wait = WebDriverWait(self.driver, 10)
 
     def comments(self):
@@ -43,6 +44,7 @@ class Action():
     def main(self):
         self.comments()
         self.scroll()
+
 
 if __name__ == '__main__':
     action = Action()

@@ -11,24 +11,24 @@ sys.path.append(os.pardir)
 from public.common import logger
 from public.web_base import WebBase
 
-yamlfile = os.path.basename(__file__).replace('py', 'yaml') #获取当前目运行文件 并替换为 yaml 后缀
+yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件 并替换为 yaml 后缀
 
 '''
 
 pageobj  对应 locatorYAML 操作页面
 '''
 
+
 class BaiDu(WebBase):
 
-
-    def input_search_content(self,content):
+    def input_search_content(self, content):
         """
         输入搜索内容
         :param content: 输入内容
         :return:
         """
 
-        self.webexe(yamlfile, 'input_search_content',text=content)
+        self.webexe(yamlfile, 'input_search_content', text=content)
 
     def click_search_button(self):
         """

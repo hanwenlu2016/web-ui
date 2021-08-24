@@ -1,4 +1,3 @@
-
 #web 定位模板
 #- casename: # 测试用例
 #  title: #用例标题
@@ -23,9 +22,9 @@
 - casename: input_search_content     # 对应类的 函数
   title: 输入搜索内容            # 操作标题
   precond:        # 前置说明
-  testdata:    # 测试数据 /列表
+  testdata: # 测试数据 /列表
     - content: python
-  element:    # 操作步骤 /列表
+  element: # 操作步骤 /列表
     - casesteid: 1      # 操作步骤
       types: name      # 定位类型  支持 id/name/xpath/css/class/link/partlink/tag 对应源码web_base.p 325行
       operate: input    # 操作类型   input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、滚动下拉到指定位置(scroll)
