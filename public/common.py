@@ -4,15 +4,17 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2021/2/1  16:11
 
-import os, sys, time,re
+import os, sys, time
+import re
 import shutil
-
+import os
 import cv2
+
 import numpy as np
 from loguru import logger
 
-from config.setting import IS_CLEAN_REPORT
-from config.ptahconf import  PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR,LOG_DIR,DIFF_IMGPATH
+from config.setting import IS_CLEAN_REPORT, LEVEL
+from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH
 
 
 def is_assertion(expect, actual, types):
@@ -31,8 +33,11 @@ def is_assertion(expect, actual, types):
         assert expect in actual
     elif types == 'notin':
         assert expect not in actual
+    elif types == None:
+        pass
     else:
         logger.error('输入的类型不支持！！')
+
 
 def facename(func):
     """
@@ -83,6 +88,7 @@ def get_run_func_name():
         Upframe = frameObj.f_back
         return Upframe.f_code.co_name
 
+
 # 提取字符中的整数
 def extract_str_in_int(string: str) -> list:
     """
@@ -93,7 +99,8 @@ def extract_str_in_int(string: str) -> list:
     findlist = re.findall(r'[1-9]+\.?[0-9]*', string)
     return findlist
 
-#自定义异常类
+
+# 自定义异常类
 class ErrorExcep(Exception):
     """
     自定义异常类
@@ -102,7 +109,8 @@ class ErrorExcep(Exception):
     def __init__(self, message):
         super().__init__(message)
 
-#日志设置类
+
+# 日志设置类
 class SetLog:
     """
     日志设置类  使用 logger 请从此logs目录导入
@@ -117,9 +125,24 @@ class SetLog:
     logger.add(LOG_PATH, rotation="00:00", encoding='utf-8')
 
     logger.add(ERR_LOG_PATH, rotation="00:00", encoding='utf-8', level='ERROR', )
+    logger.remove()  # 删去import logger之后自动产生的handler，不删除的话会出现重复输出的现象
+    handler_id = logger.add(sys.stderr, level=LEVEL)  # 添加一个可以修改控制的handler
+
 
 # 删除测试报告
 class DelReport:
+
+    def mkdir(self, path):
+        """
+        文件夹不存在就创建
+        :param path:
+        :return:
+        """
+        folder = os.path.exists(path)
+        if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+            os.makedirs(path)
+        else:
+            pass
 
     def clean_report(self, filepath: str) -> None:
         """
@@ -153,11 +176,16 @@ class DelReport:
             try:
                 dir_list = [PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR]
                 for dir in dir_list:
+                    self.mkdir(dir)
                     self.clean_report(dir)
+                logger.info('清除测试报告中.....')
             except Exception as e:
                 logger.error(e)
 
-# 图片算法类
+        else:
+            logger.warning('清理报告未启用！！')
+
+
 class AlgorithmClassify:
     """
     图片算法类
@@ -261,7 +289,7 @@ class AlgorithmClassify:
         degree = degree / len(hist1)
         return degree
 
-# 图片对比类
+
 class ImgDiff:
     """
     图片对比运用类
@@ -322,7 +350,7 @@ class ImgDiff:
         for im1, im2 in zip(sub_image1, sub_image2):
             sub_data += AlgorithmClassify.calculate(im1, im2)
         sub_data = sub_data / 3
-        logger.info(f'三直方图算法相似度:{sub_data}')
+        logger.debug(f'三直方图算法相似度:{sub_data}')
         return sub_data
 
     @classmethod
@@ -338,7 +366,7 @@ class ImgDiff:
             hash1 = AlgorithmClassify.aHash(cv2.imread(img1))
             hash2 = AlgorithmClassify.aHash(cv2.imread(img2))
             n = cls.cmpHash(hash1, hash2)
-            logger.info(f'均值哈希算法相似度:{n}')
+            logger.debug(f'均值哈希算法相似度:{n}')
             return n
         except Exception as e:
             logger.error(f'对比均值哈希错误:{e}')
@@ -356,7 +384,7 @@ class ImgDiff:
             hash1 = AlgorithmClassify.dHash(cv2.imread(img1))
             hash2 = AlgorithmClassify.dHash(cv2.imread(img2))
             n = cls.cmpHash(hash1, hash2)
-            logger.info(f'差值哈希算法相似度:{n}')
+            logger.debug(f'差值哈希算法相似度:{n}')
             return n
         except Exception as e:
             logger.error(f'对比差值哈希错误:{e}')
@@ -374,11 +402,10 @@ class ImgDiff:
             hash1 = AlgorithmClassify.pHash(cv2.imread(img1))
             hash2 = AlgorithmClassify.pHash(cv2.imread(img2))
             n = cls.cmpHash(str(hash1), str(hash2))
-            logger.info(f'感知哈希算法相似度:{n}')
+            logger.debug(f'感知哈希算法相似度:{n}')
             return n
         except Exception as e:
             logger.error(f'对比差感知哈希错误:{e}')
-
 
 #
 # d = ImgDiff.dhaDiff('test.png1',

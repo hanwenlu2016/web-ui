@@ -12,6 +12,8 @@ IS_CLEAN_REPORT = False  # 是否清除 测试历史测试报告结果 * 默认�
 
 IS_REDIS = False  # 是否读取redis 数据 (完成代码用列后导入管理平台时使用) 默认不读取 #False/True
 
+
+LEVEL=  'DEBUG'  #'INFO'  #'DEBUG'  # INFO 日志级别
 ########## selenium/appium配置
 IMPLICITLY_WAIT_TIME = 10  # 显示等待最长时间 /s
 

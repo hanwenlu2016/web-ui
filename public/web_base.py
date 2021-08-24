@@ -24,7 +24,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
 from public.common import ErrorExcep, logger, is_assertion
-from public.reda_data import GetLocatorYmal, GetCaseYmal
+from public.reda_data import GetCaseYmal
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
 
@@ -40,8 +40,11 @@ class Base:
         :param s:
         :return:
         """
-        time.sleep(s)
-        logger.info('强制休眠{}'.format(s))
+        if s is not None:
+            logger.debug('强制等待 {} /s'.format(s))
+            time.sleep(s)
+        else:
+            pass
 
     @property
     def get_title(self):
@@ -50,7 +53,7 @@ class Base:
         :return:
         """
         title = self.driver.title
-        logger.info(f"获取当前title {title}")
+        logger.debug(f"获取当前title {title}")
         return title
 
     @property
@@ -60,7 +63,7 @@ class Base:
         :return:
         """
         currentURL = self.driver.current_url
-        logger.info(f"获取当前url {currentURL}")
+        logger.debug(f"获取当前url {currentURL}")
         return currentURL
 
     @property
@@ -77,7 +80,7 @@ class Base:
         刷新当前页面
         :return:
         """
-        logger.info('刷新当前页面')
+        logger.debug('刷新当前页面')
         return self.driver.refresh()
 
     def back(self):
@@ -85,7 +88,7 @@ class Base:
         返回上一个页面
         :return:
         """
-        logger.info('返回上一个页面')
+        logger.debug('返回上一个页面')
         return self.driver.back()
 
     def forward(self):
@@ -93,7 +96,7 @@ class Base:
         前进到下一个页面
         :return:
         """
-        logger.info('前进到下一个页面')
+        logger.debug('前进到下一个页面')
         return self.driver.forward()
 
     def baclick(self):
@@ -120,10 +123,10 @@ class Base:
         :return:
         """
         if direction == "up":
-            logger.info('滚动到顶部')
+            logger.debug('滚动到顶部')
             self.driver.execute_script("window.scrollBy(0, -10000);")
         if direction == "down":
-            logger.info('滚动到底部')
+            logger.debug('滚动到底部')
             self.driver.execute_script("window.scrollBy(0, 10000)")
 
     def web_scroll_to_ele(self, types, locate, index=None):
@@ -151,7 +154,7 @@ class Base:
         :return:
         """
         current_window = self.driver.current_window_handle
-        logger.info(f'获取当前句柄 {current_window}')
+        logger.debug(f'获取当前句柄 {current_window}')
         return current_window
 
     def all_handle(self):
@@ -160,7 +163,7 @@ class Base:
         :return:  list
         """
         handle = self.driver.window_handles
-        logger.info(f'获取所有句柄 {handle}')
+        logger.debug(f'获取所有句柄 {handle}')
         return handle
 
     def switch_windows(self, index):
@@ -171,11 +174,11 @@ class Base:
         """
         indexHandle = self.all_handle()[index]
         try:
-            logger.info(f'窗口已经切换{indexHandle}')
+            logger.debug(f'窗口已经切换{indexHandle}')
             return self.driver.switch_to.window(indexHandle)
 
         except Exception as e:
-            logger.error("查找窗口句柄handle异常-> {0}".format(e))
+            logger.debug("查找窗口句柄handle异常-> {0}".format(e))
 
     def switch_frame(self, el):
         """
@@ -206,7 +209,7 @@ class Base:
         """
         try:
             accept = self.driver.switch_to.alert.accept()
-            logger.info('警告框已确认')
+            logger.debug('警告框已确认')
             return accept
         except Exception as e:
             logger.error("查找alert弹出框异常-> {0}".format(e))
@@ -218,7 +221,7 @@ class Base:
         """
         try:
             accept = self.driver.switch_to.alert.dismiss()
-            logger.info('警告框已取消')
+            logger.debug('警告框已取消')
             return accept
         except Exception as e:
             logger.error("查找dismiss弹出框异常-> {0}".format(e))
@@ -230,7 +233,7 @@ class Base:
         """
         try:
             accept = self.driver.switch_to.alert.text
-            logger.info(f'警告框文本信息为 {accept}')
+            logger.debug(f'警告框文本信息为 {accept}')
             return accept
         except Exception as e:
             logger.error("查找alert弹出框异常-> {0}".format(e))
@@ -252,7 +255,7 @@ class Base:
             allure.attach(self.driver.get_screenshot_as_png(),
                           name=fileName,
                           attachment_type=allure.attachment_type.PNG)
-        logger.info(f"截图成功已经存储在: {filePath}")
+        logger.debug(f"截图成功已经存储在: {filePath}")
         return filePath
 
     def get_dropdown_options_count(self, types, locate):
@@ -277,7 +280,7 @@ class Base:
         """
         element = self.used_operate(types, locate)
         hover = ActionChains(self.driver).move_to_element(element).perform()
-        logger.info(f"鼠标悬停位置{locate}")
+        logger.debug(f"鼠标悬停位置{locate}")
         return hover
 
     def element_hover_clicks(self, types, locate, index=None):
@@ -289,9 +292,9 @@ class Base:
         """
         element = self.used_operate(types, locate)
         ActionChains(self.driver).move_to_element(element).perform()
-        time.sleep(0.5)
+        self.sleep(0.5)
         self.used_click(types=types, locate=locate, index=index)
-        logger.info(f"鼠标悬停位置{locate}")
+        logger.debug(f"鼠标悬停位置{locate}")
 
     def save_as_img(self, types, locate, filename, sleep=1):
         """
@@ -314,14 +317,14 @@ class Base:
             pyperclip.copy(pic_dir)
 
             # 等待窗口打开，以免命令冲突，粘贴失败，试过很多次才有0.8，具体时间自己试
-            time.sleep(sleep)
+            self.sleep(sleep)
 
             # 粘贴
             pyautogui.hotkey('ctrlleft', 'V')
 
             # 保存
             pyautogui.press('enter')
-            logger.info(f'图片路径为{filename}！')
+            logger.debug(f'图片路径为{filename}！')
             return pic_dir
         return None
 
@@ -349,7 +352,7 @@ class Base:
             pyautogui.hotkey('ctrl', 'v')
 
             pyautogui.press('enter', presses=2)
-            logger.info(f'上传文件路径{filepath}')
+            logger.debug(f'上传文件路径{filepath}')
             return True
         return False
 
@@ -394,7 +397,7 @@ class Base:
         elif locatorType == "tag":
             return By.TAG_NAME
         else:
-            logger.info(f"Locator type {locatorType} not correct/supported")
+            logger.error(f"Locator type {locatorType} not correct/supported")
             raise Exception('定位类型错误！！！！')
 
     def isElementDisplayed(self, types, locate):
@@ -412,7 +415,7 @@ class Base:
             element = self.used_operate(types, locate)
         if element is not None:
             isDisplayed = element.is_displayed()
-            logger.info(f"Element is displayed with locate: {locate} and types: {types}")
+            logger.error(f"Element is displayed with locate: {locate} and types: {types}")
         else:
             logger.error(f"Element is not displayed with locate: {locate} and types: {types}")
         return isDisplayed
@@ -428,9 +431,11 @@ class Base:
             elementList = self.driver.find_elements(types, locate)
             if len(elementList) > 0:
                 logger.info(f"找到元素 {locate}")
+                logger.debug(f"找到元素 {locate}")
                 return True
             else:
-                logger.info("元素未找到")
+                logger.info(f"找到元素 {locate}")
+                logger.error("元素未找到")
                 return False
 
     def waitForElement(self, types, locate):
@@ -447,6 +452,7 @@ class Base:
 
             element = wait.until(EC.presence_of_element_located((types, locate)))
             logger.info(f'等待页面元素 {locate} {types}  存在')
+
             return element
         except Exception as e:
             logger.error('等待元素错误,元素在等待时间内未出现！')
@@ -705,7 +711,7 @@ class Base:
         """
 
         self.used_clear(types=types, locate=locate, index=index)
-        time.sleep(0.5)
+        self.sleep(0.5)
         self.used_input(types=types, locate=locate, text=text, index=index)
 
     def used_jsclear_continue_input(self, types, locate, text, index=None):
@@ -720,7 +726,7 @@ class Base:
         """
 
         self.js_clear(types=types, locate=locate, index=index)
-        time.sleep(0.5)
+        self.sleep(0.5)
         self.used_input(types=types, locate=locate, text=text, index=index)
 
 
@@ -729,41 +735,27 @@ class WebBase(Base):
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
 
-    def get_locator(self, yaml_names=None, case_names=None):
+    def get_loca(self, yaml_names=None, case_names=None,):
         """
-        获取定位数据
-        :param yaml_names:  ymal 路径
-        :param case_names:   用例名称
-        :return:
-        """
-
-        if yaml_names is not None:
-            d = GetLocatorYmal(yaml_name=yaml_names, case_name=case_names)
-            return d
-        else:
-            raise ErrorExcep('yaml路径不能为空！')
-
-    def get_case(self, yaml_names=None, case_names=None):
-        """
-        获取用例数据
+        获取定位步骤用例数据
         :param yaml_names: ymal 路径
         :param case_names:  用例名称
+        :param case_names: 默认读取 locatorYAML 路径数据 FLASE 读取CASEYMAL_DIR
         :return:
         """
         if yaml_names is not None:
-            d = GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
-            return d
+            return GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
         else:
             raise ErrorExcep('yaml路径不能为空！')
 
-    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, index=None):
+    def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, notes=None, index=None, wait=None):
         """
-        * 私有方法不继承
         判断 CommonlyUsed 执行操作
         :param locate:  表达 或者定位元素
         :param operate: 执行操作 类型input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
         :param text: 输入文本内容
-        :param el: 输入文本内容
+        :param index: 多个步骤列表索引
+        :param wait: 操作等待
         :return:
         """
 
@@ -773,45 +765,64 @@ class WebBase(Base):
 
         if operate in (
                 'text', 'click', 'input', 'clear', 'jsclear', 'submit', 'clear_continue_input',
-                'jsclear_continue_input', 'scroll', 'get_html','get_url'):
+                'jsclear_continue_input', 'scroll', 'get_html', 'get_url'):
             if operate == 'text':  # 提取文本
+                self.sleep(wait)
+                logger.debug(notes)
                 return self.used_text(types=types, locate=locate, index=index)
 
             elif operate == 'click':  # 点击操作
-                self.used_click(types=types, locate=locate, index=index)
+                self.sleep(wait)
+                logger.debug(notes)
+                return self.used_click(types=types, locate=locate, index=index)
 
             elif operate == 'submit':  # 提交操作
-                self.used_submit(types=types, locate=locate, index=index)
+                self.sleep(wait)
+                logger.debug(notes)
+                return self.used_submit(types=types, locate=locate, index=index)
 
             elif operate == 'input':  # 输入操作
                 if text is not None:
+                    self.sleep(wait)
+                    logger.debug(notes)
                     return self.used_input(types=types, locate=locate, text=text, index=index)
                 logger.error(' 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
+                self.sleep(wait)
+                logger.debug(notes)
                 return self.used_clear(types=types, locate=locate, index=index)
 
             elif operate == 'jsclear':  # js清除操作
+                self.sleep(wait)
+                logger.debug(notes)
                 return self.js_clear(types=types, locate=locate, index=index)
 
             elif operate == 'scroll':  # 滚动下拉到指定位置
+                self.sleep(wait)
+                logger.debug(notes)
                 return self.web_scroll_to_ele(types=types, locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
+                    self.sleep(wait)
                     return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
-                logger.info(' 函数必须传递 text 参数')
+                logger.debug(' 函数必须传递 text 参数')
 
             elif operate == 'jsclear_continue_input':  # js清除后在输入操作
                 if text is not None:
+                    self.sleep(wait)
+                    logger.debug(notes)
                     return self.used_jsclear_continue_input(types=types, locate=locate, text=text, index=index)
-                logger.info(' 函数必须传递 text 参数')
+                logger.debug(' 函数必须传递 text 参数')
 
             elif operate == 'get_html':  # 获取当前html信息 操作类型必须是 types必须是 function 时
-                self.sleep(1)
+                self.sleep(wait)
+                logger.debug(notes)
                 return self.get_url_html
             elif operate == 'get_url':  # 获取当前url  types必须是 function 时
-                self.sleep(1)
+                self.sleep(wait)
+                logger.debug(notes)
                 return self.get_url
         else:
             logger.error(f'输入的{operate}暂时不支持此操作！！！')
@@ -820,7 +831,7 @@ class WebBase(Base):
             ,get_html(获取当前网页信息) get_url(获取当前url)""")
             raise ErrorExcep(f'输入的{operate}暂时不支持此操作！！！')
 
-    def web_expression(self, types, locate, operate=None, text=None, index=None, notes=None, ):
+    def web_expression(self, types, locate, operate=None, text=None, index=None, notes=None, wait=None):
         """
         web 执行操作判断
         :param types: 定位类型
@@ -829,13 +840,14 @@ class WebBase(Base):
         :param text : 输入文本内容
         :param index:
         :param notes: 帮助说明 /说明此步骤
+        :param wait: 操作等待秒数
         :return:
         """
 
         if types in ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function'):
-            logger.info(notes)
-            return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text,
-                                                     index=index, )
+            return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, notes=notes,
+                                                     text=text,
+                                                     index=index, wait=wait)
 
         else:
             logger.error(f'输入的{types}操作类型，暂时不支持！！')
@@ -853,7 +865,7 @@ class WebBase(Base):
         """
         relust = None  # 断言结果  最后一步才返回
 
-        locator_data = self.get_locator(yamlfile, case)
+        locator_data = self.get_loca(yamlfile, case)
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
@@ -866,7 +878,7 @@ class WebBase(Base):
             else:
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text, index=locator_data.listindex(locator))
+                                             index=locator_data.listindex(locator))
             self.sleep(wait)
         return relust
 
@@ -876,25 +888,23 @@ class AutoRunCase(WebBase):
     自动执行测试用列
     """
 
-    def run(self, yamlfile, case, test_date=None, assertion=None, assertype=None, wait=0.1):
+    def run(self, yamlfile, case, test_date=None, forwait=None):
         """
-        自动执行定位步骤
+        自动执行定位步骤  使用run 函数时 test_date 直接传递为可迭代对象
         :param yamlfile:  yaml文件
         :param case: yaml定位用例
         :param test_date:  测试数据
         :param assertion:  断言预期内容
         :param assertype:  断言预期类型
-        :param wait:  没步骤等待多少秒
+        :param forwait:  多步骤循环等待 /s
+        :param locawait:  多步骤定位操作等待 /s
         :return:
         """
 
-        if assertion is not None and assertype is None:
-            logger.error('assertion有值时assertype不能为空')
-            raise ErrorExcep('assertion有值时assertype不能为空')
 
         relust = None
 
-        locator_data = self.get_case(yamlfile, case)
+        locator_data = self.get_loca(yamlfile, case)
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
@@ -904,16 +914,15 @@ class AutoRunCase(WebBase):
 
                 self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                     operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                    text=test_date[locator], index=locator_data.listindex(locator))
+                                    text=test_date[locator], index=locator_data.listindex(locator),
+                                    wait=locator_data.locawait(locator))
             else:
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             index=locator_data.listindex(locator))
-            self.sleep(wait)
+                                             index=locator_data.listindex(locator), wait=locator_data.locawait(locator))
+            self.sleep(forwait)
 
-        if assertion is not None and assertype is not None and relust is not None:
-            logger.info('开始断言参数！！！')
-            is_assertion(expect=assertion, actual=relust, types=assertype)
-            logger.info('执行用列断言成功！！！')
-        else:
-            logger.info('执行用列完成！！！')
+        if len(locator_data.test_data()) < 1:
+            is_assertion(expect=test_date[-2], actual=relust, types=test_date[-1])
+
+        return relust

@@ -14,7 +14,7 @@ from xlrd import open_workbook
 from public.db import RedisPool
 from public.common import ErrorExcep, logger
 from config.setting import IS_REDIS
-from config.ptahconf import LOCATORYMAL_DIR, CASEYMAL_DIR
+from config.ptahconf import CASEYMAL_DIR, LOCATORYMAL_DIR
 
 fake = Factory().create('zh_CN')
 
@@ -73,13 +73,13 @@ class RedaExcel:
 
 
 # 读取yaml数据
-class GetLocatorYmal:
+class GetCaseYmal:
     """
     步骤数据 locatorYaml
      获取测试用例 locatorYaml数据类
     """
 
-    def __init__(self, yaml_name: str, case_name: str,ymalpath=False) -> None:
+    def __init__(self, yaml_name: str, case_name: str) -> None:
         """
         :param yaml_name:  yaml 文件名称
         :param case_name:  用列名称 对应 yaml 用列
@@ -90,7 +90,10 @@ class GetLocatorYmal:
         self.yaml_name = yaml_name  # yaml 文件名称 拼接后的路径
         self.case_name = case_name  # 用列名称 对应 yaml 用列
 
-        self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
+        if case_name.startswith('test'):
+            self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
+        else:
+            self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
 
     def open_yaml(self):
         """
@@ -165,11 +168,14 @@ class GetLocatorYmal:
         else:
             dataList = self.get_yaml()
 
-        for data in dataList:
-            # 如果用列等于当前 用列就返回
-            if data.get('casename') == self.case_name:
-                return len(data.get('element'))
-        return "casename 不存在！"
+        if dataList:
+            for data in dataList:
+                # 如果用列等于当前 用列就返回
+                if data.get('casename') == self.case_name:
+                    return len(data.get('element'))
+        else:
+            logger.error('用例不存在！请检查ymla文件')
+            raise ErrorExcep('用例不存在！请检查文件')
 
     def get_param(self, value: str) -> str:
         """
@@ -360,7 +366,7 @@ class GetLocatorYmal:
 
     def test_data_list(self, index: int, agrs: str) -> str:
         """
-        **** ！应该会弃用
+
         返回 用列 测试 data 数据列表
         :param index: 列表的索引位置
         :param agrs: 字段的key  因为测试数据是可变的增加的
@@ -394,7 +400,7 @@ class GetLocatorYmal:
             return self.redi_all().get('testdata')
         return self.get_current_data().get('testdata')
 
-    def casesteid(self, index: int) -> str:
+    def casesteid(self, index: int) -> int:
         """
        返回 用列步骤 casesteid 参数
        """
@@ -424,36 +430,17 @@ class GetLocatorYmal:
         """
         return self.get_set(index, 'listindex')
 
+    def locawait(self, index: int or float) -> int or float:
+        """
+        返回 用列步骤 locawait 参数
+        """
+        return self.get_set(index, 'locawait')
+
     def info(self, index: int) -> str:
         """
         返回 用列步骤 info 参数
         """
         return self.get_set(index, 'info')
-
-    def expect(self, index: int) -> str:
-        """
-        返回 用列步骤 expect 参数
-        """
-        return self.get_set(index, 'expect')
-
-
-# 读取yaml数据 -测试数据部分
-class GetCaseYmal(GetLocatorYmal):
-    """
-    用例数据 caseYaml
-    获取测试用例 caseYaml数据类
-    """
-
-    def __init__(self, yaml_name: str, case_name: str):
-        super(GetCaseYmal, self).__init__(yaml_name, case_name)
-        self.isredis = IS_REDIS  # 是否读取reds数据
-        self.modelname = yaml_name  # 模块名称 对应yaml 文件名
-
-        self.yaml_name = yaml_name  # yaml 文件名称 拼接后的路径
-        self.case_name = case_name  # 用列名称 对应 yaml 用列
-
-        self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
-
 
 
 # faker 随机数据类
@@ -608,15 +595,26 @@ class RandomData:
 
 
 #  快速获取测试数据 *元组 WEB、APP
-def reda_web_casedata(yamlname, casename):
+def reda_web_casedata(yamlname, casename, case=False):
     """
     * pytest.mark.parametrize() 读取数据时使用 # d = self.get_locator(yamlfile, 'click_cancel_save')
     快速获取测试数据 *元组
     :param yamlname: yaml 名称
     :param casename:   用例数据
+    :param case=False **在pytest 框架内使用此参数不填  非pytest框架必填
     :return:
     """
     listdata = []
+
+    if case:  # 非测试用列循环使用
+        listdatas = []
+        testdata = GetCaseYmal(yamlname, casename).test_data()
+        if len(testdata) == 1:
+            for i in testdata:
+                for j in i.values():
+                    listdatas.append(j)
+        return listdatas
+
     testdata = GetCaseYmal(yamlname, casename).test_data_values()
 
     if len(testdata[0]) == 1:
@@ -626,7 +624,6 @@ def reda_web_casedata(yamlname, casename):
         return listdata  # 单个参数返回列表
     else:
         return testdata
-
 
 
 #  快速获取测试数据 *字典 API
@@ -640,8 +637,3 @@ def reda_api_casedata(yamlname, casename):
     if IS_REDIS:
         return testdata.test_data()
     return testdata.test_data()
-
-# x=reda_api_casedata('/Users/reda-flight/Desktop/svn/reda-ui-auto/database/caseYAML/test_api.yaml','test_getmodule')
-#
-# print(x)
-# print(type(x))

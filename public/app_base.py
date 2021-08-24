@@ -28,7 +28,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from appium.webdriver.common.touch_action import TouchAction
 
-from public.reda_data import GetLocatorYmal, GetCaseYmal
+from public.reda_data import  GetCaseYmal
 from public.common import ErrorExcep,logger
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
@@ -1173,29 +1173,15 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
 
         return relust
 
-    def get_locator(self, yaml_names=None, case_names=None):
+    def get_loca(self, yaml_names=None, case_names=None,):
         """
-        获取定位数据
-        :param yaml_names:  ymal 路径
-        :param case_names:   用例名称
-        :return:
-        """
-
-        if yaml_names is not None:
-            d = GetLocatorYmal(yaml_name=yaml_names, case_name=case_names)
-            return d
-        else:
-            raise ErrorExcep('yaml路径不能为空！')
-
-    def get_case(self, yaml_names=None, case_names=None):
-        """
-        获取用例数据
+        获取定位步骤用例数据
         :param yaml_names: ymal 路径
         :param case_names:  用例名称
+        :param case_names: 默认读取 locatorYAML 路径数据 FLASE 读取CASEYMAL_DIR
         :return:
         """
         if yaml_names is not None:
-            d = GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
-            return d
+            return GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
         else:
             raise ErrorExcep('yaml路径不能为空！')
