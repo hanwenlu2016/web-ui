@@ -22,7 +22,7 @@
 -- 不过本人目前找时间在重新写一个M端管理平台 (django+mtv模式)
 ```
 
-初步效果如下：
+初步效果如下 [对应项目](https://github.com/hanwenlu2016/Salvation) 有时间持续更新！：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/001.png)
 
@@ -92,14 +92,12 @@ python3 run.py
 管理端功能暂未开发完成，请关注项目。完成后会选择上传开源！
 
 
-
-~~管理技术由 django+rest_framework+react实际 主要来管理C端用列，定时任务自动跑任务，工具集成等！ 此部分由于设计到公司的业务暂时不做了开源
-
+> ~~！！！ 管理技术由 django+rest_framework+react实际 主要来管理C端用列，定时任务自动跑任务，工具集成等！ 此部分由于设计到公司的业务暂时不做了开源！！！~~
 
 
 
 
-管理端用户页面
+管理端用户页面--此部分应用用 [Salvation](https://github.com/hanwenlu2016/Salvation)  替代
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage0.png)
 
