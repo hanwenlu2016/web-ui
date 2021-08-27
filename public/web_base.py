@@ -875,10 +875,16 @@ class WebBase(Base):
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
                                              text=text[locator], index=locator_data.listindex(locator))
-            else:
+            #如果text为空
+            elif text == None:
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
                                              index=locator_data.listindex(locator))
+            #text不为空，单个
+            else:
+                relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             text=text, index=locator_data.listindex(locator))
             self.sleep(wait)
         return relust
 
@@ -915,12 +921,19 @@ class AutoRunCase(WebBase):
                                     operate=locator_data.operate(locator), notes=locator_data.info(locator),
                                     text=test_date[locator], index=locator_data.listindex(locator),
                                     wait=locator_data.locawait(locator))
+
+            # 如果text为空
+            elif test_date == None:
+                relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                         operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                         index=locator_data.listindex(locator), wait=locator_data.locawait(locator))
+            # text不为空，单个时
             else:
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
-                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             index=locator_data.listindex(locator), wait=locator_data.locawait(locator))
-            self.sleep(forwait)
+                                         operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                         text=test_date, index=locator_data.listindex(locator), wait=locator_data.locawait(locator))
 
+            self.sleep(forwait)
         if len(locator_data.test_data()) < 1:
             is_assertion(expect=test_date[-2], actual=relust, types=test_date[-1])
 
