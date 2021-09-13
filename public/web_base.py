@@ -735,19 +735,6 @@ class WebBase(Base):
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
 
-    def get_loca(self, yaml_names=None, case_names=None, ):
-        """
-        获取定位步骤用例数据
-        :param yaml_names: ymal 路径
-        :param case_names:  用例名称
-        :param case_names: 默认读取 locatorYAML 路径数据 FLASE 读取CASEYMAL_DIR
-        :return:
-        """
-        if yaml_names is not None:
-            return GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
-        else:
-            raise ErrorExcep('yaml路径不能为空！')
-
     def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, notes=None, index=None, wait=None):
         """
         判断 CommonlyUsed 执行操作
@@ -869,12 +856,10 @@ class WebBase(Base):
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
-            # if isinstance(text, list) 多步骤链接时
-            if isinstance(text, list) and (
-                    locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
-                relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
-                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text[locator], index=locator_data.listindex(locator))
+            if (locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
+                self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
+                                    operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                    text=text, index=locator_data.listindex(locator))
             else:
                 relust = self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
@@ -903,13 +888,14 @@ class AutoRunCase(WebBase):
 
         relust = None
 
-        locator_data = self.get_loca(yamlfile, case)
+        locator_data = GetCaseYmal(yamlfile, case)
+        test_dict = GetCaseYmal(yamlfile, case).test_data()
+
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
 
-            if isinstance(test_date, (list, tuple)) and (
-                    locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
+            if (locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input')):
 
                 self.web_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                     operate=locator_data.operate(locator), notes=locator_data.info(locator),
@@ -921,7 +907,7 @@ class AutoRunCase(WebBase):
                                              index=locator_data.listindex(locator), wait=locator_data.locawait(locator))
             self.sleep(forwait)
 
-        if len(locator_data.test_data()) < 1:
-            is_assertion(expect=test_date[-2], actual=relust, types=test_date[-1])
-
-        return relust
+        # 断言函数
+        if  ('assertion' and 'assertype') in test_dict[0]  and relust:  # 有断言需求并且有实际值才进行断言
+            is_assertion(test_date, relust)
+        # return relust

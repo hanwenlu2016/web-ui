@@ -1,11 +1,4 @@
-# web 测试用例模板说明
-#- casename: test_login_and_logout  #测试用例 对应测试函数
-#  title: 用户登录登出                 # 用例标题
-#  precond:                          # 前置条件
-#  testdata:                         # 测试数据
-#    - loginname: "admin"
-#      password: "fdr**2020"
-#      assertion: "管理员"    # *断言时必填
+
 
 - model: TestBaiDu  # 对应case的类名称
 

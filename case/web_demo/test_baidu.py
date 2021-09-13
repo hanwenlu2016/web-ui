@@ -10,7 +10,7 @@ import pytest
 import allure
 
 from pageobj.baidu import BaiDu
-from public.reda_data import reda_web_casedata
+from public.reda_data import reda_pytestdata
 from public.common import ImgDiff
 from public.api_base import apiexe
 
@@ -24,7 +24,7 @@ class TestBaiDu:
     @allure.title("输入内容并搜索")  # 用例标题
     @allure.description('输入多参数搜索')  # 用例描述
     @pytest.mark.testbaidu_web  # 用列标记
-    @pytest.mark.parametrize('content', reda_web_casedata(yamlfile, 'test_baidu_search'))  # 测试数据
+    @pytest.mark.parametrize('content', reda_pytestdata(yamlfile, 'test_baidu_search'))  # 测试数据
     def test_baidu_search(self, webDriver, content):
         baidu = BaiDu(webDriver)
 

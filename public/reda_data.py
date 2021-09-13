@@ -595,35 +595,17 @@ class RandomData:
 
 
 #  快速获取测试数据 *元组 WEB、APP
-def reda_web_casedata(yamlname, casename, case=False):
+def reda_pytestdata(yamlname, casename, ):
     """
-    * pytest.mark.parametrize() 读取数据时使用 # d = self.get_locator(yamlfile, 'click_cancel_save')
+    * pytest.mark.parametrize()  *此函数只支持在pytes框架内使用
+    * 如果配合run函数调用自己在pytest.mark.parametrize() 传入列表 否则其它方法传入字段名
     快速获取测试数据 *元组
     :param yamlname: yaml 名称
     :param casename:   用例数据
-    :param case=False **在pytest 框架内使用此参数不填  非pytest框架必填
     :return:
     """
-    listdata = []
-
-    if case:  # 非测试用列循环使用
-        listdatas = []
-        testdata = GetCaseYmal(yamlname, casename).test_data()
-        if len(testdata) == 1:
-            for i in testdata:
-                for j in i.values():
-                    listdatas.append(j)
-        return listdatas
-
     testdata = GetCaseYmal(yamlname, casename).test_data_values()
-
-    if len(testdata[0]) == 1:
-        # 当元组只有一个参数时 以列表方式返回 [(1,), (2,), (3,)] 转为 [1,2,3] 大于2个参数不影响
-        for i in testdata:
-            listdata.append(i[0])
-        return listdata  # 单个参数返回列表
-    else:
-        return testdata
+    return testdata
 
 
 #  快速获取测试数据 *字典 API
@@ -634,6 +616,4 @@ def reda_api_casedata(yamlname, casename):
     """
     testdata = GetCaseYmal(yamlname, casename)
 
-    if IS_REDIS:
-        return testdata.test_data()
     return testdata.test_data()

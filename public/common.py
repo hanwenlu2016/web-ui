@@ -17,26 +17,46 @@ from config.setting import IS_CLEAN_REPORT, LEVEL
 from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH
 
 
-def is_assertion(expect, actual, types):
+def is_assertion(dicts, actual):
     """
     断言参数
-    :param expect: 预期
-    :param actual: 实际
-    :param types: 断言类型
+    :param dicts: dict 断言参数
+    :param actual: 实际结果
+    :return:
+    """
+
+    if dicts is not None:
+
+        is_assertion_results(actual=actual, expect=dicts[-2], types=dicts[-1])
+
+
+def is_assertion_results(actual, expect, types):
+    """
+    断言函数
+    :param actual: 实际结果
+    :param expect:  预期结果
+    :param types:  断言类型    ==(等于) !=(不等于) in(包含) notin(不包含)
     :return:
     """
     if types == '==':
         assert expect == actual
+        return True
     elif types == '!=':
         assert expect != actual
+        return True
     elif types == 'in':
+        logger.info(expect)
         assert expect in actual
+        return True
     elif types == 'notin':
         assert expect not in actual
+        return True
     elif types == None:
-        pass
+        return False
     else:
         logger.error('输入的类型不支持！！')
+        return False
+
 
 
 def facename(func):
