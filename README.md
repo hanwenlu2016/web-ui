@@ -99,14 +99,6 @@ python3 run.py
 
 管理端用户页面--此部分应用用 [Salvation](https://github.com/hanwenlu2016/Salvation)  替代
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage0.png)
-
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage1.png)
-
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/manage2.png)
-
-
-
 管理端管理员后台：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin1.png)
