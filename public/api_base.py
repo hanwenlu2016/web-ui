@@ -101,7 +101,7 @@ class ApiBase:
         if self.headers is not None:
             try:
                 if params is not None:
-                    with requests.get(url, params=json.dumps(params), headers=header, imeout=self.timeout,
+                    with requests.get(url, params=json.dumps(params), headers=header, timeout=self.timeout,
                                       verify=verify) as rep:
                         return rep
                 with requests.get(url, headers=header, timeout=self.timeout, verify=verify) as rep:

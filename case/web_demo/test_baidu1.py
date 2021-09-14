@@ -11,8 +11,7 @@ import allure
 
 from public.web_base import AutoRunCase
 from public.reda_data import reda_pytestdata
-from public.common import ImgDiff
-from public.api_base import apiexe
+
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 

@@ -6,9 +6,9 @@
 
 
 '''
-webexe
-定位方式支持  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
-操作方式支持 input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉)
+types 定位方式支持  :'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag',   *当为'function' 时操作类型必须为get_html或get_url
+operate 操作方式支持 :input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),
+                    clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉),get_html(获取当前html内容), get_url(获取当前URL)
 '''
 
 import time
@@ -735,6 +735,19 @@ class WebBase(Base):
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
 
+    def get_case(self, yaml_names=None, case_names=None):
+        """
+        获取用例数据   如果 case_names 以 test_ 开头直接找 caseYAML 目录下  如果不是 找 locaotrTAML
+        :param yaml_names: ymal 路径
+        :param case_names:  用例名称
+        :return:
+        """
+        if yaml_names is not None:
+            d = GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
+            return d
+        else:
+            raise ErrorExcep('yaml路径不能为空！')
+
     def __if_commonly_used_predicate(self, types, locate, operate=None, text=None, notes=None, index=None, wait=None):
         """
         判断 CommonlyUsed 执行操作
@@ -852,7 +865,7 @@ class WebBase(Base):
         """
         relust = None  # 断言结果  最后一步才返回
 
-        locator_data = self.get_loca(yamlfile, case)
+        locator_data = self.get_case(yamlfile, case)
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
@@ -888,8 +901,8 @@ class AutoRunCase(WebBase):
 
         relust = None
 
-        locator_data = GetCaseYmal(yamlfile, case)
-        test_dict = GetCaseYmal(yamlfile, case).test_data()
+        locator_data = self.get_case(yamlfile, case)
+        test_dict = locator_data.test_data()
 
         locator_step = locator_data.stepCount()
 
@@ -908,6 +921,6 @@ class AutoRunCase(WebBase):
             self.sleep(forwait)
 
         # 断言函数
-        if  ('assertion' and 'assertype') in test_dict[0]  and relust:  # 有断言需求并且有实际值才进行断言
+        if ('assertion' and 'assertype') in test_dict[0] and relust:  # 有断言需求并且有实际值才进行断言
             is_assertion(test_date, relust)
         # return relust

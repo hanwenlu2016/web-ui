@@ -895,6 +895,19 @@ class AccessibilityId(Base):
 
 class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUsed):
 
+    def get_case(self, yaml_names=None, case_names=None):
+        """
+        获取用例数据   如果 case_names 以 test_ 开头直接找 caseYAML 目录下  如果不是 找 locaotrTAML
+        :param yaml_names: ymal 路径
+        :param case_names:  用例名称
+        :return:
+        """
+        if yaml_names is not None:
+            d = GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
+            return d
+        else:
+            raise ErrorExcep('yaml路径不能为空！')
+
     def __if_android_operate_uiautomator(self, locate, operate=None, text=None, index=None):
         """
         * 私有不继承
@@ -1153,16 +1166,16 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         """
         relust = None  # 断言结果  最后一步才返回
 
-        locator_data = GetCaseYmal(yamlfile, case)
+        locator_data = self.get_case(yamlfile, case)
         locator_step = locator_data.stepCount()
 
         for locator in range(0, locator_step):
             if (locator_data.operate(locator) == 'input' or locator_data.operate(
                     locator) == 'clear_continue_input'):
                 self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
-                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text[locator],
-                                             index=index)
+                                    operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                    text=text[locator],
+                                    index=index)
             else:
                 relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
@@ -1171,16 +1184,3 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             time.sleep(wait)
 
         return relust
-
-    def get_loca(self, yaml_names=None, case_names=None, ):
-        """
-        获取定位步骤用例数据
-        :param yaml_names: ymal 路径
-        :param case_names:  用例名称
-        :param case_names: 默认读取 locatorYAML 路径数据 FLASE 读取CASEYMAL_DIR
-        :return:
-        """
-        if yaml_names is not None:
-            return GetCaseYmal(yaml_name=yaml_names, case_name=case_names)
-        else:
-            raise ErrorExcep('yaml路径不能为空！')
