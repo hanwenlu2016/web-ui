@@ -5,12 +5,12 @@
  * 各位有兴小伙伴麻烦点下start 谢谢 😁
 ``` 
 
-
-###### 设计思路
+### 设计思路:
 
   web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成) 
 做用例管理，定时任务分配，测试工具集合。
 
+### 前台页面：
 
 > ~~！！！ M端(django+rest_framework+react）此部分由于设计到公司的业务暂时不做了开源！！！~~
 
@@ -25,35 +25,46 @@
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/003.png)
 
-
-管理端管理员后台：
+### 后台管理端：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin1.png)
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)
 
-
-###### 项目框架设计图
+### 项目框架设计图：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frame.png)
 
-###### 项目架构详情
+### 项目架构详情：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frameexplain.png)
 
-###### 测试输出报告
+### 测试输出报告：
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run001.jpg)
+
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run002.jpg)
+
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run003.jpg)
 
-###### 开始准备使用
+### seleniumGrid集群：
 
-操作系统中必须有python3, 推荐python3.8或者更高版本
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run1.jpg)
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run2.jpg)
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run3.jpg)
+
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run4.jpg)
+
+
+# 开始使用
+
+### 1开始准备
 
 
 ```python
-# 安装所需的依赖环境(阿里源安装)
+# 安装所需的依赖环境(阿里源安装 * 操作系统中必须有python3, 推荐python3.8或者更高版本)
 
 pip install -r requirements.txt https://mirrors.aliyun.com/pypi/simple  
 
@@ -69,11 +80,10 @@ pip install -r requirements.txt https://mirrors.aliyun.com/pypi/simple
 
 python3 run.py
 
-  
 ```
 
-###### 使用说明
- 
+### 2使用说明
+
 1 本架构元素定位 数据依赖为yaml文件 
 
 2 使用前需要对 读取yaml函数(yaml_data.py) ，yaml对应说明仔细阅读 文件内代码处有注释！
