@@ -26,21 +26,11 @@
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/003.png)
 
 
-###### 使用说明
- 
-1 本架构元素定位 数据依赖为yaml文件 
+管理端管理员后台：
 
-2 使用前需要对 读取yaml函数(yaml_data.py) ，yaml对应说明仔细阅读 文件内代码处有注释！
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin1.png)
 
-3 web-base.py 为 web函数封装 已经封装了功能代码 可以仔细阅读注释来完成页面功能！
-
-4 app_base.py 为 app函数封装 可以仔细阅读注释来完成页面功能
-
-5 api_base.py 为 api接口函数封装 可以仔细阅读注释来完成页面功能
-
-6 目前 web 端用例管理和任务定时触发已经在调试阶段，如果顺利可开源让大家参考！
-
-7 目前浏览器支持 ctenos7(谷歌/火狐)， windos(谷歌/火狐/IE)，mac(谷歌/火狐/safair) 其它浏览器暂未联调！
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)
 
 
 ###### 项目框架设计图
@@ -62,13 +52,11 @@
 操作系统中必须有python3, 推荐python3.8或者更高版本
 
 
-
 ```python
 # 安装所需的依赖环境(阿里源安装)
 
 pip install -r requirements.txt https://mirrors.aliyun.com/pypi/simple  
 
-    
 # 安装配置Allure(官网下载解压包)
 
 解压allure-commandline-2.13.6.zip 包到对应目录
@@ -84,20 +72,21 @@ python3 run.py
   
 ```
 
+###### 使用说明
+ 
+1 本架构元素定位 数据依赖为yaml文件 
 
+2 使用前需要对 读取yaml函数(yaml_data.py) ，yaml对应说明仔细阅读 文件内代码处有注释！
 
-###### 后期更新
+3 web-base.py 为 web函数封装 已经封装了功能代码 可以仔细阅读注释来完成页面功能！
 
+4 app_base.py 为 app函数封装 可以仔细阅读注释来完成页面功能
 
-管理端用户页面--此部分应用用 [Salvation](https://github.com/hanwenlu2016/Salvation)  替代
+5 api_base.py 为 api接口函数封装 可以仔细阅读注释来完成页面功能
 
-管理端管理员后台：
+6 目前 web 端用例管理和任务定时触发已经在调试阶段，如果顺利可开源让大家参考！
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin1.png)
-
-
-
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/admin2.png)
+7 目前浏览器支持 ctenos7(谷歌/火狐)， windos(谷歌/火狐/IE)，mac(谷歌/火狐/safair) 其它浏览器暂未联调！
 
 
 # 更新日志
