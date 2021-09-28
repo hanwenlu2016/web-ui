@@ -17,6 +17,38 @@ from config.setting import IS_CLEAN_REPORT, LEVEL
 from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH
 
 
+def find_dict(will_find_dist: dict, find_keys: str) -> list:
+    """
+    查询 嵌套字典中的值
+    :param will_find_dist:  要查找的字典
+    :param find_keys:  要查找的key
+    :return:  list
+    """
+
+    value_found = []
+    if (isinstance(will_find_dist, (list))):  # 含有列表的值处理
+        if (len(will_find_dist) > 0):
+            for now_dist in will_find_dist:
+                found = find_dict(now_dist, find_keys)
+                if (found):
+                    value_found.extend(found)
+            return value_found
+
+    if (not isinstance(will_find_dist, (dict))):  # 没有字典类型的了
+        return 0
+
+    else:  # 查找下一层
+        dict_key = will_find_dist.keys()
+        for i in dict_key:
+            if (i == find_keys):
+                value_found.append(will_find_dist[i])
+            found = find_dict(will_find_dist[i], find_keys)
+            if (found):
+                value_found.extend(found)
+
+        return value_found
+
+
 def is_assertion(dicts, actual):
     """
     断言参数
@@ -26,7 +58,6 @@ def is_assertion(dicts, actual):
     """
 
     if dicts is not None:
-
         is_assertion_results(actual=actual, expect=dicts[-2], types=dicts[-1])
 
 
@@ -38,25 +69,31 @@ def is_assertion_results(actual, expect, types):
     :param types:  断言类型    ==(等于) !=(不等于) in(包含) notin(不包含)
     :return:
     """
+    if isinstance(actual, dict):
+        if isinstance(expect, dict):
+            actual = find_dict(actual, list(expect)[0])  # 利用字典的键获取断言的值
+            expect = list(expect.values())[0]
     if types == '==':
         assert expect == actual
         return True
+
     elif types == '!=':
         assert expect != actual
         return True
+
     elif types == 'in':
-        logger.info(expect)
         assert expect in actual
         return True
+
     elif types == 'notin':
         assert expect not in actual
         return True
+
     elif types == None:
         return False
     else:
         logger.error('输入的类型不支持！！')
         return False
-
 
 
 def facename(func):

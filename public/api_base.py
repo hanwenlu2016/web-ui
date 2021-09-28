@@ -12,7 +12,7 @@ import requests
 
 from config.setting import API_URL, TIMEOUT, HEADERS
 from public.reda_data import GetCaseYmal
-from public.common import ErrorExcep, logger
+from public.common import ErrorExcep, logger, is_assertion_results
 
 
 class ApiBase:
@@ -34,7 +34,8 @@ class ApiBase:
             else:
                 return self.url + urlpath
 
-    def post(self, urlpath, params, filePath=None, filename=None, verify=False, header=None, upheader=None):
+    def post(self, urlpath, params, filePath=None, filename=None, verify=False, header=None, upheader=None, code=None,
+             assertion=None, assertype=None, isassert=True):
         """
         post 请求
         :param urlpath:  url 路径
@@ -44,6 +45,10 @@ class ApiBase:
         :param verify:  https 请求时忽略证书
         :param header:  请求头
         :param upheader: 更新请求参数
+        :param code: 状态码
+        :param assertion: 预期参数
+        :param assertype: 断言类型
+        :param isassert: 是否开启模板断言默认是开启
         :return:
         """
 
@@ -67,17 +72,29 @@ class ApiBase:
 
                     with requests.post(url, data=params, headers=header, timeout=self.timeout,
                                        verify=verify) as rep:
-                        return rep
 
-                with requests.post(url, json=params, headers=header, timeout=self.timeout, verify=verify) as rep:
-                    return rep
+                        if isassert and (assertion, assertype) is not None:  # 判断开启默认断言
+
+                            assert rep.status_code == code if code is not None else 200
+                            is_assertion_results(rep.json(), assertion, assertype)
+                            return rep
+                        else:
+                            return rep
+                with requests.post(url, data=params, headers=header, timeout=self.timeout, verify=verify) as rep:
+                    if isassert and (assertion, assertype) is not None:  # 判断开启默认断言
+                        assert rep.status_code == code if code is not None else 200
+                        is_assertion_results(rep.json(), assertion, assertype)
+                        return rep
+                    else:
+                        return rep
             except Exception as e:
                 logger.error(f'请求异常，异常原因:{e}')
+                raise ErrorExcep(e)
         else:
             logger.error('headers is not null ！！')
             raise ('headers is not null ！！')
 
-    def get(self, urlpath, params=None, verify=False, header=None, upheader=None):
+    def get(self, urlpath, params=None, verify=False, header=None, upheader=None, code=None,assertion=None, assertype=None, isassert=True):
         """
         get 请求
         :param urlpath:  url 路径
@@ -101,14 +118,24 @@ class ApiBase:
         if self.headers is not None:
             try:
                 if params is not None:
-                    with requests.get(url, params=json.dumps(params), headers=header, timeout=self.timeout,
+                    with requests.get(url, params=params, headers=header, timeout=self.timeout,
                                       verify=verify) as rep:
-                        return rep
+                        if isassert and (assertion, assertype) is not None:  # 判断开启默认断言
+                            assert rep.status_code == code if code is not None else 200
+                            is_assertion_results(rep.json(), assertion, assertype)
+                            return rep
+                        else:
+                            return rep
                 with requests.get(url, headers=header, timeout=self.timeout, verify=verify) as rep:
-                    return rep
-
+                    if isassert and (assertion, assertype) is not None:  # 判断开启默认断言
+                        assert rep.status_code == code if code is not None else 200
+                        is_assertion_results(rep.json(), assertion, assertype)
+                        return rep
+                    else:
+                        return rep
             except Exception as e:
                 logger.error(f'请求异常，异常原因:{e}')
+                raise ErrorExcep(e)
 
         else:
             logger.error('headers is not null ！！')
@@ -177,7 +204,8 @@ class ApiBase:
             raise ('headers is not null ！！')
 
 
-def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
+def apiexe(yamlfile, case, params=None, verify=True, upheader=None, code=None, assertion=None, assertype=None,
+           isassert=True):
     """
     api 请求执行函数
     :param yamlfile:  yaml 文件
@@ -196,11 +224,16 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
 
     filename = None
     filepath = None
+    code = None
+    assertion = None
+    assertype = None
 
     # 删除多余参数
-    if params is not None and ("assertion" in params or "filename" in params or "filepath" in params):
+    if params is not None :
         try:
-            params.pop('assertion')
+            assertion = params.pop('assertion')
+            code = params.pop('code')
+            assertype = params.pop('assertype')
             filename = params.pop('filename')
             filepath = params.pop('filepath')
         except Exception:
@@ -212,10 +245,12 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None):
 
     if requests_type == 'POST':
         return api.post(requests_url, params, filePath=filepath, filename=filename, verify=verify,
-                        header=requests_header, upheader=upheader)
+                        header=requests_header, upheader=upheader, code=code, assertion=assertion, assertype=assertype,
+                        isassert=isassert)
 
     elif requests_type == 'GET':
-        return api.get(requests_url, params, verify=verify, header=requests_header, upheader=upheader)
+        return api.get(requests_url, params, verify=verify, header=requests_header, upheader=upheader, code=code,
+                       assertion=assertion, assertype=assertype, isassert=isassert)
 
     elif requests_type == 'PUT':
         return api.put(requests_url, params, verify=verify, header=requests_header, upheader=upheader)

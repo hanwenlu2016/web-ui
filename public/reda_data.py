@@ -617,3 +617,4 @@ def reda_api_casedata(yamlname, casename):
     testdata = GetCaseYmal(yamlname, casename)
 
     return testdata.test_data()
+

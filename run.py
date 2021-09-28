@@ -168,7 +168,7 @@ class RunPytest:
         DelReport().run_del_report()
 
         pytest.main(
-            ['-m', 'testbaidu_web1', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+            ['-m', 'test_api', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
         # os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
         # logger.info('测试报告生成完成！')

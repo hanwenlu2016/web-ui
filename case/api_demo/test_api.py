@@ -28,6 +28,4 @@ class TestApiDemo:
     @pytest.mark.test_api
     def test_api(self, data):
         with allure.step('登录接口'):
-            ret = apiexe(yamlfile, 'test_api')
-            assertion = data.get('assertion')
-            assert assertion == ret.status_code
+            apiexe(yamlfile, 'test_api', params=data)
