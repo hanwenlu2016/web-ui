@@ -4,6 +4,7 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2021/3/18  18:13
 import sys
+from typing import TypeVar
 
 sys.path.append('../')
 import os, time
@@ -23,8 +24,10 @@ from config.setting import PLATFORM, IOS_CAPA, ANDROID_CAPA, APIUMHOST
 
 DAY = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
+T = TypeVar('T')  # 可以是任何类型。
 
-def if_linux_firefox():
+
+def if_linux_firefox() -> bool:
     """
     当系统是 luinx 和火狐流量浏览器时 需要做特殊处理
     :browsername 浏览器名称
@@ -47,7 +50,7 @@ class AppInit:
     def __init__(self):
         self.appos = PLATFORM.lower()
 
-    def decide_appos(self):  # 判断移动系统选择参数
+    def decide_appos(self) -> str:  # 判断移动系统选择参数
 
         if self.appos == 'ios':
             return IOS_CAPA
@@ -58,7 +61,7 @@ class AppInit:
             logger.error('不支持此移动系统！')
             raise ErrorExcep("不支持此移动系统!!!!")
 
-    def setup(self):
+    def setup(self) -> T:
         try:
             from appium import webdriver
             decide = self.decide_appos()
@@ -78,7 +81,7 @@ class WebInit:
         self.browser = BROWSERNAME.lower()
         self.baseurl = URL
 
-    def inspect_url_code(self, url):
+    def inspect_url_code(self, url: str) -> bool:
         """
         判断url 地址正常请求
         """
@@ -93,15 +96,15 @@ class WebInit:
             logger.error(f'请求地址异常{e}！！')
 
     @property
-    def url(self):
+    def url(self) -> str:
         return self.baseurl
 
     @url.setter
-    def url(self, value):
+    def url(self, value: str) -> str:
         self.baseurl = value
 
     @property
-    def linux_firefox_args(self):
+    def linux_firefox_args(self) -> T:
         """
         linux os firefox browser parameter  只能在 linux 调试
         :return:
@@ -113,7 +116,7 @@ class WebInit:
         return options
 
     @property
-    def linux_chrome_args(self):
+    def linux_chrome_args(self) -> T:
         """
         linux os chrome browser parameter
         :return:
@@ -127,7 +130,7 @@ class WebInit:
         return option
 
     @property
-    def enable(self):
+    def enable(self) -> T:
         """
         如果是 IS_COLONY 开启  启用集群 否则 启用模式
         :return:
@@ -137,7 +140,7 @@ class WebInit:
         else:
             return self.setup()
 
-    def browaer_setup_args(self, driver):
+    def browaer_setup_args(self, driver: T) -> T:
         """
         单机浏览器参数设置
         :param driver: driver驱动浏览器
@@ -147,7 +150,7 @@ class WebInit:
         driver.get(self.url)
         return driver
 
-    def browaer_setups_args(self, descap, option=None):
+    def browaer_setups_args(self, descap: str, option=None) -> T:
         """
         集群浏览器参数设置
         :param descap:启动参数
@@ -160,7 +163,7 @@ class WebInit:
         driver.get(self.url)
         return driver
 
-    def setup(self):
+    def setup(self) -> T:
         """
         设置单机版 浏览器驱动
         :return:
@@ -236,7 +239,7 @@ class WebInit:
             logger.error(f'浏览器驱动启动失败 {e}')
             return False
 
-    def setups(self):
+    def setups(self) -> T:
         """
         设置集群 浏览器驱动
         :return:

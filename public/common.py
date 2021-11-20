@@ -9,6 +9,7 @@ import re
 import shutil
 import os
 import cv2
+from typing import TypeVar, Tuple
 
 import numpy as np
 from loguru import logger
@@ -16,8 +17,11 @@ from loguru import logger
 from config.setting import IS_CLEAN_REPORT, LEVEL
 from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH
 
+# 可以是任意类型
+T = TypeVar('T')
 
-def find_dict(will_find_dist: dict, find_keys: str) -> list:
+
+def find_dict(will_find_dist: dict, find_keys: T) -> list or int:
     """
     查询 嵌套字典中的值
     :param will_find_dist:  要查找的字典
@@ -49,7 +53,7 @@ def find_dict(will_find_dist: dict, find_keys: str) -> list:
         return value_found
 
 
-def is_assertion(dicts, actual):
+def is_assertion(dicts: T, actual: T) -> None:
     """
     断言参数
     :param dicts: dict 断言参数
@@ -61,7 +65,7 @@ def is_assertion(dicts, actual):
         is_assertion_results(actual=actual, expect=dicts[-2], types=dicts[-1])
 
 
-def is_assertion_results(actual, expect, types):
+def is_assertion_results(actual: T, expect: T, types: str) -> bool:
     """
     断言函数
     :param actual: 实际结果
@@ -96,7 +100,7 @@ def is_assertion_results(actual, expect, types):
         return False
 
 
-def facename(func):
+def facename(func: T) -> T:
     """
     获取函数名称 *装饰器
     :param func:
@@ -110,7 +114,7 @@ def facename(func):
     return wrapper
 
 
-def ymal(*args, **kwargs):
+def ymal(*args, **kwargs) -> T:
     """
     装饰器
     获取当前运行文件的py文件并转为yaml
@@ -131,7 +135,7 @@ def ymal(*args, **kwargs):
 
 
 # 获取运行函数名称
-def get_run_func_name():
+def get_run_func_name() -> T:
     """
     获取运行函数名称
     :return:
@@ -189,7 +193,7 @@ class SetLog:
 # 删除测试报告
 class DelReport:
 
-    def mkdir(self, path):
+    def mkdir(self, path: str) -> None:
         """
         文件夹不存在就创建
         :param path:
@@ -354,7 +358,7 @@ class ImgDiff:
     """
 
     @classmethod
-    def sampleIMG(CLS, imgname):
+    def sampleIMG(CLS, imgname: str) -> str:
         """
         * 样本数据 检查与路径返回
         返回img测试图片路径  * 断言图片时使用
@@ -390,7 +394,7 @@ class ImgDiff:
         return n
 
     @classmethod
-    def classify_hist_with_split(cls, image1: str, image2: str, size=(256, 256)) -> float:
+    def classify_hist_with_split(cls, image1: str, image2: str, size: Tuple[str] = (256, 256)) -> float:
         """
         通过得到RGB每个通道的直方图来计算相似度
          将图像resize后，分离为RGB三个通道，再计算每个通道的相似值

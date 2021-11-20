@@ -20,7 +20,7 @@
   precond: 前置条件      # 前置条件
   header:              # 如果为空取配置文件默认
   reqtype: GET         # 请求类型
-  urlpath: '/weather_mini'     # 请求地址  或者写全地址 http://wthrcdn.etouch.cn 在setting
+  urlpath: '/weather_mini'     # 请求地址  或者写全地址 http://wthrcdn.etouch.cn 在setting http://wthrcdn.etouch.cn/weather_mini?&city=%E6%B7%B1%E5%9C%B3
   testdata: # 测试数据
     - city: 深圳
       code:                   # 不写时默认为200

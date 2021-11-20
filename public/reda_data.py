@@ -6,6 +6,7 @@
 
 import os
 import pickle
+from typing import List, Tuple
 
 import yaml
 from faker import Factory
@@ -595,7 +596,7 @@ class RandomData:
 
 
 #  快速获取测试数据 *元组 WEB、APP
-def reda_pytestdata(yamlname, casename, ):
+def reda_pytestdata(yamlname: str, casename: str, ) -> List or Tuple:
     """
     * pytest.mark.parametrize()  *此函数只支持在pytes框架内使用
     * 如果配合run函数调用自己在pytest.mark.parametrize() 传入列表 否则其它方法传入字段名
@@ -609,7 +610,7 @@ def reda_pytestdata(yamlname, casename, ):
 
 
 #  快速获取测试数据 *字典 API
-def reda_api_casedata(yamlname, casename):
+def reda_api_casedata(yamlname: str, casename: str) -> List or Tuple:
     """
     读取测试数据 HTTP 专用  *字典
     :return:
@@ -617,4 +618,3 @@ def reda_api_casedata(yamlname, casename):
     testdata = GetCaseYmal(yamlname, casename)
 
     return testdata.test_data()
-

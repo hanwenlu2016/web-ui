@@ -4,7 +4,7 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2021/3/18  19:23
 
-from typing import TypeVar
+from typing import TypeVar, Tuple, List
 
 import pymysql
 import cx_Oracle
@@ -23,7 +23,7 @@ class Mysql:
     """
 
     @classmethod
-    def connMysql(cls):
+    def connMysql(cls) -> T:
         """
         Mysql 连接
         :return:  str  Mysql连接串
@@ -35,7 +35,7 @@ class Mysql:
             logger.error(f'Mysql客户端连接失败! {e}')
 
     @classmethod
-    def select(cls, sql):
+    def select(cls, sql: str) -> Tuple or List:
         """
         SQL 操作   "select * from  `case`"
         :param sql:  str sql
@@ -59,7 +59,7 @@ class Oracle:
     """
 
     @classmethod
-    def connOracle(cls):
+    def connOracle(cls) -> T:
         """
         Oracle 连接客户端
         :return:
@@ -73,7 +73,7 @@ class Oracle:
             logger.error(f'连接Oracle客户端错误!{e}')
 
     @classmethod
-    def select(cls, sql):
+    def select(cls, sql: str) -> Tuple or List:
         """
         Oracle sql 执行
         :param sql:  sql str
@@ -99,7 +99,7 @@ class RedisPool:
     def __init__(self):
         self.session = self.redis_conn()
 
-    def redis_conn(self):
+    def redis_conn(self) -> T:
         """
         连接redis 操作
         :return:
@@ -114,7 +114,7 @@ class RedisPool:
         except Exception as e:
             logger.error(f'连接错误！{e}')
 
-    def set(self, key, value):
+    def set(self, key: str, value: str) -> T:
         """
         redis  set 操作
         :param key: 键
@@ -125,7 +125,7 @@ class RedisPool:
         self.session.close()
         return ret
 
-    def get(self, key):
+    def get(self, key: str) -> T:
         """
         redis get 操作
         :param key: 键
@@ -183,7 +183,7 @@ class RedisPoolCluster:
         self.session.close()
         return get_key
 
-    def keys(self):
+    def keys(self)-> T:
         """
         获取所有键
         :return:
@@ -193,7 +193,7 @@ class RedisPoolCluster:
         return keys_all
 
     @property
-    def opt(self):
+    def opt(self)-> T:
         """
         reis 操作   RedisPoolCluster.opt.xxxx
         :return:
