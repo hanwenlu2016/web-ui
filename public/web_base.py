@@ -114,7 +114,10 @@ class Base:
         :param index: int 索引位置
         :return:
         """
-        return self.driver.switch_to.frame(index)
+        if index is not None:  # 为空就去0
+            return self.driver.switch_to.frame(0)
+        else:
+            return self.driver.switch_to.frame(index)
 
     def web_scroll(self, direction):
         """
@@ -765,7 +768,7 @@ class WebBase(Base):
 
         if operate in (
                 'text', 'click', 'input', 'clear', 'jsclear', 'submit', 'clear_continue_input',
-                'jsclear_continue_input', 'scroll', 'get_html', 'get_url'):
+                'jsclear_continue_input', 'scroll', 'get_html', 'get_url', 'iframe'):
             if operate == 'text':  # 提取文本
                 self.sleep(wait)
                 logger.debug(notes)
@@ -803,11 +806,19 @@ class WebBase(Base):
                 logger.debug(notes)
                 return self.web_scroll_to_ele(types=types, locate=locate, index=index)
 
+            elif operate == 'iframe':  # iframe切换
+
+                self.sleep(wait)
+                logger.debug(notes)
+                return self.switch_to_fram_el(index=index)
+
+
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
                     self.sleep(wait)
                     return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
                 logger.debug(' 函数必须传递 text 参数')
+
 
             elif operate == 'jsclear_continue_input':  # js清除后在输入操作
                 if text is not None:
@@ -815,6 +826,7 @@ class WebBase(Base):
                     logger.debug(notes)
                     return self.used_jsclear_continue_input(types=types, locate=locate, text=text, index=index)
                 logger.debug(' 函数必须传递 text 参数')
+
 
             elif operate == 'get_html':  # 获取当前html信息 操作类型必须是 types必须是 function 时
                 self.sleep(wait)

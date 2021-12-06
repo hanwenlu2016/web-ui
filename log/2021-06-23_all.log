@@ -1,6 +1,0 @@
-2021-06-23 15:27:29.854 | INFO     | __main__:run_bebug:174 - 测试报告生成完成！
-2021-06-23 15:27:57.862 | INFO     | __main__:run_bebug:174 - 测试报告生成完成！
-2021-06-23 15:28:17.964 | INFO     | public.api_base:get:94 - 当前请求接口: https://www.163.com/ ,请求类型: GET
-2021-06-23 15:28:20.387 | INFO     | __main__:run_bebug:174 - 测试报告生成完成！
-2021-06-23 15:29:32.165 | INFO     | public.api_base:get:94 - 当前请求接口: https://www.163.com/ ,请求类型: GET
-2021-06-23 15:29:34.284 | INFO     | __main__:run_bebug:174 - 测试报告生成完成！

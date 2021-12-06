@@ -14,8 +14,10 @@
 #      types:   # 定位类型
 #      operate:    # 操作类型
 #      locate: # 定位器
+#      listindex: # 多个时列表索引 单个为空 /int
+#      locawait:              #操作等待时间  folt/s
 #      info:    # 步骤说明
-#      expect:        # 步骤预期
+
 
 - model: BaiDu  # 对应pageobj 的类名称
 
@@ -29,8 +31,10 @@
       types: name      # 定位类型  支持 id/name/xpath/css/class/link/partlink/tag 对应源码web_base.p 325行
       operate: input    # 操作类型   input(输入) , clear(清除) , clear_continue_input(清除在输入) 、click(点击) ,text(提取文本)、滚动下拉到指定位置(scroll)
       locate: wd    # 定位元素
+      listindex: # 多个时列表索引 单个为空 /int
+      locawait:              #操作等待时间  folt/s
       info: 点击输入框收入    # 操作说明
-      expect:         # 预期结果
+
 
 
 - casename: click_search_button
@@ -42,5 +46,6 @@
       types: id
       operate: click
       locate: su
+      listindex: # 多个时列表索引 单个为空 /int
+      locawait:              #操作等待时间  folt/s
       info: 点击搜索按钮
-      expect:
