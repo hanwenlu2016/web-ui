@@ -108,17 +108,6 @@ class Base:
 
         return base_click
 
-    def switch_to_fram_el(self, index):
-        """
-        切换ifarme
-        :param index: int 索引位置
-        :return:
-        """
-        if index is not None:  # 为空就去0
-            return self.driver.switch_to.frame(0)
-        else:
-            return self.driver.switch_to.frame(index)
-
     def web_scroll(self, direction):
         """
         网页滚动 部分网页不可用时轻请使用  web_scroll_to_ele
@@ -183,13 +172,27 @@ class Base:
         except Exception as e:
             logger.debug("查找窗口句柄handle异常-> {0}".format(e))
 
-    def switch_frame(self, el):
+    def switch_frame(self, types, locate, index=None):
         """
-        #切换到iframe
-        :param el: 可以是element 或者是 元素
+        #切换到 iframe
+        :param types: 定位类型
+        :param locate: 定位元素
+        :param index: 列表索引位置
         :return:
         """
-        self.driver.switch_to.frame(el)
+        el = None  # 单个/多个  默认 find_element=None 单个  / 如果 find_element = 's' 多个
+
+        if index is not None:
+            el = 'l'
+
+        if el is not None and index is not None:
+            # 多个定位定位 利用index 列表索引点击
+            element = self.used_operate(types=types, locate=locate, el=el)[index]
+            self.driver.switch_to.frame(element)
+        else:
+            # 单个定位点击
+            element = self.used_operate(types=types, locate=locate)
+            self.driver.switch_to.frame(element)
 
     def switch_default_content(self):
         """
@@ -806,11 +809,11 @@ class WebBase(Base):
                 logger.debug(notes)
                 return self.web_scroll_to_ele(types=types, locate=locate, index=index)
 
-            elif operate == 'iframe':  # iframe切换
+            elif operate == 'iframe':  # iframe切换   switch_default_content切换最外层 switch_parent_frame切换父节点
 
                 self.sleep(wait)
                 logger.debug(notes)
-                return self.switch_to_fram_el(index=index)
+                return self.switch_frame(types=types, locate=locate, index=index)
 
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作

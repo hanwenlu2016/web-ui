@@ -222,6 +222,7 @@ class WebInit:
 
                     elif self.browser == 'firefox':
                         driver = webdriver.Firefox(executable_path=WIN_FIREFOXDRIVER, service_log_path=log_path)
+
                         return self.browaer_setup_args(driver, )
 
                     else:
