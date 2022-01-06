@@ -414,17 +414,12 @@ class Base:
         :param element:
         :return:
         """
-        isDisplayed = False
-        element = None
-
-        if locate:
+        if types and locate is not None:
             element = self.used_operate(types, locate)
-        if element is not None:
             isDisplayed = element.is_displayed()
-            logger.error(f"Element is displayed with locate: {locate} and types: {types}")
+            return isDisplayed
         else:
-            logger.error(f"Element is not displayed with locate: {locate} and types: {types}")
-        return isDisplayed
+            logger.error('类型定位元素不能为空')
 
     def isElementExist(self, types, locate):
         """

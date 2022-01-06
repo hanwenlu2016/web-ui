@@ -477,20 +477,14 @@ class CommonlyUsed(Base):
         检查元素是否可见
         :param types:定位类型
         :param locate: 定位器
-        :param element:
         :return:
         """
-        isDisplayed = False
-        element = None
-
-        if locate:
+        if types and locate is not None:
             element = self.used_operate(types, locate)
-        if element is not None:
             isDisplayed = element.is_displayed()
-            logger.info(f"Element is displayed with locate: {locate} and types: {types}")
+            return isDisplayed
         else:
-            logger.error(f"Element is not displayed with locate: {locate} and types: {types}")
-        return isDisplayed
+            logger.error('类型定位元素不能为空')
 
     def isElementExist(self, types, locate):
         """
