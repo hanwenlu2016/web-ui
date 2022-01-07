@@ -47,3 +47,4 @@ toml==0.10.1
 urllib3==1.25.11
 yarg==0.1.9
 xrld==1.2.0
+ddddocr

@@ -13,6 +13,7 @@ from typing import TypeVar, Tuple
 
 import numpy as np
 from loguru import logger
+import ddddocr
 
 from config.setting import IS_CLEAN_REPORT, LEVEL
 from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH
@@ -467,6 +468,21 @@ class ImgDiff:
             return n
         except Exception as e:
             logger.error(f'对比差感知哈希错误:{e}')
+
+
+def read_img_verification_code(image: str):
+    """
+    读取图片验证码 借助 ddddocr 此库相对识别高 https://github.com/sml2h3/ddddocr
+    :param image: 图片验证码
+    :return: str
+    """
+    try:
+        img_ocr = ddddocr.DdddOcr(show_ad=False)
+        res = img_ocr.classification(image)
+        logger.info(f'识别验证码成功：{res}')
+        return res
+    except Exception as e:
+        logger.error(e, '读取验证码异常！')
 
 #
 # d = ImgDiff.dhaDiff('test.png1',
