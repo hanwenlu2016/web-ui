@@ -16,7 +16,7 @@ from public.api_base import apiexe
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 
-
+# 修改 setting  URL
 class TestBaiDu:
 
     @allure.feature("百度搜索")  # 测试用例特性（主要功能模块）
@@ -25,11 +25,12 @@ class TestBaiDu:
     @allure.description('输入多参数搜索')  # 用例描述
     @pytest.mark.testbaidu_web  # 用列标记
     @pytest.mark.parametrize('content', reda_pytestdata(yamlfile, 'test_baidu_search'))  # 测试数据
-    def test_baidu_search(self, webDriver, content):
+    def test_baidu_search(self, webDriver,content):
         baidu = BaiDu(webDriver)
 
         with allure.step('输入搜索内容'):
             baidu.input_search_content(content)
+
 
         with allure.step('点击搜索'):
             baidu.click_search_button()

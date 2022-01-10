@@ -15,7 +15,7 @@ from public.reda_data import reda_pytestdata
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 
-
+# 修改 setting  URL
 class TestBaiDu:
 
     @allure.feature("百度搜索")  # 测试用例特性（主要功能模块）

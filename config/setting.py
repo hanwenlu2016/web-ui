@@ -26,7 +26,7 @@ TIMEOUT = 5  # 接口请求超时时间 /S
 HEADERS = {'Content-Type': 'application/json', }
 
 ########## Web端配置
-URL = "https://www.baidu.com/"  # # 项目地址 web 时选择
+URL ='https://mail.163.com/' #"https://www.baidu.com/"  # # 项目地址 web 时选择
 
 BROWSERNAME = "Chrome"  # "Chrome" "Firefox" "Ie"  "Safari"  # 浏览器选择
 

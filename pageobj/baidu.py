@@ -37,3 +37,4 @@ class BaiDu(WebBase):
         """
 
         self.webexe(yamlfile, 'click_search_button')
+
