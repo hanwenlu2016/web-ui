@@ -26,13 +26,20 @@ TIMEOUT = 5  # 接口请求超时时间 /S
 HEADERS = {'Content-Type': 'application/json', }
 
 ########## Web端配置
-URL ='https://mail.163.com/' #"https://www.baidu.com/"  # # 项目地址 web 时选择
+URL = 'https://mail.163.com/'  # "https://www.baidu.com/"  # # 项目地址 web 时选择
 
 BROWSERNAME = "Chrome"  # "Chrome" "Firefox" "Ie"  "Safari"  # 浏览器选择
 
 IS_COLONY = False  # 是否启动集群模式 True(启用)  False(不启用)
 
 HUB_HOST = '192.168.7.101:4444'  # 集群hub地址和端口
+
+####### email配置
+EMAIL_HOST = 'smtp.163.com'  # 地址
+EMAIL_PORT = '465'  # 端口
+SEND_EMAIL_USERNAME = 'xxxx@163.com'  # 发送邮件账号
+SEND_EMAIL_PASSWORD = 'xxx'  # 发送密码或授权码
+RECEIVE_EMAIL_USER = ['xxx@163.com']
 
 ########## 移动端配置
 PLATFORM = 'Android'  # 'Android'  # ios Android  平台 app 时配合

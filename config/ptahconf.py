@@ -47,3 +47,7 @@ PRPORE_ALLURE_DIR = os.path.join(BASE_DIR, "output", "report_allure")
 
 # 测试截图目录
 PRPORE_SCREEN_DIR = os.path.join(BASE_DIR, "output", "report_screen")
+
+
+# 测试临时目录
+PRPORE_TMP = os.path.join(BASE_DIR, "output", "report_tmp")

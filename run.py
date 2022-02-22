@@ -14,6 +14,7 @@ import pytest
 
 from config.ptahconf import *
 from public.common import DelReport, ErrorExcep, logger
+from public.emails import SendEMail
 
 OUT_TITLE = """
 ══════════════════════════════════════════
@@ -153,6 +154,10 @@ class RunPytest:
             os.system(f'allure generate {prpore_json_dir} -o {prpore_allure_dir} --clean')
             logger.info('测试报告生成完成！')
 
+            # 发送邮件zip格式
+            SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果', reports_path=prpore_allure_dir,
+                                filename='testport')
+
             html_index = os.path.join(prpore_allure_dir, 'index.html')
             logger.info(html_index)
             return html_index
@@ -170,12 +175,18 @@ class RunPytest:
         pytest.main(
             ['-m', 'testwy_web', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
-        # os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
-        # logger.info('测试报告生成完成！')
+        # 生成测试报告
+        os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
+        logger.info('测试报告生成完成！')
+
+        #发送邮件zip格式
+        SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果', reports_path=PRPORE_ALLURE_DIR,
+                              filename='testport')
+        logger.info('邮件推送完成')
 
 
 if __name__ == '__main__':
-    # RunPytest.run()
+    #RunPytest.run()
     RunPytest.run_bebug()
 
 # Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称)
