@@ -6,6 +6,8 @@
 
 import os, sys
 
+from public.message_notice import EnterpriseWeChatNotice, DingDingNotice
+
 sys.path.append(os.pardir)
 
 from typing import List
@@ -121,14 +123,39 @@ class RunPytest:
             # 4 生成结果目录名称
             results_dir = sys.argv[4]
 
+            # 5 是否开启邮箱通知
+            is_email = sys.argv[5]  # True、1 开启   False、0 不开
+
+            # 6 是否开启消息通知 企业微信或者钉钉
+            is_notice = sys.argv[6]  # 传递参数 'w' 微信 ,'d' 钉钉 ,'a' 都通知
+
             if int(thread_num) <= 0 or int(thread_num) is None:
                 thread_num = 1
             if int(reruns) <= 0 or int(reruns) is None:
                 reruns = 1
-            return results_dir, module_name, mlist, thread_num, reruns
+            return results_dir, module_name, mlist, thread_num, reruns, is_email, is_notice
         except Exception as e:
             logger.error(e)
             raise ErrorExcep('输入参数错误！')
+
+    @classmethod
+    def notice_type(cls, types: str, content: str = '最新通知！！'):
+        """
+        通知类型判断
+        :param types:  传递的类型
+        :param content:  传递的内容
+        :return:
+        """
+
+        if types == 'w':
+            EnterpriseWeChatNotice.send_txt(content)
+        elif types == 'd':
+            DingDingNotice.send_txt(content)
+        elif types == 'a':
+            EnterpriseWeChatNotice.send_txt(content)
+            DingDingNotice.send_txt(content)
+        else:
+            pass
 
     @classmethod
     def run(cls):
@@ -141,7 +168,7 @@ class RunPytest:
         DelReport().run_del_report()
 
         # 接收参数
-        results_dir, module_name, mlist, thread_num, reruns = cls.receiving_argv()
+        results_dir, module_name, mlist, thread_num, reruns, is_email, is_notice = cls.receiving_argv()
 
         # 生成测试结果目录
         prpore_json_dir, prpore_allure_dir = cls.output_path(results_dir)
@@ -154,13 +181,19 @@ class RunPytest:
             os.system(f'allure generate {prpore_json_dir} -o {prpore_allure_dir} --clean')
             logger.info('测试报告生成完成！')
 
-            # 发送邮件zip格式
-            SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果', reports_path=prpore_allure_dir,
-                                filename='testport')
+        # 发送邮件 附件为zip格式
+        if is_email:
+            SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果',
+                                  reports_path=prpore_allure_dir,
+                                  filename='testport')
 
-            html_index = os.path.join(prpore_allure_dir, 'index.html')
-            logger.info(html_index)
-            return html_index
+        html_index = os.path.join(prpore_allure_dir, 'index.html')
+        logger.info(html_index)
+
+        # 消息发送判断
+        cls.notice_type(is_notice, html_index)
+
+        return html_index
 
     @staticmethod
     def run_bebug():
@@ -179,17 +212,18 @@ class RunPytest:
         os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')
         logger.info('测试报告生成完成！')
 
-        #发送邮件zip格式
+        # 发送邮件zip格式
         SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果', reports_path=PRPORE_ALLURE_DIR,
                               filename='testport')
+
         logger.info('邮件推送完成')
 
 
 if __name__ == '__main__':
-    #RunPytest.run()
+    # RunPytest.run()
     RunPytest.run_bebug()
 
-# Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称)
+#  RunPytest.run() Python run.py all(项目或者模块) 1(线程数) 1(失败重跑次数) dir(生成目录名称) True(开启邮件发送) a(启用企业微信钉钉消息通知)
 # addopts 参数说明
 # -s：输出调试信息，包括print打印的信息。
 # -v：显示更详细的信息。

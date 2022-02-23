@@ -41,6 +41,14 @@ SEND_EMAIL_USERNAME = 'xxxx@163.com'  # 发送邮件账号
 SEND_EMAIL_PASSWORD = 'xxx'  # 发送密码或授权码
 RECEIVE_EMAIL_USER = ['xxx@163.com']
 
+######### 消息通知配置
+### 企业微信群 webhook
+WECHAT_WEBHOOK = ''
+WECHAT_MOBILE_LIST=['@all']  # 通知的人 ['@all'] 代表所有
+
+### 企业钉钉 webhook
+DINGDING_WEBHOOK = ''
+DINGDING_MOBILE_LIST=[]  # 通知@人 ['138xxxxxx']
 ########## 移动端配置
 PLATFORM = 'Android'  # 'Android'  # ios Android  平台 app 时配合
 
