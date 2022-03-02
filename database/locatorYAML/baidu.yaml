@@ -19,7 +19,7 @@
 #      info:    # 步骤说明
 
 
-- model: WangYi  # 对应pageobj 的类名称
+- model: WangYi/航班管理  # 对应pageobj 的类名称
 
 
 

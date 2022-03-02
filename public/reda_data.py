@@ -80,21 +80,25 @@ class GetCaseYmal:
      获取测试用例 locatorYaml数据类
     """
 
-    def __init__(self, yaml_name: str, case_name: str) -> None:
+    def __init__(self, yaml_name: str, case_name: str=None) -> None:
         """
         :param yaml_name:  yaml 文件名称
         :param case_name:  用列名称 对应 yaml 用列
         """
         self.isredis = IS_REDIS  # 是否读取reds数据
-        self.modelname = yaml_name  # 模块名称 对应yaml 文件名
 
         self.yaml_name = yaml_name  # yaml 文件名称 拼接后的路径
-        self.case_name = case_name  # 用列名称 对应 yaml 用列
 
-        if case_name.startswith('test'):
+        if case_name is not None: # 如果用例名称不为空 可自动识别读取定位数据还是测试数据
+            self.modelname = yaml_name  # 模块名称 对应yaml 文件名
+            self.case_name = case_name  # 用列名称 对应 yaml 用列
+
+            if case_name.startswith('test'):
+                self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
+            else:
+                self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
+        else: # 没有用例名称 直接返回定位用例yaml路径
             self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
-        else:
-            self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
 
     def open_yaml(self):
         """
@@ -147,8 +151,14 @@ class GetCaseYmal:
         for yaml in yamlList:
             # 如果用列等于当前 用列就返回
             if yaml.get('casename') == self.case_name:
-                return len(yaml.get('testdata'))
-        return "casename 不存在！"
+                try:
+                    testdata_len = len(yaml.get('testdata'))
+
+                    return testdata_len
+                except  Exception as e:
+                    logger.error(e)
+                    pass
+
 
     def dataCount(self):
         """
@@ -354,16 +364,24 @@ class GetCaseYmal:
 
             if data.get('casename') == self.case_name and self.isredis == False:
                 data_list = data.get('testdata')
-                for i in data_list:
-                    data_values_list.append(tuple(i.values()))
-                return data_values_list
+                if data_list is not None:
+                    for i in data_list:
+                        data_values_list.append(tuple(i.values()))
+                    return data_values_list
+                else:
+                    logger.info('没有测试数据')
+                    continue
 
             elif data.get('casename') == self.case_name and self.isredis:
                 # 读取是redis 时  data.get('data') 是字符串需要转为字典 列表
                 data_list = eval(data.get('testdata'))
-                for i in data_list:
-                    data_values_list.append(tuple(i.values()))
-                return data_values_list
+                if data_list is not None:
+                    for i in data_list:
+                        data_values_list.append(tuple(i.values()))
+                    return data_values_list
+                else:
+                    logger.info('没有测试数据')
+                    continue
 
     def test_data_list(self, index: int, agrs: str) -> str:
         """
@@ -618,3 +636,13 @@ def reda_api_casedata(yamlname: str, casename: str) -> List or Tuple:
     testdata = GetCaseYmal(yamlname, casename)
 
     return testdata.test_data()
+
+
+# d = GetCaseYmal('/Users/reda-flight/Desktop/svn/web-ui/database/locatorYAML/baidu.yaml')
+# #print(d.open_yaml())
+#
+# # for i in d.get_yaml():
+# #     print(i)
+#
+# for i in d.open_yaml():
+#     print(i)

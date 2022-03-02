@@ -49,6 +49,7 @@ WECHAT_MOBILE_LIST=['@all']  # 通知的人 ['@all'] 代表所有
 ### 企业钉钉 webhook
 DINGDING_WEBHOOK = ''
 DINGDING_MOBILE_LIST=[]  # 通知@人 ['138xxxxxx']
+
 ########## 移动端配置
 PLATFORM = 'Android'  # 'Android'  # ios Android  平台 app 时配合
 
