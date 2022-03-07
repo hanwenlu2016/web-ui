@@ -1,8 +1,8 @@
 {
-  "total" : 2,
+  "total" : 1,
   "items" : [ {
-    "uid" : "ba0ba93d9f3cf1e93f6e1d898397e94b",
-    "name" : "baid",
+    "uid" : "75b8a4c5f907e261cca27d3371236081",
+    "name" : "case.api_demo",
     "statistic" : {
       "failed" : 0,
       "broken" : 0,
@@ -10,17 +10,6 @@
       "passed" : 3,
       "unknown" : 0,
       "total" : 3
-    }
-  }, {
-    "uid" : "7559db31629684e5f31176d189a833ac",
-    "name" : "case",
-    "statistic" : {
-      "failed" : 0,
-      "broken" : 0,
-      "skipped" : 0,
-      "passed" : 2,
-      "unknown" : 0,
-      "total" : 2
     }
   } ]
 }

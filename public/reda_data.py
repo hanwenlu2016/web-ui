@@ -80,7 +80,7 @@ class GetCaseYmal:
      获取测试用例 locatorYaml数据类
     """
 
-    def __init__(self, yaml_name: str, case_name: str=None) -> None:
+    def __init__(self, yaml_name: str, case_name: str = None) -> None:
         """
         :param yaml_name:  yaml 文件名称
         :param case_name:  用列名称 对应 yaml 用列
@@ -89,7 +89,7 @@ class GetCaseYmal:
 
         self.yaml_name = yaml_name  # yaml 文件名称 拼接后的路径
 
-        if case_name is not None: # 如果用例名称不为空 可自动识别读取定位数据还是测试数据
+        if case_name is not None:  # 如果用例名称不为空 可自动识别读取定位数据还是测试数据
             self.modelname = yaml_name  # 模块名称 对应yaml 文件名
             self.case_name = case_name  # 用列名称 对应 yaml 用列
 
@@ -97,8 +97,8 @@ class GetCaseYmal:
                 self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
             else:
                 self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
-        else: # 没有用例名称 直接返回定位用例yaml路径
-            self.FLIE_PATH = os.path.join(CASEYMAL_DIR, f"{self.yaml_name}")
+        else:  # 没有用例名称 直接返回定位用例yaml路径
+            self.FLIE_PATH = os.path.join(LOCATORYMAL_DIR, f"{self.yaml_name}")
 
     def open_yaml(self):
         """
@@ -158,7 +158,6 @@ class GetCaseYmal:
                 except  Exception as e:
                     logger.error(e)
                     pass
-
 
     def dataCount(self):
         """
@@ -638,11 +637,11 @@ def reda_api_casedata(yamlname: str, casename: str) -> List or Tuple:
     return testdata.test_data()
 
 
-# d = GetCaseYmal('/Users/reda-flight/Desktop/svn/web-ui/database/locatorYAML/baidu.yaml')
-# #print(d.open_yaml())
+
+
+
+
+# 写入到yaml文件
+# with open(d.FLIE_PATH, "w", encoding="utf-8") as f:
 #
-# # for i in d.get_yaml():
-# #     print(i)
-#
-# for i in d.open_yaml():
-#     print(i)
+#     yaml.dump(xx, f, allow_unicode=True)
