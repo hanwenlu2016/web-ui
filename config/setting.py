@@ -8,7 +8,7 @@
 ########## 通用配置
 CASE_TYPE = 'web'  # 项目类型  'app'  # web
 
-IS_CLEAN_REPORT = False  # 是否清除 测试历史测试报告结果 * 默认清除
+IS_CLEAN_REPORT = True  # 是否清除 测试历史测试报告结果 * 默认清除
 
 IS_REDIS = False  # 是否读取redis 数据 (完成代码用列后导入管理平台时使用) 默认不读取 #False/True
 

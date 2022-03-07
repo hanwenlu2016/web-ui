@@ -1,76 +1,49 @@
-#web ¶¨Î»Ä£°å
-#- casename: # ²âÊÔÓÃÀı
-#  title: #ÓÃÀı±êÌâ
-#  precond: #Ç°ÖÃ
-#  testdata:
-#    - loginname: "admin"
-#      password: "fdr**2020"
-#      assertion: "¹ÜÀíÔ±"
-#    - loginname: "18268"
-#      password: "123456a?"
-#      assertion: "18268"
-#  element:
-#    - casesteid:  # ²½Öèid
-#      types:   # ¶¨Î»ÀàĞÍ
-#      operate:    # ²Ù×÷ÀàĞÍ
-#      locate: # ¶¨Î»Æ÷
-#      listindex: # ¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-#      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-#      info:    # ²½ÖèËµÃ÷
-
-
-- model: WangYi/º½°à¹ÜÀí  # ¶ÔÓ¦pageobj µÄÀàÃû³Æ
-
-
-
+- model: WangYi/èˆªç­ç®¡ç†
 - casename: 163_input_user
-  title: ÊäÈëÓÃ»§Ãû
-  precond:
-  testdata:
   element:
-    - casesteid: 1
-      types: name
-      operate: input
-      locate: email
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: ÊäÈëÓÃ»§Ãû
-
+  - casesteid: 1
+    info: è¾“å…¥ç”¨æˆ·å
+    listindex: null
+    locate: email
+    locawait: null
+    operate: input
+    types: name
+  precond: null
+  testdata: null
+  title: è¾“å…¥ç”¨æˆ·å
 - casename: 163_input_pwd
-  title: ÊäÈëÃÜÂë
-  precond:
-  testdata:
   element:
-    - casesteid: 1
-      types: name
-      operate: input
-      locate: password
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: ÊäÈëÃÜÂë
-
+  - casesteid: 1
+    info: è¾“å…¥å¯†ç 
+    listindex: null
+    locate: password
+    locawait: null
+    operate: input
+    types: name
+  precond: null
+  testdata: null
+  title: è¾“å…¥å¯†ç 
 - casename: 163_input_sub
-  title: Ìá½»µÇÂ¼
-  precond:
-  testdata:
   element:
-    - casesteid: 1
-      types: id
-      operate: click
-      locate: dologin
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: Ìá½»µÇÂ¼
-
+  - casesteid: 1
+    info: æäº¤ç™»å½•
+    listindex: null
+    locate: dologin
+    locawait: null
+    operate: click
+    types: id
+  precond: null
+  testdata: null
+  title: æäº¤ç™»å½•
 - casename: 163_froms
-  title: Ìø×ªfroms
-  precond:
-  testdata:
   element:
-    - casesteid: 1
-      types: xpath
-      operate: iframe
-      locate: //div[@id='loginDiv']/iframe
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: Ìø×ªfroms
+  - casesteid: 1
+    info: è·³è½¬froms
+    listindex: null
+    locate: //div[@id='loginDiv']/iframe
+    locawait: null
+    operate: iframe
+    types: xpath
+  precond: null
+  testdata: null
+  title: è·³è½¬froms
