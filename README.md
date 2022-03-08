@@ -100,9 +100,9 @@ python3 run.py
 
 # 帮到你的话，请我喝杯咖啡吧！！！！
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/wx.jpeg)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/wx.png)
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/zfb.jpeg)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/zfb.png)
 
 # 更新日志
 
