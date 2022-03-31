@@ -98,11 +98,7 @@ python3 run.py
 
 7 目前浏览器支持 ctenos7(谷歌/火狐)， windos(谷歌/火狐/IE)，mac(谷歌/火狐/safair) 其它浏览器暂未联调！
 
-# 帮到你的话，请我喝杯咖啡吧！！！！
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/wx.png)
-
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/zfb.png)
 
 # 更新日志
 
