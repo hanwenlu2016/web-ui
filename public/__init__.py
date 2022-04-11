@@ -4,6 +4,6 @@ from web_base import Base,WebBase,AutoRunCase
 
 # from public import ApiBase
 
-__all_=['ApiBase','apiexe','Base','CommonlyUsed','AndroidUiautomatorBase','IosPredicate','AccessibilityId','AppBase',
+__all__=['ApiBase','apiexe','Base','CommonlyUsed','AndroidUiautomatorBase','IosPredicate','AccessibilityId','AppBase',
         'Base','WebBase','AutoRunCase'
         ]
