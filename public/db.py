@@ -67,24 +67,44 @@ class Oracle:
         try:
             info = list(ORACLE.values())
             db = cx_Oracle.connect(f'{info[0]}/{info[1]}@{info[2]}')
-            cursor = db.cursor()
-            return cursor
+            return db
         except Exception as e:
             logger.error(f'连接Oracle客户端错误!{e}')
 
     @classmethod
-    def select(cls, sql: str) -> Tuple or List:
-        """
+    def ex_select(cls, sql: str) -> Tuple or List:
+        """ 查询
         Oracle sql 执行
         :param sql:  sql str
         :return: tupe
         """
         try:
             conn = cls.connOracle()
-            conn.execute(sql)
-            select_data = conn.fetchall()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            select_data = cursor.fetchall()
+            cursor.close()
             conn.close()
             return select_data
+        except Exception as e:
+            logger.error(f'执行Oracle sql异常{e}')
+
+    @classmethod
+    def ex_insert(cls, sql: str) -> Tuple or List:
+        """ 插入
+        Oracle sql 执行
+        :param sql:  sql str
+        :return: tupe
+        """
+        try:
+            conn = cls.connOracle()
+            cursor = conn.cursor()
+
+            cursor.execute(sql)
+            conn.commit()
+
+            cursor.close()
+            conn.close()
         except Exception as e:
             logger.error(f'执行Oracle sql异常{e}')
 
@@ -183,7 +203,7 @@ class RedisPoolCluster:
         self.session.close()
         return get_key
 
-    def keys(self)-> T:
+    def keys(self) -> T:
         """
         获取所有键
         :return:
@@ -193,7 +213,7 @@ class RedisPoolCluster:
         return keys_all
 
     @property
-    def opt(self)-> T:
+    def opt(self) -> T:
         """
         reis 操作   RedisPoolCluster.opt.xxxx
         :return:
