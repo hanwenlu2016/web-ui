@@ -85,9 +85,10 @@ class Oracle:
             select_data = cursor.fetchall()
             cursor.close()
             conn.close()
+            logger.debug('查询sql成功！！')
             return select_data
         except Exception as e:
-            logger.error(f'执行Oracle sql异常{e}')
+            logger.error(f'执行Oracle 查询异常{e}')
 
     @classmethod
     def ex_insert(cls, sql: str) -> Tuple or List:
@@ -105,8 +106,9 @@ class Oracle:
 
             cursor.close()
             conn.close()
+            logger.debug('提交sql成功！！')
         except Exception as e:
-            logger.error(f'执行Oracle sql异常{e}')
+            logger.error(f'执行Oracle 插入异常{e}')
 
 
 class RedisPool:
