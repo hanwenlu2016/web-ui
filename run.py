@@ -182,7 +182,7 @@ class RunPytest:
             logger.info('测试报告生成完成！')
 
         # 发送邮件 附件为zip格式
-        if is_email:
+        if is_email != 'False' and is_email != '0'::
             SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果',
                                   reports_path=prpore_allure_dir,
                                   filename='testport')
