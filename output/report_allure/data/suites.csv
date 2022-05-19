@@ -1,4 +1,3 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon Mar 07 15:36:59 CST 2022","Mon Mar 07 15:36:59 CST 2022","159","case.api_demo","test_api","TestApiDemo","","","get接口","测试接口get方法"
-"passed","Mon Mar 07 15:36:59 CST 2022","Mon Mar 07 15:36:59 CST 2022","59","case.api_demo","test_api","TestApiDemo","","","get接口","测试接口get方法"
-"passed","Mon Mar 07 15:36:59 CST 2022","Mon Mar 07 15:36:59 CST 2022","73","case.api_demo","test_api","TestApiDemo","","","get接口","测试接口get方法"
+"passed","Thu May 19 10:22:30 CST 2022","Thu May 19 10:22:34 CST 2022","4447","case.web_demo","test_baidu1","TestBaiDu","","","输入内容并搜索","输入多参数搜索"
+"passed","Thu May 19 10:22:37 CST 2022","Thu May 19 10:22:42 CST 2022","4242","case.web_demo","test_baidu1","TestBaiDu","","","输入内容并搜索","输入多参数搜索"

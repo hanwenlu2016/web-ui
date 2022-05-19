@@ -5,10 +5,10 @@
 # @Time: 2021/6/23  14:42
 
 import os
+
 import allure
 import pytest
 
-from public.common import logger
 from public.api_base import apiexe
 from public.reda_data import reda_api_casedata
 

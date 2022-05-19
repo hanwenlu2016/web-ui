@@ -19,14 +19,14 @@ IMPLICITLY_WAIT_TIME = 10  # 显示等待最长时间 /s
 POLL_FREQUENCY = 0.2  # 显示等待元素出现时 在此时间内检索一次 /s
 
 ########## 接口端配置
-API_URL = "http://wthrcdn.etouch.cn"  # "https://github.com/" #'"http://192.168.7.101/api"  # 接口地址
+API_URL = "http://wthrcdn.etouch.cn"   # 接口地址
 
 TIMEOUT = 5  # 接口请求超时时间 /S
 
 HEADERS = {'Content-Type': 'application/json', }
 
 ########## Web端配置
-URL = 'https://mail.163.com/'  # "https://www.baidu.com/"  # # 项目地址 web 时选择
+URL = 'https://www.baidu.com/'   # 项目地址 web 时选择
 
 BROWSERNAME = "Chrome"  # "Chrome" "Firefox" "Ie"  "Safari"  # 浏览器选择
 

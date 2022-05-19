@@ -6,13 +6,13 @@
 
 from typing import TypeVar, Tuple, List
 
-import pymysql
 import cx_Oracle
+import pymysql
 import redis
 from rediscluster import RedisCluster
 
-from public.common import logger
 from config.setting import MYSQL, ORACLE, REDIS, REDIS_CLUSTER, REDIS_CLUSTER_PASWORD
+from public.common import logger
 
 T = TypeVar('T')  # 可以是任何类型。
 

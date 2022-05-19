@@ -12,10 +12,10 @@ import yaml
 from faker import Factory
 from xlrd import open_workbook
 
-from public.db import RedisPool
-from public.common import ErrorExcep, logger
-from config.setting import IS_REDIS
 from config.ptahconf import CASEYMAL_DIR, LOCATORYMAL_DIR
+from config.setting import IS_REDIS
+from public.common import ErrorExcep, logger
+from public.db import RedisPool
 
 fake = Factory().create('zh_CN')
 

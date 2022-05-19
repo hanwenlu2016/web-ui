@@ -6,13 +6,12 @@
 
 import os
 
-import pytest
 import allure
+import pytest
 
 from pageobj.baidu import BaiDu
-from public.reda_data import reda_pytestdata
 from public.common import ImgDiff
-from public.api_base import apiexe
+from public.reda_data import reda_pytestdata
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 

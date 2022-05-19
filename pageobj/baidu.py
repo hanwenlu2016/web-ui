@@ -4,11 +4,11 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2020/10/22  16:21
 
-import os, sys
+import os
+import sys
 
 sys.path.append(os.pardir)
 
-from public.common import logger
 from public.web_base import WebBase
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件 并替换为 yaml 后缀

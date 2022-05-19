@@ -1,48 +1,43 @@
 {
   "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
-  "name" : "packages",
   "children" : [ {
-    "name" : "case.api_demo.test_api",
+    "name" : "case.web_demo.test_baidu1",
     "children" : [ {
-      "name" : "get接口",
-      "uid" : "bce5ad7cb542a134",
-      "parentUid" : "75a6c6ecbb79d62639ce08b4e339871f",
+      "name" : "输入内容并搜索",
+      "uid" : "b63a8e64b9eb52e4",
+      "parentUid" : "d449d8adf440662fa1144dfcdd4397d2",
       "status" : "passed",
       "time" : {
-        "start" : 1646638619156,
-        "stop" : 1646638619315,
-        "duration" : 159
+        "start" : 1652926950356,
+        "stop" : 1652926954803,
+        "duration" : 4447
       },
       "flaky" : false,
       "newFailed" : false,
-      "parameters" : [ "{'city': '广州', 'code': None, 'assertion': {'city': '广州'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+      "newPassed" : false,
+      "newBroken" : false,
+      "retriesCount" : 0,
+      "retriesStatusChange" : false,
+      "parameters" : [ "('python', 'python', 'in')" ]
     }, {
-      "name" : "get接口",
-      "uid" : "fa912719104054cc",
-      "parentUid" : "75a6c6ecbb79d62639ce08b4e339871f",
+      "name" : "输入内容并搜索",
+      "uid" : "341528e644049322",
+      "parentUid" : "d449d8adf440662fa1144dfcdd4397d2",
       "status" : "passed",
       "time" : {
-        "start" : 1646638619156,
-        "stop" : 1646638619229,
-        "duration" : 73
+        "start" : 1652926957913,
+        "stop" : 1652926962155,
+        "duration" : 4242
       },
       "flaky" : false,
       "newFailed" : false,
-      "parameters" : [ "{'city': '深圳', 'code': None, 'assertion': {'city': '深圳'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
-    }, {
-      "name" : "get接口",
-      "uid" : "572951bee80fc4d1",
-      "parentUid" : "75a6c6ecbb79d62639ce08b4e339871f",
-      "status" : "passed",
-      "time" : {
-        "start" : 1646638619234,
-        "stop" : 1646638619293,
-        "duration" : 59
-      },
-      "flaky" : false,
-      "newFailed" : false,
-      "parameters" : [ "{'city': '上海', 'code': None, 'assertion': {'city': '上海'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+      "newPassed" : false,
+      "newBroken" : false,
+      "retriesCount" : 0,
+      "retriesStatusChange" : false,
+      "parameters" : [ "('C++', 'C++', 'in')" ]
     } ],
-    "uid" : "case.api_demo.test_api"
-  } ]
+    "uid" : "case.web_demo.test_baidu1"
+  } ],
+  "name" : "packages"
 }

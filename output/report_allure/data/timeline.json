@@ -1,56 +1,47 @@
 {
   "uid" : "ab17fc5a4eb3bca4b216b548c7f9fcbc",
-  "name" : "timeline",
   "children" : [ {
-    "name" : "han.local",
+    "name" : "hanwenludeMac-mini.local",
     "children" : [ {
-      "name" : "92039-MainThread",
+      "name" : "72174-MainThread",
       "children" : [ {
-        "name" : "get接口",
-        "uid" : "fa912719104054cc",
-        "parentUid" : "034795af298ddc4197e145d6cdef9972",
+        "name" : "输入内容并搜索",
+        "uid" : "341528e644049322",
+        "parentUid" : "01fbff4adaca5d67f25521659383c6c7",
         "status" : "passed",
         "time" : {
-          "start" : 1646638619156,
-          "stop" : 1646638619229,
-          "duration" : 73
+          "start" : 1652926957913,
+          "stop" : 1652926962155,
+          "duration" : 4242
         },
         "flaky" : false,
         "newFailed" : false,
-        "parameters" : [ "{'city': '深圳', 'code': None, 'assertion': {'city': '深圳'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+        "newPassed" : false,
+        "newBroken" : false,
+        "retriesCount" : 0,
+        "retriesStatusChange" : false,
+        "parameters" : [ "('C++', 'C++', 'in')" ]
       }, {
-        "name" : "get接口",
-        "uid" : "572951bee80fc4d1",
-        "parentUid" : "034795af298ddc4197e145d6cdef9972",
+        "name" : "输入内容并搜索",
+        "uid" : "b63a8e64b9eb52e4",
+        "parentUid" : "01fbff4adaca5d67f25521659383c6c7",
         "status" : "passed",
         "time" : {
-          "start" : 1646638619234,
-          "stop" : 1646638619293,
-          "duration" : 59
+          "start" : 1652926950356,
+          "stop" : 1652926954803,
+          "duration" : 4447
         },
         "flaky" : false,
         "newFailed" : false,
-        "parameters" : [ "{'city': '上海', 'code': None, 'assertion': {'city': '上海'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+        "newPassed" : false,
+        "newBroken" : false,
+        "retriesCount" : 0,
+        "retriesStatusChange" : false,
+        "parameters" : [ "('python', 'python', 'in')" ]
       } ],
-      "uid" : "034795af298ddc4197e145d6cdef9972"
-    }, {
-      "name" : "92041-MainThread",
-      "children" : [ {
-        "name" : "get接口",
-        "uid" : "bce5ad7cb542a134",
-        "parentUid" : "3cf958461a5f5c72c096b41a80d10bd3",
-        "status" : "passed",
-        "time" : {
-          "start" : 1646638619156,
-          "stop" : 1646638619315,
-          "duration" : 159
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "parameters" : [ "{'city': '广州', 'code': None, 'assertion': {'city': '广州'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
-      } ],
-      "uid" : "3cf958461a5f5c72c096b41a80d10bd3"
+      "uid" : "01fbff4adaca5d67f25521659383c6c7"
     } ],
-    "uid" : "a3f595151c04ec7fbaf2501c5c2a78cb"
-  } ]
+    "uid" : "f4d1aa0c234e58b35e9ffede6fbf27ca"
+  } ],
+  "name" : "timeline"
 }

@@ -21,17 +21,17 @@
 
 import os
 import time
+
 import allure
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from appium.webdriver.common.touch_action import TouchAction
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
-from public.reda_data import GetCaseYmal
-from public.common import ErrorExcep, logger
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
+from public.common import ErrorExcep, logger
+from public.reda_data import GetCaseYmal
 
 
 class Base:

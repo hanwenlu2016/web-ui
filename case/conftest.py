@@ -11,8 +11,7 @@ from public.driver_init import WebInit, AppInit
 
 @pytest.fixture(scope='function')
 def webDriver():
-    wb = WebInit()
-    driver = wb.enable
+    driver = WebInit().enable
     yield driver
     driver.quit()
 

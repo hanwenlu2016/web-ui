@@ -6,12 +6,11 @@
 
 import os
 
-import pytest
 import allure
+import pytest
 
-from public.web_base import AutoRunCase
 from public.reda_data import reda_pytestdata
-
+from public.web_base import AutoRunCase
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 

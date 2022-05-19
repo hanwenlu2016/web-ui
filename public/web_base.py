@@ -11,22 +11,22 @@ operate 操作方式支持 :input(输入) , clear(清除) , submit(提交),jscle
                     clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉),get_html(获取当前html内容), get_url(获取当前URL)
 '''
 
-import time
 import os
 import sys
+import time
 
 import allure
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
-from public.common import ErrorExcep, logger, is_assertion
-from public.reda_data import GetCaseYmal
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
+from public.common import ErrorExcep, logger, is_assertion
+from public.reda_data import GetCaseYmal
 
 
 class Base:

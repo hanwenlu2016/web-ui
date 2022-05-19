@@ -1,52 +1,47 @@
 {
   "uid" : "b1a8273437954620fa374b796ffaacdd",
-  "name" : "behaviors",
   "children" : [ {
-    "name" : "接口demo",
+    "name" : "百度搜索",
     "children" : [ {
-      "name" : "接口测试",
+      "name" : "所搜验证",
       "children" : [ {
-        "name" : "get接口",
-        "uid" : "bce5ad7cb542a134",
-        "parentUid" : "cc75e7723371b9fa04e433b0425b8db6",
+        "name" : "输入内容并搜索",
+        "uid" : "b63a8e64b9eb52e4",
+        "parentUid" : "2249c6438e61b861cc328111dda6595b",
         "status" : "passed",
         "time" : {
-          "start" : 1646638619156,
-          "stop" : 1646638619315,
-          "duration" : 159
+          "start" : 1652926950356,
+          "stop" : 1652926954803,
+          "duration" : 4447
         },
         "flaky" : false,
         "newFailed" : false,
-        "parameters" : [ "{'city': '广州', 'code': None, 'assertion': {'city': '广州'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+        "newPassed" : false,
+        "newBroken" : false,
+        "retriesCount" : 0,
+        "retriesStatusChange" : false,
+        "parameters" : [ "('python', 'python', 'in')" ]
       }, {
-        "name" : "get接口",
-        "uid" : "fa912719104054cc",
-        "parentUid" : "cc75e7723371b9fa04e433b0425b8db6",
+        "name" : "输入内容并搜索",
+        "uid" : "341528e644049322",
+        "parentUid" : "2249c6438e61b861cc328111dda6595b",
         "status" : "passed",
         "time" : {
-          "start" : 1646638619156,
-          "stop" : 1646638619229,
-          "duration" : 73
+          "start" : 1652926957913,
+          "stop" : 1652926962155,
+          "duration" : 4242
         },
         "flaky" : false,
         "newFailed" : false,
-        "parameters" : [ "{'city': '深圳', 'code': None, 'assertion': {'city': '深圳'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
-      }, {
-        "name" : "get接口",
-        "uid" : "572951bee80fc4d1",
-        "parentUid" : "cc75e7723371b9fa04e433b0425b8db6",
-        "status" : "passed",
-        "time" : {
-          "start" : 1646638619234,
-          "stop" : 1646638619293,
-          "duration" : 59
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "parameters" : [ "{'city': '上海', 'code': None, 'assertion': {'city': '上海'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+        "newPassed" : false,
+        "newBroken" : false,
+        "retriesCount" : 0,
+        "retriesStatusChange" : false,
+        "parameters" : [ "('C++', 'C++', 'in')" ]
       } ],
-      "uid" : "cc75e7723371b9fa04e433b0425b8db6"
+      "uid" : "2249c6438e61b861cc328111dda6595b"
     } ],
-    "uid" : "13f81fe330a5540280d8855cbfec9510"
-  } ]
+    "uid" : "a76e3034c0bacf1f726844fd54aff2b5"
+  } ],
+  "name" : "behaviors"
 }

@@ -1,30 +1,20 @@
 [ {
-  "uid" : "572951bee80fc4d1",
-  "name" : "get接口",
+  "uid" : "341528e644049322",
+  "name" : "输入内容并搜索",
   "time" : {
-    "start" : 1646638619234,
-    "stop" : 1646638619293,
-    "duration" : 59
+    "start" : 1652926957913,
+    "stop" : 1652926962155,
+    "duration" : 4242
   },
   "status" : "passed",
   "severity" : "normal"
 }, {
-  "uid" : "bce5ad7cb542a134",
-  "name" : "get接口",
+  "uid" : "b63a8e64b9eb52e4",
+  "name" : "输入内容并搜索",
   "time" : {
-    "start" : 1646638619156,
-    "stop" : 1646638619315,
-    "duration" : 159
-  },
-  "status" : "passed",
-  "severity" : "normal"
-}, {
-  "uid" : "fa912719104054cc",
-  "name" : "get接口",
-  "time" : {
-    "start" : 1646638619156,
-    "stop" : 1646638619229,
-    "duration" : 73
+    "start" : 1652926950356,
+    "stop" : 1652926954803,
+    "duration" : 4447
   },
   "status" : "passed",
   "severity" : "normal"

@@ -6,12 +6,11 @@
 
 import os
 
-import pytest
 import allure
+import pytest
 
 from pageobj.wy163 import WangYi
 from public.reda_data import reda_pytestdata
-
 
 yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
 

@@ -6,6 +6,8 @@
 import sys
 from typing import TypeVar
 
+from selenium.common.exceptions import SessionNotCreatedException
+
 sys.path.append('../')
 import os, time
 import requests
@@ -85,7 +87,7 @@ class WebInit:
         判断url 地址正常请求
         """
         try:
-            rep = requests.get(url, timeout=5)  # 默认设置5秒超时
+            rep = requests.get(url, timeout=10)  # 默认设置10秒超时
             code = rep.status_code
             if code == 200:
                 return True
@@ -137,7 +139,9 @@ class WebInit:
         if IS_COLONY:
             return self.setups()
         else:
+
             return self.setup()
+
 
     def browaer_setup_args(self, driver: T) -> T:
         """
@@ -189,11 +193,12 @@ class WebInit:
 
                     else:
                         logger.error(f'linux系统不支持此浏览器: {self.browser}')
-                        return False
+
 
                 elif current_sys == 'darwin':  # mac 系统
 
                     if self.browser == 'chrome':
+
                         driver = webdriver.Chrome(executable_path=MAC_CHROMEDRIVER)
                         return self.browaer_setup_args(driver)
 
@@ -204,10 +209,9 @@ class WebInit:
                     elif self.browser == 'safari':
                         driver = webdriver.Safari()
                         return self.browaer_setup_args(driver)
-
                     else:
                         logger.error(f'mac系统不支持此浏览器: {self.browser}')
-                        return False
+
                 elif current_sys == 'win32':
 
                     if self.browser == 'ie':
@@ -221,23 +225,22 @@ class WebInit:
 
                     elif self.browser == 'firefox':
                         driver = webdriver.Firefox(executable_path=WIN_FIREFOXDRIVER, service_log_path=log_path)
-
                         return self.browaer_setup_args(driver, )
 
                     else:
                         logger.error(f'windos系统不支持此浏览器: {self.browser}')
 
-                        return False
                 else:
                     logger.error(f'当前{current_sys}系统不支持！')
-                    return False
+
             else:
                 logger.error('项目地址地址请求异常！！！')
-                return False
 
-        except Exception as e:
-            logger.error(f'浏览器驱动启动失败 {e}')
-            return False
+
+        except SessionNotCreatedException :
+            logger.warning('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
+            logger.error('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
+
 
     def setups(self) -> T:
         """
@@ -259,7 +262,7 @@ class WebInit:
                         return self.browaer_setups_args(descap, option=options)
                     else:
                         logger.error('linux不支持此浏览器')
-                        return False
+
 
                 elif current_sys == 'darwin':  # mac 系统
                     if self.browser == 'safari':
@@ -276,7 +279,7 @@ class WebInit:
 
                     else:
                         logger.error('mac不支持此浏览器')
-                        return False
+
 
                 elif current_sys == 'win32':
                     if self.browser == 'ie':
@@ -293,16 +296,14 @@ class WebInit:
 
                     else:
                         logger.error('windos不支持此浏览器')
-                        return False
 
                 else:
                     logger.info(f'当前{current_sys}系统不支持！')
-                    return False
 
             else:
                 logger.error('项目地址或者集群地址请求异常！！！')
-                return False
 
-        except Exception as e:
-            logger.error(f'浏览器驱动启动失败 {e}')
-            return False
+        except SessionNotCreatedException :
+            logger.warning('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
+            logger.error('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
+

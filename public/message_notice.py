@@ -8,7 +8,7 @@ from typing import TypeVar
 
 import requests
 
-from config.setting import WECHAT_WEBHOOK, DINGDING_WEBHOOK,WECHAT_MOBILE_LIST,DINGDING_MOBILE_LIST
+from config.setting import WECHAT_WEBHOOK, DINGDING_WEBHOOK, WECHAT_MOBILE_LIST, DINGDING_MOBILE_LIST
 from public.common import logger
 
 T = TypeVar('T')  # 可以是任何类型。

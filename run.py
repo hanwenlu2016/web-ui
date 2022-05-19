@@ -4,7 +4,8 @@
 # @E-mail: wenlupay@163.com
 # @Time: 2020/10/26  19:04
 
-import os, sys
+import os
+import sys
 
 from public.message_notice import EnterpriseWeChatNotice, DingDingNotice
 
@@ -182,7 +183,7 @@ class RunPytest:
             logger.info('测试报告生成完成！')
 
         # 发送邮件 附件为zip格式
-        if is_email != 'False' and is_email != '0'::
+        if is_email != 'False' and is_email != '0':
             SendEMail().send_file(content='demo项目测试完成已经完成发送报告请查收', subject='demo项目测测试结果',
                                   reports_path=prpore_allure_dir,
                                   filename='testport')
@@ -206,7 +207,7 @@ class RunPytest:
         DelReport().run_del_report()
 
         pytest.main(
-            ['-m', 'test_api', '-n=2', '--reruns=1', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
+            ['-m', 'testbaidu_web1', '-n=1', '--reruns=0', '--alluredir', f'{PRPORE_JSON_DIR}', f'{CASE_DIR}'])
 
         #生成测试报告
         os.system(f'allure generate {PRPORE_JSON_DIR} -o {PRPORE_ALLURE_DIR} --clean')

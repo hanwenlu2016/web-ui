@@ -5,17 +5,17 @@
 # @Time: 2022/2/22  13:59
 
 import os
+import smtplib
 import time
 import zipfile
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
 from email.mime.application import MIMEApplication
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-from public.common import logger
 from config.ptahconf import PRPORE_TMP
 from config.setting import EMAIL_PORT, EMAIL_HOST, SEND_EMAIL_PASSWORD, SEND_EMAIL_USERNAME, RECEIVE_EMAIL_USER
+from public.common import logger
 
 
 class SendEMail:

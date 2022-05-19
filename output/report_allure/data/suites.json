@@ -1,56 +1,51 @@
 {
   "uid" : "98d3104e051c652961429bf95fa0b5d6",
-  "name" : "suites",
   "children" : [ {
-    "name" : "case.api_demo",
+    "name" : "case.web_demo",
     "children" : [ {
-      "name" : "test_api",
+      "name" : "test_baidu1",
       "children" : [ {
-        "name" : "TestApiDemo",
+        "name" : "TestBaiDu",
         "children" : [ {
-          "name" : "get接口",
-          "uid" : "bce5ad7cb542a134",
-          "parentUid" : "cad174dbf41e765b366011930546a7cb",
+          "name" : "输入内容并搜索",
+          "uid" : "b63a8e64b9eb52e4",
+          "parentUid" : "1ab819524286dd16538470909d9d06cf",
           "status" : "passed",
           "time" : {
-            "start" : 1646638619156,
-            "stop" : 1646638619315,
-            "duration" : 159
+            "start" : 1652926950356,
+            "stop" : 1652926954803,
+            "duration" : 4447
           },
           "flaky" : false,
           "newFailed" : false,
-          "parameters" : [ "{'city': '广州', 'code': None, 'assertion': {'city': '广州'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+          "newPassed" : false,
+          "newBroken" : false,
+          "retriesCount" : 0,
+          "retriesStatusChange" : false,
+          "parameters" : [ "('python', 'python', 'in')" ]
         }, {
-          "name" : "get接口",
-          "uid" : "fa912719104054cc",
-          "parentUid" : "cad174dbf41e765b366011930546a7cb",
+          "name" : "输入内容并搜索",
+          "uid" : "341528e644049322",
+          "parentUid" : "1ab819524286dd16538470909d9d06cf",
           "status" : "passed",
           "time" : {
-            "start" : 1646638619156,
-            "stop" : 1646638619229,
-            "duration" : 73
+            "start" : 1652926957913,
+            "stop" : 1652926962155,
+            "duration" : 4242
           },
           "flaky" : false,
           "newFailed" : false,
-          "parameters" : [ "{'city': '深圳', 'code': None, 'assertion': {'city': '深圳'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
-        }, {
-          "name" : "get接口",
-          "uid" : "572951bee80fc4d1",
-          "parentUid" : "cad174dbf41e765b366011930546a7cb",
-          "status" : "passed",
-          "time" : {
-            "start" : 1646638619234,
-            "stop" : 1646638619293,
-            "duration" : 59
-          },
-          "flaky" : false,
-          "newFailed" : false,
-          "parameters" : [ "{'city': '上海', 'code': None, 'assertion': {'city': '上海'}, 'assertype': 'in', 'filename': None, 'filepath': None}" ]
+          "newPassed" : false,
+          "newBroken" : false,
+          "retriesCount" : 0,
+          "retriesStatusChange" : false,
+          "parameters" : [ "('C++', 'C++', 'in')" ]
         } ],
-        "uid" : "cad174dbf41e765b366011930546a7cb"
+        "uid" : "1ab819524286dd16538470909d9d06cf"
       } ],
-      "uid" : "a1bf0c567702aac0b0698e0b6d399f2a"
+      "uid" : "f111931c322e85d2dc79bbe108c2cd1e"
     } ],
-    "uid" : "75b8a4c5f907e261cca27d3371236081"
-  } ]
+    "uid" : "c67c09617ba79a2372c6af278a90599e"
+  } ],
+  "name" : "suites"
 }

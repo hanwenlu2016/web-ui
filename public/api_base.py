@@ -5,14 +5,14 @@
 # @Time: 2021/6/17  10:42
 
 
-from urllib3 import encode_multipart_formdata
 import json
 
 import requests
+from urllib3 import encode_multipart_formdata
 
 from config.setting import API_URL, TIMEOUT, HEADERS
-from public.reda_data import GetCaseYmal
 from public.common import ErrorExcep, logger, is_assertion_results
+from public.reda_data import GetCaseYmal
 
 
 class ApiBase:
