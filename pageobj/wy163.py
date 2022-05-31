@@ -12,7 +12,7 @@ sys.path.append(os.pardir)
 
 from public.web_base import WebBase
 
-yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件 并替换为 yaml 后缀
+
 
 '''
 
@@ -28,7 +28,7 @@ class WangYi(WebBase):
         跳转iffrom
         :return:
         """
-        self.webexe(yamlfile, 'froms')
+        self.webexe(__file__, sys._getframe().f_code.co_name)
 
     def input_user(self,user):
         """
@@ -36,19 +36,19 @@ class WangYi(WebBase):
         :return:
         """
 
-        self.webexe(yamlfile, 'input_user',text=user)
+        self.webexe(__file__, sys._getframe().f_code.co_name,text=user)
 
     def input_pwd(self,pwd):
         """
         输入密码
         :return:
         """
-        self.webexe(yamlfile, 'input_pwd',text=pwd)
+        self.webexe(__file__, sys._getframe().f_code.co_name,text=pwd)
 
     def input_sub(self):
         """
         提交登录
         :return:
         """
-        self.webexe(yamlfile, 'input_sub')
+        self.webexe(__file__, sys._getframe().f_code.co_name)
 

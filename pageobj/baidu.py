@@ -11,7 +11,7 @@ sys.path.append(os.pardir)
 
 from public.web_base import WebBase
 
-yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件 并替换为 yaml 后缀
+
 
 '''
 
@@ -27,8 +27,12 @@ class BaiDu(WebBase):
         :param content: 输入内容
         :return:
         """
+        #self.webexe(__file__,sys._getframe().f_code.co_name)
+        # __file__ 代表当前运行的py文件 运行的py文件必须和locatorYAML保持文件名称一样
+        # sys._getframe().f_code.co_name 获取当前运行函数名称  次函数名称必须和 locatorYAML 的casename保持一致
 
-        self.webexe(yamlfile, 'input_search_content', text=content)
+        self.webexe(__file__, sys._getframe().f_code.co_name, text=content)
+        #self.webexe(__file__, 'input_search_content', text=content)
 
     def click_search_button(self):
         """
@@ -36,5 +40,5 @@ class BaiDu(WebBase):
         :return:
         """
 
-        self.webexe(yamlfile, 'click_search_button')
+        self.webexe(__file__, sys._getframe().f_code.co_name,)
 

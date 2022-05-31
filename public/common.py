@@ -55,7 +55,6 @@ def find_dict(will_find_dist: dict, find_keys: T) -> list or int:
 
         return value_found
 
-
 def is_assertion(dicts: T, actual: T) -> None:
     """
     断言参数
@@ -66,7 +65,6 @@ def is_assertion(dicts: T, actual: T) -> None:
 
     if dicts is not None:
         is_assertion_results(actual=actual, expect=dicts[-2], types=dicts[-1])
-
 
 def is_assertion_results(actual: T, expect: T, types: str) -> bool:
     """
@@ -101,56 +99,6 @@ def is_assertion_results(actual: T, expect: T, types: str) -> bool:
     else:
         logger.error('输入的类型不支持！！')
         return False
-
-
-def facename(func: T) -> T:
-    """
-    获取函数名称 *装饰器
-    :param func:
-    :return:
-    """
-
-    def wrapper(*args, **kwargs):
-        name = func.__name__
-        return name
-
-    return wrapper
-
-
-def ymal(*args, **kwargs) -> T:
-    """
-    装饰器
-    获取当前运行文件的py文件并转为yaml
-    :param args:
-    :param kwargs:
-    :return:
-    """
-
-    def getyaml(func):
-        def yaml():
-            # name=func.__name__
-            yamlfile = args[0](__file__).name.replace('py', 'yaml')
-            return yamlfile  # ,name
-
-        return yaml
-
-    return getyaml
-
-
-# 获取运行函数名称
-def get_run_func_name() -> T:
-    """
-    获取运行函数名称
-    :return:
-    """
-    try:
-        raise Exception
-    except:
-        exc_info = sys.exc_info()
-        traceObj = exc_info[2]
-        frameObj = traceObj.tb_frame
-        Upframe = frameObj.f_back
-        return Upframe.f_code.co_name
 
 
 # 提取字符中的整数

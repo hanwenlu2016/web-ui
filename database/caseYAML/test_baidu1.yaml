@@ -1,37 +1,34 @@
-- model: TestBaiDu                  # ¶ÔÓ¦pageobj µÄÀàÃû³Æ
+- model: TestBaiDu                  # å¯¹åº”pageobj çš„ç±»åç§°
 
-- casename: test_baidu_search     # ¶ÔÓ¦ÀàµÄ º¯Êı
-  title: ÊäÈëËÑË÷ÄÚÈİ               # ²Ù×÷±êÌâ
-  precond:                        # Ç°ÖÃËµÃ÷
-  testdata: # ²âÊÔÊı¾İ /ÁĞ±í
+- casename: test_baidu_search     # å¯¹åº”ç±»çš„ å‡½æ•°
+  title: è¾“å…¥æœç´¢å†…å®¹               # æ“ä½œæ ‡é¢˜
+  precond:                        # å‰ç½®è¯´æ˜
+  testdata: # æµ‹è¯•æ•°æ® /åˆ—è¡¨
     - content: python
-      assertion: "python"             # *¶ÏÑÔÊ±±ØÌî
-      assertype: 'in'                # ¶ÏÑÔ²ÎÊıÌîĞ´Ê±´Ë±ØÌîÀàĞÍ  ==(µÈÓÚ) !=(²»µÈÓÚ) in(°üº¬) notin(²»°üº¬)
+      assertion: "python"             # *æ–­è¨€æ—¶å¿…å¡«
+      assertype: 'in'                # æ–­è¨€å‚æ•°å¡«å†™æ—¶æ­¤å¿…å¡«ç±»å‹  ==(ç­‰äº) !=(ä¸ç­‰äº) in(åŒ…å«) notin(ä¸åŒ…å«)
     - content: C++
-      assertion: "C++"             # *¶ÏÑÔÊ±±ØÌî
-      assertype: 'in'                # ¶ÏÑÔ²ÎÊıÌîĞ´Ê±´Ë±ØÌîÀàĞÍ  ==(µÈÓÚ) !=(²»µÈÓÚ) in(°üº¬) notin(²»°üº¬)
-  element: # ²Ù×÷²½Öè /ÁĞ±í
-    - casesteid: 1            # ²Ù×÷²½Öè
-      types: name             # ¶¨Î»ÀàĞÍ  Ö§³Ö('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function')
-      operate: input          # ²Ù×÷ÀàĞÍ Ö§³Ö input(ÊäÈë) , clear(Çå³ı) , submit(Ìá½»),jsclear (jsÇå³ı),jsclear_continue_input(jsÇå³ıºóÊäÈë),clear_continue_input(Çå³ıÔÚÊäÈë) ¡¢click(µã»÷) ,text(ÌáÈ¡ÎÄ±¾) ,scroll(»¬¶¯ÏÂÀ­) get_html(»ñÈ¡µ±Ç°ÍøÒ³ĞÅÏ¢) get_url(»ñÈ¡µ±Ç°url)* ×¢Òâ types = function  Ê±  operateÀàĞÍ±ØĞëÎª get_html get_url  locate¿ÉÎª¿Õ
-      locate: wd              # ¶¨Î»ÔªËØ
-      listindex: # ¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: µã»÷ÊäÈë¿òÊÕÈë       # ²Ù×÷ËµÃ÷
+      assertion: "C++"             # *æ–­è¨€æ—¶å¿…å¡«
+      assertype: 'in'                # æ–­è¨€å‚æ•°å¡«å†™æ—¶æ­¤å¿…å¡«ç±»å‹  ==(ç­‰äº) !=(ä¸ç­‰äº) in(åŒ…å«) notin(ä¸åŒ…å«)
+  element: # æ“ä½œæ­¥éª¤ /åˆ—è¡¨
+    - casesteid: 1            # æ“ä½œæ­¥éª¤
+      types: name             # å®šä½ç±»å‹  æ”¯æŒ('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function')
+      operate: input          # æ“ä½œç±»å‹ æ”¯æŒ input(è¾“å…¥) , clear(æ¸…é™¤) , submit(æäº¤),jsclear (jsæ¸…é™¤),jsclear_continue_input(jsæ¸…é™¤åè¾“å…¥),clear_continue_input(æ¸…é™¤åœ¨è¾“å…¥) ã€click(ç‚¹å‡») ,text(æå–æ–‡æœ¬) ,scroll(æ»‘åŠ¨ä¸‹æ‹‰) get_html(è·å–å½“å‰ç½‘é¡µä¿¡æ¯) get_url(è·å–å½“å‰url)* æ³¨æ„ types = function  æ—¶  operateç±»å‹å¿…é¡»ä¸º get_html get_url  locateå¯ä¸ºç©º
+      locate: wd              # å®šä½å…ƒç´ 
+      listindex: # å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: ç‚¹å‡»è¾“å…¥æ¡†æ”¶å…¥       # æ“ä½œè¯´æ˜
     - casesteid: 2
       types: id
       operate: click
       locate: su
-      listindex: # ¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: µã»÷ËÑË÷°´Å¥
+      listindex: # å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: ç‚¹å‡»æœç´¢æŒ‰é’®
     - casesteid: 3
       types: function
       operate: get_html
       locate:
-      listindex: # ¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: »ñÈ¡µ±Ç°HTMLÒ³Ãæ # ´Ë²½Öè¶ÏÑÔ
-
-
-
+      listindex: # å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: è·å–å½“å‰HTMLé¡µé¢ # æ­¤æ­¥éª¤æ–­è¨€

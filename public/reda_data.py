@@ -612,6 +612,15 @@ class RandomData:
         return fake.date_of_birth(tzinfo=None, minimum_age=0, maximum_age=age)
 
 
+def replace_py_yaml(file):
+    """
+    当前py文件转为 yaml后缀
+    :param file:
+    :return:
+    """
+    return os.path.basename(file).replace('py', 'yaml')
+
+
 #  快速获取测试数据 *元组 WEB、APP
 def reda_pytestdata(yamlname: str, casename: str, ) -> List or Tuple:
     """
@@ -622,7 +631,8 @@ def reda_pytestdata(yamlname: str, casename: str, ) -> List or Tuple:
     :param casename:   用例数据
     :return:
     """
-    testdata = GetCaseYmal(yamlname, casename).test_data_values()
+    yaml = replace_py_yaml(yamlname)
+    testdata = GetCaseYmal(yaml, casename).test_data_values()
     return testdata
 
 
@@ -632,14 +642,10 @@ def reda_api_casedata(yamlname: str, casename: str) -> List or Tuple:
     读取测试数据 HTTP 专用  *字典
     :return:
     """
-    testdata = GetCaseYmal(yamlname, casename)
+    yaml = replace_py_yaml(yamlname)
+    testdata = GetCaseYmal(yaml, casename)
 
     return testdata.test_data()
-
-
-
-
-
 
 # 写入到yaml文件
 # with open(d.FLIE_PATH, "w", encoding="utf-8") as f:

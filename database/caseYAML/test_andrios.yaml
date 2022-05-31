@@ -1,7 +1,7 @@
-- model: TestAndroidDemo  # ¶ÔÓ¦µ±Ç°ÎÄ¼şµÄ ÀàÃû³Æ
+- model: TestAndroidDemo  # å¯¹åº”å½“å‰æ–‡ä»¶çš„ ç±»åç§°
 
 - casename: test_open_wechat
-  title: ´ò¿ªÎ¢ĞÅµã»÷µÇÂ¼
+  title: æ‰“å¼€å¾®ä¿¡ç‚¹å‡»ç™»å½•
   precond:
   testdata:
     - test:

@@ -4,10 +4,10 @@
     "uid" : "a76e3034c0bacf1f726844fd54aff2b5",
     "name" : "百度搜索",
     "statistic" : {
-      "failed" : 0,
+      "failed" : 1,
       "broken" : 0,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     }

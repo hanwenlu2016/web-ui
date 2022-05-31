@@ -1,32 +1,32 @@
-#¶¨Î»Ä£°å
-#- casename: # ²âÊÔÓÃÀı
-#  title: #ÓÃÀı±êÌâ
-#  precond: #Ç°ÖÃ
+#å®šä½æ¨¡æ¿
+#- casename: # æµ‹è¯•ç”¨ä¾‹
+#  title: #ç”¨ä¾‹æ ‡é¢˜
+#  precond: #å‰ç½®
 #  testdata:
 #    - loginname: "admin"
 #      password: "fdr**2020"
-#      assertion: "¹ÜÀíÔ±"
+#      assertion: "ç®¡ç†å‘˜"
 #    - loginname: "18268"
 #      password: "123456a?"
 #      assertion: "18268"
 #  element:
-#    - casesteid:  # ²½Öèid
-#      types:   # ¶¨Î»ÀàĞÍ
-#      operate:    # ²Ù×÷ÀàĞÍ
-#      locate: # ¶¨Î»Æ÷
-#      info:    # ²½ÖèËµÃ÷
-#      expect:        # ²½ÖèÔ¤ÆÚ
+#    - casesteid:  # æ­¥éª¤id
+#      types:   # å®šä½ç±»å‹
+#      operate:    # æ“ä½œç±»å‹
+#      locate: # å®šä½å™¨
+#      info:    # æ­¥éª¤è¯´æ˜
+#      expect:        # æ­¥éª¤é¢„æœŸ
 
-- model: OpenWeChatPage  # ¶ÔÓ¦µ±Ç°ÎÄ¼şµÄ ÀàÃû³Æ
+- model: OpenWeChatPage  # å¯¹åº”å½“å‰æ–‡ä»¶çš„ ç±»åç§°
 
 - casename: click_login_button
-  title: µã»÷µÇÂ¼°´Å¥
+  title: ç‚¹å‡»ç™»å½•æŒ‰é’®
   precond:
   testdata:
   element:
     - casesteid: 1
       types: uiautomator
       operate: click
-      locate: new UiSelector().text("µÇÂ¼")
-      info: µã»÷µÇÂ¼°´Å¥
+      locate: new UiSelector().text("ç™»å½•")
+      info: ç‚¹å‡»ç™»å½•æŒ‰é’®
       expect:

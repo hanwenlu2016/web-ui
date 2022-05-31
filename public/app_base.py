@@ -889,6 +889,7 @@ class AccessibilityId(Base):
 
 class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUsed):
 
+
     def get_case(self, yaml_names=None, case_names=None):
         """
         获取用例数据   如果 case_names 以 test_ 开头直接找 caseYAML 目录下  如果不是 找 locaotrTAML
@@ -1160,7 +1161,9 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         """
         relust = None  # 断言结果  最后一步才返回
 
-        locator_data = self.get_case(yamlfile, case)
+        yaml = self.replace_py_yaml(yamlfile)
+
+        locator_data = self.get_case(yaml, case)
         locator_step = locator_data.stepCount()
 
         for locator in range(0, locator_step):

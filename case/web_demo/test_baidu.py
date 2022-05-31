@@ -13,7 +13,7 @@ from pageobj.baidu import BaiDu
 from public.common import ImgDiff
 from public.reda_data import reda_pytestdata
 
-yamlfile = os.path.basename(__file__).replace('py', 'yaml')  # 获取当前目运行文件
+
 
 # 修改 setting  URL
 class TestBaiDu:
@@ -23,7 +23,7 @@ class TestBaiDu:
     @allure.title("输入内容并搜索")  # 用例标题
     @allure.description('输入多参数搜索')  # 用例描述
     @pytest.mark.testbaidu_web  # 用列标记
-    @pytest.mark.parametrize('content', reda_pytestdata(yamlfile, 'test_baidu_search'))  # 测试数据
+    @pytest.mark.parametrize('content', reda_pytestdata(__file__, 'test_baidu_search'))  # 测试数据
     def test_baidu_search(self, webDriver,content):
         baidu = BaiDu(webDriver)
 

@@ -12,7 +12,7 @@ from urllib3 import encode_multipart_formdata
 
 from config.setting import API_URL, TIMEOUT, HEADERS
 from public.common import ErrorExcep, logger, is_assertion_results
-from public.reda_data import GetCaseYmal
+from public.reda_data import GetCaseYmal, replace_py_yaml
 
 
 class ApiBase:
@@ -94,7 +94,8 @@ class ApiBase:
             logger.error('headers is not null ！！')
             raise ('headers is not null ！！')
 
-    def get(self, urlpath, params=None, verify=False, header=None, upheader=None, code=None,assertion=None, assertype=None, isassert=True):
+    def get(self, urlpath, params=None, verify=False, header=None, upheader=None, code=None, assertion=None,
+            assertype=None, isassert=True):
         """
         get 请求
         :param urlpath:  url 路径
@@ -217,7 +218,8 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None, code=None, a
     """
 
     api = ApiBase()
-    yaml_data = GetCaseYmal(yaml_name=yamlfile, case_name=case)
+    yaml = replace_py_yaml(yamlfile)
+    yaml_data = GetCaseYmal(yaml_name=yaml, case_name=case)
     requests_type = yaml_data.reqtype.upper()  # 请求类型
     requests_url = yaml_data.urlpath  # url地址
     requests_header = yaml_data.header  # 请求头
@@ -229,7 +231,7 @@ def apiexe(yamlfile, case, params=None, verify=True, upheader=None, code=None, a
     assertype = None
 
     # 删除多余参数
-    if params is not None :
+    if params is not None:
         try:
             assertion = params.pop('assertion')
             code = params.pop('code')

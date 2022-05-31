@@ -1,28 +1,28 @@
-#web ¶¨Î»Ä£°å
-#- casename: # ²âÊÔÓÃÀı
-#  title: #ÓÃÀı±êÌâ
-#  precond: #Ç°ÖÃ
+#web å®šä½æ¨¡æ¿
+#- casename: # æµ‹è¯•ç”¨ä¾‹
+#  title: #ç”¨ä¾‹æ ‡é¢˜
+#  precond: #å‰ç½®
 #  testdata:
 #    - loginname: "admin"
 #      password: "fdr**2020"
-#      assertion: "¹ÜÀíÔ±"
+#      assertion: "ç®¡ç†å‘˜"
 #    - loginname: "18268"
 #      password: "123456a?"
 #      assertion: "18268"
 #  element:
-#    - casesteid:  # ²½Öèid
-#      types:   # ¶¨Î»ÀàĞÍ
-#      operate:    # ²Ù×÷ÀàĞÍ
-#      locate: # ¶¨Î»Æ÷
-#      listindex: # ¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-#      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-#      info:    # ²½ÖèËµÃ÷
+#    - casesteid:  # æ­¥éª¤id
+#      types:   # å®šä½ç±»å‹
+#      operate:    # æ“ä½œç±»å‹
+#      locate: # å®šä½å™¨
+#      listindex: # å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+#      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+#      info:    # æ­¥éª¤è¯´æ˜
 
 
-- model: WangYi  # ¶ÔÓ¦pageobj µÄÀàÃû³Æ
-  
+- model: WangYi  # å¯¹åº”pageobj çš„ç±»åç§°
+
 - casename: froms
-  title: Ìø×ªfroms
+  title: è·³è½¬froms
   precond:
   testdata:
   element:
@@ -30,13 +30,13 @@
       types: xpath
       operate: iframe
       locate: //div[@id='loginDiv']/iframe
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: Ìø×ªfroms
+      listindex:  #å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: è·³è½¬froms
 
 
 - casename: input_user
-  title: ÊäÈëÓÃ»§Ãû
+  title: è¾“å…¥ç”¨æˆ·å
   precond:
   testdata:
   element:
@@ -44,12 +44,12 @@
       types: name
       operate: input
       locate: email
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: ÊäÈëÓÃ»§Ãû
+      listindex:  #å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: è¾“å…¥ç”¨æˆ·å
 
 - casename: input_pwd
-  title: ÊäÈëÃÜÂë
+  title: è¾“å…¥å¯†ç 
   precond:
   testdata:
   element:
@@ -57,12 +57,12 @@
       types: name
       operate: input
       locate: password
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: ÊäÈëÃÜÂë
+      listindex:  #å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: è¾“å…¥å¯†ç 
 
 - casename: input_sub
-  title: Ìá½»µÇÂ¼
+  title: æäº¤ç™»å½•
   precond:
   testdata:
   element:
@@ -70,7 +70,6 @@
       types: id
       operate: click
       locate: dologin
-      listindex:  #¶à¸öÊ±ÁĞ±íË÷Òı µ¥¸öÎª¿Õ /int
-      locawait:              #²Ù×÷µÈ´ıÊ±¼ä  folt/s
-      info: Ìá½»µÇÂ¼
-
+      listindex:  #å¤šä¸ªæ—¶åˆ—è¡¨ç´¢å¼• å•ä¸ªä¸ºç©º /int
+      locawait:              #æ“ä½œç­‰å¾…æ—¶é—´  folt/s
+      info: æäº¤ç™»å½•

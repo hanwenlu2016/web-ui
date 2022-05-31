@@ -1,11 +1,10 @@
-- model: TestWangYi  # 对应case的类名称
+- model: TestWangYi  # 瀵瑰簲case鐨勭被鍚嶇О
 
-- casename: test_wy63_go     # 对应类的 函数
-  title: 测试iffrom登录            # 操作标题
-  precond:        # 前置说明
-  testdata: # 测试数据 /列表
+- casename: test_wy63_go     # 瀵瑰簲绫荤殑 鍑芥暟
+  title: 娴嬭瘯iffrom鐧诲綍            # 鎿嶄綔鏍囬
+  precond:        # 鍓嶇疆璇存槑
+  testdata: # 娴嬭瘯鏁版嵁 /鍒楄〃
     - user: 123@163.vom
       pwd: 123@163.vom
     - user: 000@163.vom
       pwd: 000@163.vom
-

@@ -26,7 +26,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
 from public.common import ErrorExcep, logger, is_assertion
-from public.reda_data import GetCaseYmal
+from public.reda_data import GetCaseYmal, replace_py_yaml
 
 
 class Base:
@@ -736,6 +736,8 @@ class WebBase(Base):
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
 
+
+
     def get_case(self, yaml_names=None, case_names=None):
         """
         获取用例数据   如果 case_names 以 test_ 开头直接找 caseYAML 目录下  如果不是 找 locaotrTAML
@@ -875,7 +877,9 @@ class WebBase(Base):
         """
         relust = None  # 断言结果  最后一步才返回
 
-        locator_data = self.get_case(yamlfile, case)
+        yaml = replace_py_yaml(yamlfile)
+
+        locator_data = self.get_case(yaml, case)
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
@@ -911,7 +915,9 @@ class AutoRunCase(WebBase):
 
         relust = None
 
-        locator_data = self.get_case(yamlfile, case)
+        yaml = replace_py_yaml(yamlfile)
+
+        locator_data = self.get_case(yaml, case)
         test_dict = locator_data.test_data()
 
         locator_step = locator_data.stepCount()

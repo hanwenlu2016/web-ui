@@ -1,43 +1,42 @@
-# api ÓÃÀıÄ£°åËµÃ÷£º
-#- casename: test_upflie   # ²âÊÔÓÃÀı ¶ÔÓ¦²âÊÔº¯Êı
-#  title: ÎÄ¼şÉÏ´«½Ó¿Ú        # ÓÃÀı±êÌâ
-#  precond: login          # Ç°ÖÃÌõ¼ş
-#  header:              # Èç¹ûÎª¿ÕÈ¡ÅäÖÃÎÄ¼şÄ¬ÈÏ
-#  reqtype: POST           # ÇëÇóÀàĞÍ
-#  urlpath: /par/          # ÇëÇóµØÖ·
-#  testdata:               # ²âÊÔÊı¾İ
+# api ç”¨ä¾‹æ¨¡æ¿è¯´æ˜ï¼š
+#- casename: test_upflie   # æµ‹è¯•ç”¨ä¾‹ å¯¹åº”æµ‹è¯•å‡½æ•°
+#  title: æ–‡ä»¶ä¸Šä¼ æ¥å£        # ç”¨ä¾‹æ ‡é¢˜
+#  precond: login          # å‰ç½®æ¡ä»¶
+#  header:              # å¦‚æœä¸ºç©ºå–é…ç½®æ–‡ä»¶é»˜è®¤
+#  reqtype: POST           # è¯·æ±‚ç±»å‹
+#  urlpath: /par/          # è¯·æ±‚åœ°å€
+#  testdata:               # æµ‹è¯•æ•°æ®
 #    - moduleid: 45
 #      isdone: true
-#      assertion: "demo"  # *±ØÌî¶ÏÑÔÔ¤ÆÚ²ÎÊı  ÇëÇóÊ±²»´«µİ
-#      filename: "demo.yaml"  # *ÎÄ¼şÉÏ´«Ê±±ØÌî  ÉÏ´«ÎÄ¼şÃû³Æ
-#      filepath: "/Users/reda-flight/Desktop/svn/reda-ui-auto/database/file/user_infos.yaml"  #*ÎÄ¼şÉÏ´«Ê±±ØÌî  ÉÏ´«ÉÏ´«Â·¾¶
+#      assertion: "demo"  # *å¿…å¡«æ–­è¨€é¢„æœŸå‚æ•°  è¯·æ±‚æ—¶ä¸ä¼ é€’
+#      filename: "demo.yaml"  # *æ–‡ä»¶ä¸Šä¼ æ—¶å¿…å¡«  ä¸Šä¼ æ–‡ä»¶åç§°
+#      filepath: "/Users/reda-flight/Desktop/svn/reda-ui-auto/database/file/user_infos.yaml"  #*æ–‡ä»¶ä¸Šä¼ æ—¶å¿…å¡«  ä¸Šä¼ ä¸Šä¼ è·¯å¾„
 
 
 - model: TestApiDemo
 
-- casename: test_api  # ²âÊÔÓÃÀı ¶ÔÓ¦²âÊÔº¯Êı
-  title: ²âÊÔapi        # ÓÃÀı±êÌâ
-  precond: Ç°ÖÃÌõ¼ş      # Ç°ÖÃÌõ¼ş
-  header:              # Èç¹ûÎª¿ÕÈ¡ÅäÖÃÎÄ¼şÄ¬ÈÏ
-  reqtype: GET         # ÇëÇóÀàĞÍ
-  urlpath: '/weather_mini'     # ÇëÇóµØÖ·  »òÕßĞ´È«µØÖ· http://wthrcdn.etouch.cn ÔÚsetting http://wthrcdn.etouch.cn/weather_mini?&city=%E6%B7%B1%E5%9C%B3
-  testdata: # ²âÊÔÊı¾İ
-    - city: ÉîÛÚ
-      code:                   # ²»Ğ´Ê±Ä¬ÈÏÎª200
-      assertion: {'city':'ÉîÛÚ'}      # ±ØÌî¶ÏÑÔÔ¤ÆÚ²ÎÊı   ¶ÏÑÔ  city µÄ Öµ 'ÉîÛÚ' ÊÇ·ñ°üº¬ÔÚ·µ»ØµÄ²ÎÊıÖĞ
-      assertype: 'in'         #¶ÏÑÔ²ÎÊıÌîĞ´Ê±´Ë±ØÌîÀàĞÍ  ==(µÈÓÚ) !=(²»µÈÓÚ) in(°üº¬) notin(²»°üº¬)
-      filename:               #ÉÏ´«ÎÄ¼şÃû³Æ    # ÉÏ´«½Ó¿ÚÊ±±ØÌî ·ÇÉÏ´«½Ó¿Ú¿ÉÒÔÎª¿Õ
-      filepath:               # ÉÏ´«ÎÄ¼şµØÖ·   # ÉÏ´«½Ó¿ÚÊ±±ØÌî ·ÇÉÏ´«½Ó¿Ú¿ÉÒÔÎª¿Õ
-    - city: ¹ãÖİ
+- casename: test_api  # æµ‹è¯•ç”¨ä¾‹ å¯¹åº”æµ‹è¯•å‡½æ•°
+  title: æµ‹è¯•api        # ç”¨ä¾‹æ ‡é¢˜
+  precond: å‰ç½®æ¡ä»¶      # å‰ç½®æ¡ä»¶
+  header:              # å¦‚æœä¸ºç©ºå–é…ç½®æ–‡ä»¶é»˜è®¤
+  reqtype: GET         # è¯·æ±‚ç±»å‹
+  urlpath: '/weather_mini'     # è¯·æ±‚åœ°å€  æˆ–è€…å†™å…¨åœ°å€ http://wthrcdn.etouch.cn åœ¨setting http://wthrcdn.etouch.cn/weather_mini?&city=%E6%B7%B1%E5%9C%B3
+  testdata: # æµ‹è¯•æ•°æ®
+    - city: æ·±åœ³
+      code:                   # ä¸å†™æ—¶é»˜è®¤ä¸º200
+      assertion: {'city':'æ·±åœ³'}      # å¿…å¡«æ–­è¨€é¢„æœŸå‚æ•°   æ–­è¨€  city çš„ å€¼ 'æ·±åœ³' æ˜¯å¦åŒ…å«åœ¨è¿”å›çš„å‚æ•°ä¸­
+      assertype: 'in'         #æ–­è¨€å‚æ•°å¡«å†™æ—¶æ­¤å¿…å¡«ç±»å‹  ==(ç­‰äº) !=(ä¸ç­‰äº) in(åŒ…å«) notin(ä¸åŒ…å«)
+      filename:               #ä¸Šä¼ æ–‡ä»¶åç§°    # ä¸Šä¼ æ¥å£æ—¶å¿…å¡« éä¸Šä¼ æ¥å£å¯ä»¥ä¸ºç©º
+      filepath:               # ä¸Šä¼ æ–‡ä»¶åœ°å€   # ä¸Šä¼ æ¥å£æ—¶å¿…å¡« éä¸Šä¼ æ¥å£å¯ä»¥ä¸ºç©º
+    - city: å¹¿å·
       code:
-      assertion: {'city': '¹ãÖİ'}
+      assertion: {'city': 'å¹¿å·'}
       assertype: 'in'
       filename:
       filepath:
-    - city: ÉÏº£
+    - city: ä¸Šæµ·
       code:
-      assertion: {'city': 'ÉÏº£'}
+      assertion: {'city': 'ä¸Šæµ·'}
       assertype: 'in'
       filename:
       filepath:
-

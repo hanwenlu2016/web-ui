@@ -1,10 +1,12 @@
+- model: TestBaiDu  # 瀵瑰簲case鐨勭被鍚嶇О
 
-
-- model: TestBaiDu  # 对应case的类名称
-
-- casename: test_baidu_search     # 对应类的 函数
-  title: 输入搜索内容            # 操作标题
-  precond:        # 前置说明
-  testdata: # 测试数据 /列表
+- casename: test_baidu_search     # 瀵瑰簲绫荤殑 鍑芥暟
+  title: 杈撳叆鎼滅储鍐呭            # 鎿嶄綔鏍囬
+  precond:        # 鍓嶇疆璇存槑
+  testdata: # 娴嬭瘯鏁版嵁 /鍒楄〃
     - content: python
-
+    - content: java
+    - content: c++
+    - content: go
+    - content: shell
+    - content: c#

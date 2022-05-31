@@ -11,10 +11,10 @@ sys.path.append(os.pardir)
 
 from public.app_base import AppBase
 
-yamlfile = os.path.basename(__file__).replace('py', 'yaml')
+
 
 
 class OpenWeChatPage(AppBase):
 
     def click_login_button(self, ):
-        self.appexe(yamlfile, 'click_login_button', )
+        self.appexe(__file__, sys._getframe().f_code.co_name )

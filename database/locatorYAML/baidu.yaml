@@ -1,49 +1,25 @@
-- model: WangYi/航班管理
-- casename: 163_input_user
+- model: BaiDu/百度
+
+- casename: input_search_content
+  precond: # 前置说明
+  testdata: # 测试数据 /列表
   element:
-  - casesteid: 1
-    info: 输入用户名
-    listindex: null
-    locate: email
-    locawait: null
-    operate: input
-    types: name
-  precond: null
-  testdata: null
-  title: 输入用户名
-- casename: 163_input_pwd
+    - casesteid: 1            # 操作步骤
+      types: name             # 定位类型  支持('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function')
+      operate: input          # 操作类型 支持 input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉) get_html(获取当前网页信息) get_url(获取当前url)* 注意 types = function  时  operate类型必须为 get_html get_url  locate可为空
+      locate: wd              # 定位元素
+      listindex:              # 多个时列表索引 单个为空 /int
+      locawait:              #操作等待时间  folt/s
+      info: 点击输入框收入       # 操作说明
+
+- casename: click_search_button
+  precond: # 前置说明
+  testdata: # 测试数据 /列表
   element:
-  - casesteid: 1
-    info: 输入密码
-    listindex: null
-    locate: password
-    locawait: null
-    operate: input
-    types: name
-  precond: null
-  testdata: null
-  title: 输入密码
-- casename: 163_input_sub
-  element:
-  - casesteid: 1
-    info: 提交登录
-    listindex: null
-    locate: dologin
-    locawait: null
-    operate: click
-    types: id
-  precond: null
-  testdata: null
-  title: 提交登录
-- casename: 163_froms
-  element:
-  - casesteid: 1
-    info: 跳转froms
-    listindex: null
-    locate: //div[@id='loginDiv']/iframe
-    locawait: null
-    operate: iframe
-    types: xpath
-  precond: null
-  testdata: null
-  title: 跳转froms
+    - casesteid: 2
+      types: id
+      operate: click
+      locate: su
+      listindex: # 多个时列表索引 单个为空 /int
+      locawait:              #操作等待时间  folt/s
+      info: 点击搜索按钮
