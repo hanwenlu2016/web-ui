@@ -5,6 +5,9 @@
  * 各位有兴小伙伴麻烦点下start 谢谢 😁
 ``` 
 
+
+# ** 最近发现部分人员拿着我们开源的项目描述为自己所写 坚决抵制此行为 请遵守Apache License 2.0 开源协议
+
 ### 设计思路:
 
   web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成) 
