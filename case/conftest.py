@@ -7,17 +7,17 @@
 import pytest
 
 from public.driver_init import WebInit, AppInit
+from config.setting import CASE_TYPE
 
 
 @pytest.fixture(scope='function')
-def webDriver():
-    driver = WebInit().enable
-    yield driver
-    driver.quit()
+def goDriver():
+    if CASE_TYPE.lower() == 'app':
+        driver = AppInit().setup()
+        yield driver
+        driver.quit()
+    else:
+        driver = WebInit().enable
+        yield driver
+        driver.quit()
 
-
-@pytest.fixture(scope='function')
-def appDriver():
-    driver = AppInit().setup()
-    yield driver
-    driver.quit()

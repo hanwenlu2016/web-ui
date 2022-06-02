@@ -471,7 +471,7 @@ class RandomData:
     def random_name(self):
         """
         随机姓名
-        :return: str
+        :return:
         """
         return fake.name()
 

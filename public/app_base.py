@@ -31,7 +31,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from config.ptahconf import PRPORE_SCREEN_DIR
 from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
 from public.common import ErrorExcep, logger
-from public.reda_data import GetCaseYmal
+from public.reda_data import GetCaseYmal, replace_py_yaml
 
 
 class Base:
@@ -889,7 +889,6 @@ class AccessibilityId(Base):
 
 class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUsed):
 
-
     def get_case(self, yaml_names=None, case_names=None):
         """
         获取用例数据   如果 case_names 以 test_ 开头直接找 caseYAML 目录下  如果不是 找 locaotrTAML
@@ -985,15 +984,18 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             elif operate == 'input':  # 输入操作
                 if text is not None:
                     self.ios_predicate_input(locate=locate, text=text, index=index)
-                logger.error('ios_predicate_input 函数必须传递 text 参数')
+                else:
+                    logger.error('ios_predicate_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
                 self.ios_predicate_clear(locate=locate, index=index)
 
             elif operate == 'clear_continue_input':  # 清除后在输入操作
-
-                self.ios_predicate_clear_continue_input(locate=locate, text=text, index=index)
+                if text is not None:
+                    self.ios_predicate_clear_continue_input(locate=locate, text=text, index=index)
+                else:
+                    logger.error('clear_continue_input 函数必须传递 text 参数')
 
             elif operate == 'slide':  # 滑动操作
                 if index is None:
@@ -1076,7 +1078,8 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             elif operate == 'input':  # 输入操作
                 if text is not None:
                     return self.used_input(types=types, locate=locate, text=text, index=index)
-                logger.error('android_uiautomator_input 函数必须传递 text 参数')
+                else:
+                    logger.error('android_uiautomator_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
@@ -1085,7 +1088,8 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
                     return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
-                logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
+                else:
+                    logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
 
             elif operate == 'slide':  # 滑动操作
                 if index is None:
@@ -1161,7 +1165,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         """
         relust = None  # 断言结果  最后一步才返回
 
-        yaml = self.replace_py_yaml(yamlfile)
+        yaml = replace_py_yaml(yamlfile)
 
         locator_data = self.get_case(yaml, case)
         locator_step = locator_data.stepCount()
@@ -1171,12 +1175,10 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                     locator) == 'clear_continue_input'):
                 self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                     operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                    text=text[locator],
-                                    index=index)
+                                    text=text, index=index)
             else:
                 relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                             text=text,
                                              index=index)
             time.sleep(wait)
 
