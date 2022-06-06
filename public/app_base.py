@@ -25,6 +25,8 @@ import time
 import allure
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
+
+from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -539,20 +541,18 @@ class AndroidUiautomatorBase(Base):
             logger.warning('此定位方法只android系统！！！')
             if el is not None:
                 # 多个定位
-                # android_uiautomator_driver = self.driver.find_elements_by_android_uiautomator(locate)
+
                 return WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                      poll_frequency=POLL_FREQUENCY).until(
-                    lambda x: x.find_elements_by_android_uiautomator(locate))
-
+                    lambda x: x.find_elements(AppiumBy.ANDROID_UIAUTOMATOR, locate))
             else:
                 # 单个定位
-                # return self.driver.find_element_by_android_uiautomator(locate)
                 return WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                      poll_frequency=POLL_FREQUENCY).until(
-                    lambda x: x.find_element_by_android_uiautomator(locate))
+                    lambda x: x.find_element(AppiumBy.ANDROID_UIAUTOMATOR, locate))
 
         except Exception as e:
-            logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！')
+            logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！{e}')
 
     def android_uiautomator_text(self, locate, index=None):
         """
@@ -659,15 +659,15 @@ class IosPredicate(Base):
         try:
             logger.warning('此定位方法只ios系统！！！')
             if el is not None:
-                # ios_predicate = self.driver.find_elements_by_ios_predicate(locate)
+
                 ios_predicate = WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                               poll_frequency=POLL_FREQUENCY).until(
-                    lambda x: x.find_elements_by_ios_predicate(locate))  # 在显示登陆时间内查询元素
+                    lambda x: x.find_elements(AppiumBy.IOS_PREDICATE, locate))  #
+
             else:
-                # ios_predicate = self.driver.find_element_by_ios_predicate(locate)
                 ios_predicate = WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                               poll_frequency=POLL_FREQUENCY).until(
-                    lambda x: x.find_element_by_ios_predicate(locate))
+                    lambda x: x.find_element(AppiumBy.IOS_PREDICATE, locate))
             return ios_predicate
         except Exception as e:
             logger.error(f'元素在显示等待时间 {IMPLICITLY_WAIT_TIME} 未出现！请检查元素是否存在！！ {e}')
@@ -687,9 +687,9 @@ class IosPredicate(Base):
 
         logger.warning('此定位方法只ios系统！！！')
         if el is not None and index is not None:
-            return self.driver.find_elements_by_ios_predicate(locate=locate, el=el)[index].text
+            return self.driver.find_elements(AppiumBy.IOS_PREDICATE, locate)[index].text
         else:
-            return self.driver.find_element_by_ios_predicate(locate=locate, el=el).text
+            return self.driver.find_element(AppiumBy.IOS_PREDICATE, locate).text
 
     def ios_predicate_click(self, locate, index=None):
         """
@@ -779,15 +779,15 @@ class AccessibilityId(Base):
         """
         try:
             if el is not None:
-                # accessibilityId = self.driver.find_elements_by_accessibility_id(locate)
+
                 accessibilityId = WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                                 poll_frequency=POLL_FREQUENCY).until(
-                    lambda x: x.find_elements_by_accessibility_id(locate))  # 在显示等待时间去查询元素
+                    lambda x: x.find_elements(AppiumBy.ACCESSIBILITY_ID, locate))
             else:
-                # accessibilityId = self.driver.find_element_by_accessibility_id(locate)
+
                 accessibilityId = WebDriverWait(self.driver, timeout=IMPLICITLY_WAIT_TIME,
                                                 poll_frequency=POLL_FREQUENCY).until(
-                    lambda x: x.find_element_by_accessibility_id(locate))
+                    lambda x: x.find_element(AppiumBy.ACCESSIBILITY_ID, locate))
 
             return accessibilityId
         except Exception as e:
@@ -808,9 +808,9 @@ class AccessibilityId(Base):
             el = 's'
 
         if el is not None and index is not None:
-            return self.driver.find_elements_by_accessibility_id(locate=locate, el=el)[index].text
+            return self.driver.find_elements(AppiumBy.ACCESSIBILITY_ID, locate)[index].text
         else:
-            return self.driver.find_element_by_accessibility_id(locate=locate, el=el).text
+            return self.driver.find_element(AppiumBy.ACCESSIBILITY_ID, locate).text
 
     def accessibility_id_click(self, locate, index=None):
         """
@@ -1078,8 +1078,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             elif operate == 'input':  # 输入操作
                 if text is not None:
                     return self.used_input(types=types, locate=locate, text=text, index=index)
-                else:
-                    logger.error('android_uiautomator_input 函数必须传递 text 参数')
+                logger.error('android_uiautomator_input 函数必须传递 text 参数')
 
             elif operate == 'clear':  # 清除操作
 
@@ -1088,8 +1087,7 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
             elif operate == 'clear_continue_input':  # 清除后在输入操作
                 if text is not None:
                     return self.used_clear_continue_input(types=types, locate=locate, text=text, index=index)
-                else:
-                    logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
+                logger.info('android_uiautomator_clear_continue_input 函数必须传递 text 参数')
 
             elif operate == 'slide':  # 滑动操作
                 if index is None:
@@ -1175,7 +1173,8 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
                     locator) == 'clear_continue_input'):
                 self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                     operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                    text=text, index=index)
+                                    text=text,
+                                    index=index)
             else:
                 relust = self.app_expression(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                              operate=locator_data.operate(locator), notes=locator_data.info(locator),
