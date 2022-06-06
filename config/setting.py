@@ -52,6 +52,7 @@ DINGDING_MOBILE_LIST=[]  # 通知@人 ['138xxxxxx']
 
 ########## 移动端配置
 PLATFORM = 'Android'  # 'Android'  # ios Android  平台 app 时配合
+IS_EXIT_APPLICATION = True # 是否退出应用
 
 APIUMHOST = '192.168.203.17:4723'  # appium 服务器地址
 

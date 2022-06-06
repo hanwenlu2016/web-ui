@@ -13,6 +13,7 @@ import os, time
 import requests
 
 from selenium import webdriver
+from appium import webdriver as appbdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from public.common import ErrorExcep, logger
@@ -49,9 +50,10 @@ class AppInit:
     """
 
     def __init__(self):
+        # self.uuid = uuid
         self.appos = PLATFORM.lower()
 
-    def decide_appos(self) -> str:  # 判断移动系统选择参数
+    def decide_appos(self) -> dict:  # 判断移动系统选择参数
 
         if self.appos == 'ios':
             return IOS_CAPA
@@ -62,12 +64,46 @@ class AppInit:
             logger.error('不支持此移动系统！')
             raise ErrorExcep("不支持此移动系统!!!!")
 
-    def setup(self) -> T:
-        try:
-            from appium import webdriver
-            decide = self.decide_appos()
-            return webdriver.Remote("http://" + APIUMHOST + "/wd/hub", decide)
+    @property
+    def enable(self) -> T:
+        """
+        如果是 IS_COLONY 开启  启用集群 否则 启用模式
+        :return:
+        """
+        if IS_COLONY:
+            return self.setups()
+        else:
+            return self.setup()
 
+    def setup(self) -> T:
+        """
+        appium 单机连接
+        :return:
+        """
+        try:
+            decide = self.decide_appos()
+            return appbdriver.Remote("http://" + APIUMHOST+ "/wd/hub", decide)
+
+        except Exception as e:
+            logger.error(f'初始app失败 {e}')
+            raise ErrorExcep("初始app失败!!!!")
+
+    def setups(self) -> T:
+        """
+        appium 集群启动  当前只支持安卓
+        :return:
+        """
+        try:
+
+            decide = self.decide_appos()
+
+            rep = requests.get(url="http://" + APIUMHOST)
+            if rep.status_code == 200:
+                driver = appbdriver.Remote("http://" + HUB_HOST + "/wd/hub", decide)
+                return driver
+            else:
+                logger.error('appium GRID集群启动失败,集群地址异常')
+                raise ErrorExcep("appium GRID集群启动失败,集群地址异常!!!!")
         except Exception as e:
             logger.error(f'初始app失败 {e}')
             raise ErrorExcep("初始app失败!!!!")
@@ -101,7 +137,7 @@ class WebInit:
         return self.baseurl
 
     @url.setter
-    def url(self, value: str) -> str:
+    def url(self, value: str) -> str or None:
         self.baseurl = value
 
     @property
@@ -142,7 +178,6 @@ class WebInit:
 
             return self.setup()
 
-
     def browaer_setup_args(self, driver: T) -> T:
         """
         单机浏览器参数设置
@@ -162,6 +197,7 @@ class WebInit:
         """
         driver = webdriver.Remote(command_executor='http://' + HUB_HOST + '/wd/hub',
                                   desired_capabilities=descap, options=option)
+
         driver.maximize_window()
         driver.get(self.url)
         return driver
@@ -237,10 +273,9 @@ class WebInit:
                 logger.error('项目地址地址请求异常！！！')
 
 
-        except SessionNotCreatedException :
+        except SessionNotCreatedException:
             logger.warning('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
             logger.error('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
-
 
     def setups(self) -> T:
         """
@@ -303,7 +338,6 @@ class WebInit:
             else:
                 logger.error('项目地址或者集群地址请求异常！！！')
 
-        except SessionNotCreatedException :
+        except SessionNotCreatedException:
             logger.warning('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
             logger.error('浏览器版本和当前驱动不匹配，请下载或者更新：http://npm.taobao.org/mirrors/chromedriver/')
-

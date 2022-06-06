@@ -1118,26 +1118,37 @@ class AppBase(AccessibilityId, AndroidUiautomatorBase, IosPredicate, CommonlyUse
         """
         if types in ('uiautomator', 'ios_predicate', 'accessibilityid', 'xpath', 'class', 'id'):
             # 只支持安卓
-            if PLATFORM.lower() == 'android' and types == 'uiautomator':
+            if PLATFORM.lower() == 'android':
                 logger.warning('此方法只支持android系统！！')
-                logger.info(notes)
-                return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text,
-                                                             index=index,
-                                                             )
+
+                if types == 'uiautomator':
+                    logger.info(notes)
+                    return self.__if_android_operate_uiautomator(locate=locate, operate=operate, text=text,
+                                                                 index=index,
+                                                                 )
+                else:
+                    raise ErrorExcep(f"""输入的{types}操作类型，暂时不支持！！
+            uiautomator 、ios_predicate 、accessibilityid、xpath、class、id 定位类型
+            """)
 
             # 只支持 iso
-            elif PLATFORM.lower() == 'ios' and types == 'ios_predicate':
+            if PLATFORM.lower() == 'ios':
                 logger.warning('此方法只支持ios系统！！')
-                logger.info(notes)
-                return self.__if_operate_ios_predicate(locate=locate, operate=operate, text=text, index=index,
-                                                       )
+                if types == 'ios_predicate':
+                    logger.info(notes)
+                    return self.__if_operate_ios_predicate(locate=locate, operate=operate, text=text, index=index,
+                                                           )
+                else:
+                    raise ErrorExcep(f"""输入的{types}操作类型，暂时不支持！！
+            uiautomator 、ios_predicate 、accessibilityid、xpath、class、id 定位类型
+            """)
 
-            elif types == 'accessibilityid':
+            if types == 'accessibilityid':
                 logger.info(notes)
                 return self.__if_acceaaibilityid_predicate(locate=locate, operate=operate, text=text, index=index
                                                            )
 
-            elif types in ('xpath', 'class', 'id'):
+            if types in ('xpath', 'class', 'id'):
                 logger.info(notes)
                 return self.__if_commonly_used_predicate(types=types, locate=locate, operate=operate, text=text,
                                                          index=index)
