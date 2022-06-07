@@ -6,12 +6,20 @@
 
 import pytest
 
-from public.driver_init import WebInit, AppInit
-from config.setting import CASE_TYPE, IS_EXIT_APPLICATION, PLATFORM, ANDROID_CAPA, IOS_CAPA
+from public import WebInit, AppInit
+from public import reda_conf
 
 
 @pytest.fixture(scope='function')
 def goDriver():
+    CASE_TYPE = reda_conf('CURRENCY').get('CASE_TYPE')
+
+    APP_UI = reda_conf('APP_UI')
+    IS_EXIT_APPLICATION = APP_UI.get('APP_IS_EXIT_APPLICATION')
+    PLATFORM = APP_UI.get('APP_PLATFORM')
+    ANDROID_CAPA = APP_UI.get('ANDROID_CAPA')
+    IOS_CAPA = APP_UI.get('IOS_CAPA')
+
     if CASE_TYPE.lower() == 'app':
         driver = AppInit().enable
         yield driver

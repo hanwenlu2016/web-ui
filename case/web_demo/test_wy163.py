@@ -10,7 +10,7 @@ import allure
 import pytest
 
 from pageobj.wy163 import WangYi
-from public.reda_data import reda_pytestdata
+from public import reda_pytestdata
 
 
 
@@ -23,8 +23,8 @@ class TestWangYi:
     @allure.description('测试iffrom')  # 用例描述
     @pytest.mark.testwy_web  # 用列标记
     @pytest.mark.parametrize('user,pwd', reda_pytestdata(__file__, 'test_wy63_go'))  # 测试数据
-    def test_wy63_go(self, webDriver,user,pwd):
-        wy = WangYi(webDriver)
+    def test_wy63_go(self, goDriver,user,pwd):
+        wy = WangYi(goDriver)
 
         with allure.step('跳转iffrom'):
             wy.froms()

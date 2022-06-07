@@ -15,7 +15,7 @@ from typing import List
 
 import pytest
 
-from config.ptahconf import *
+from config import *
 from public.common import DelReport, ErrorExcep, logger
 from public.emails import SendEMail
 

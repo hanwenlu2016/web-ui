@@ -26,8 +26,8 @@ class TestAndroidDemo:
     @allure.title("打开微信")  # 用例标题
     @allure.description('打开微信')  # 用例描述
     @pytest.mark.test_open_wechat_addroid
-    def test_open_wechat(self, appDriver):
+    def test_open_wechat(self, goDriver):
         with allure.step('打开微信'):
-            op = OpenWeChatPage(appDriver)
+            op = OpenWeChatPage(goDriver)
             op.click_login_button()
             op.sleep(3)

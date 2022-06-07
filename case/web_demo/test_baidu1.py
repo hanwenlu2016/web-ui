@@ -22,8 +22,8 @@ class TestBaiDu:
     @allure.description('输入多参数搜索')  # 用例描述
     @pytest.mark.testbaidu_web1  # 用列标记
     @pytest.mark.parametrize('testdate', reda_pytestdata(__file__, 'test_baidu_search'))  # 测试数据
-    def test_baidu_search(self, webDriver, testdate):
+    def test_baidu_search(self, goDriver, testdate):
         with allure.step('输入搜索内容'):
-            baidu = AutoRunCase(webDriver)
+            baidu = AutoRunCase(goDriver)
 
             baidu.run(__file__, 'test_baidu_search', test_date=testdate, forwait=1)

@@ -11,10 +11,19 @@ import pymysql
 import redis
 from rediscluster import RedisCluster
 
-from config.setting import MYSQL, ORACLE, REDIS, REDIS_CLUSTER, REDIS_CLUSTER_PASWORD
-from public.common import logger
+from public.common import logger,reda_conf
+
 
 T = TypeVar('T')  # 可以是任何类型。
+
+
+# 读取配置参数
+DB = reda_conf('DB')
+MYSQL = DB.get('MYSQL')
+ORACLE = DB.get('ORACLE')
+REDIS = DB.get('REDIS')
+REDIS_CLUSTER = DB.get('REDIS_CLUSTER')
+REDIS_CLUSTER_PASWORD = DB.get('REDIS_CLUSTER_PASWORD')
 
 
 class Mysql:
