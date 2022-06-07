@@ -30,10 +30,15 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from config.ptahconf import PRPORE_SCREEN_DIR
-from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME, PLATFORM
-from public.common import ErrorExcep, logger
+from config import PRPORE_SCREEN_DIR
+from public.common import ErrorExcep, logger,reda_conf
 from public.reda_data import GetCaseYmal, replace_py_yaml
+
+# 读取配置参数
+APP_UI = reda_conf('APP_UI')
+POLL_FREQUENCY = APP_UI.get('APP_POLL_FREQUENCY')
+IMPLICITLY_WAIT_TIME = APP_UI.get('APP_IMPLICITLY_WAIT_TIME')
+PLATFORM = APP_UI.get('APP_PLATFORM')
 
 
 class Base:

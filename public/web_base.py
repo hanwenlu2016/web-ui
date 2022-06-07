@@ -23,10 +23,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
-from config.ptahconf import PRPORE_SCREEN_DIR
-from config.setting import POLL_FREQUENCY, IMPLICITLY_WAIT_TIME
-from public.common import ErrorExcep, logger, is_assertion
+from config import PRPORE_SCREEN_DIR
+from public.common import ErrorExcep, logger, is_assertion,reda_conf
 from public.reda_data import GetCaseYmal, replace_py_yaml
+
+# 读取配置参数
+WEB_UI = reda_conf('WEB_UI')
+POLL_FREQUENCY = WEB_UI.get('WEB_WIMPLICITLY_WAIT_TIME')
+IMPLICITLY_WAIT_TIME = WEB_UI.get('WEB_POLL_FREQUENCY')
 
 
 class Base:
@@ -735,8 +739,6 @@ class WebBase(Base):
     """
      常用定位方式  'id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag'
     """
-
-
 
     def get_case(self, yaml_names=None, case_names=None):
         """

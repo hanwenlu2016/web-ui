@@ -8,10 +8,16 @@ from typing import TypeVar
 
 import requests
 
-from config.setting import WECHAT_WEBHOOK, DINGDING_WEBHOOK, WECHAT_MOBILE_LIST, DINGDING_MOBILE_LIST
-from public.common import logger
+from public.common import logger,reda_conf
 
 T = TypeVar('T')  # 可以是任何类型。
+
+# 读取配置参数
+MSG = reda_conf('MSG')
+WECHAT_WEBHOOK = MSG.get('WECHAT').get('wechat_webhook')
+WECHAT_MOBILE_LIST = MSG.get('WECHAT').get('wechat_mobile_list')
+DINGDING_MOBILE_LIST = MSG.get('DINGDING').get('dingding_mobile_list')
+DINGDING_WEBHOOK = MSG.get('DINGDING').get('dingding_webhook')
 
 
 class EnterpriseWeChatNotice:
@@ -20,7 +26,7 @@ class EnterpriseWeChatNotice:
     """
 
     @staticmethod
-    def send_txt(content: T, mentioned_mobile_list: list=WECHAT_MOBILE_LIST):
+    def send_txt(content: T, mentioned_mobile_list: list = WECHAT_MOBILE_LIST):
         """
         发送文本消息通知
         :param content:   文本内容，最长不超过2048个字节，必须是utf8编码
@@ -75,7 +81,6 @@ class DingDingNotice:
             logger.info('钉钉消息推送成功！', rep.text)
         except Exception as e:
             logger.error('钉钉微信消息推送失败！', e)
-
 
 # if __name__ == '__main__':
 #     EnterpriseWeChatNotice.send_txt('测试报告完成 ')
