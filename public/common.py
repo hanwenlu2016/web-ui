@@ -13,15 +13,36 @@ from typing import TypeVar, Tuple
 
 import cv2
 import numpy as np
+import yaml
 from loguru import logger
 
-from config.ptahconf import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH
-from config.setting import IS_CLEAN_REPORT, LEVEL
+from config import PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR, LOG_DIR, DIFF_IMGPATH, STETING_YAML_DIR
 
 # import ddddocr 不支持Python3.10
-
 # 可以是任意类型
+
+
 T = TypeVar('T')
+
+
+def reda_conf(value: str) -> list or dict or str:
+    """
+    读取yaml配置文件
+    :param value: 读取的建
+    :return:
+    """
+    try:
+        with open(STETING_YAML_DIR, encoding='utf-8') as f:
+            data = yaml.load(f, Loader=yaml.FullLoader)
+            for da in data:
+                if da.get(value) is not None:
+                    return da.get(value)
+    except Exception as e:
+        logger.error(f'读取yaml异常{e}')
+
+
+levels = reda_conf('CURRENCY').get('LEVEL')  # 读取配置
+
 
 
 def find_dict(will_find_dist: dict, find_keys: T) -> list or int:
@@ -55,6 +76,7 @@ def find_dict(will_find_dist: dict, find_keys: T) -> list or int:
 
         return value_found
 
+
 def is_assertion(dicts: T, actual: T) -> None:
     """
     断言参数
@@ -65,6 +87,7 @@ def is_assertion(dicts: T, actual: T) -> None:
 
     if dicts is not None:
         is_assertion_results(actual=actual, expect=dicts[-2], types=dicts[-1])
+
 
 def is_assertion_results(actual: T, expect: T, types: str) -> bool:
     """
@@ -138,7 +161,8 @@ class SetLog:
 
     logger.add(ERR_LOG_PATH, rotation="00:00", encoding='utf-8', level='ERROR', )
     logger.remove()  # 删去import logger之后自动产生的handler，不删除的话会出现重复输出的现象
-    handler_id = logger.add(sys.stderr, level=LEVEL)  # 添加一个可以修改控制的handler
+
+    handler_id = logger.add(sys.stderr, level=levels)  # 添加一个可以修改控制的handler
 
 
 # 删除测试报告
@@ -183,7 +207,8 @@ class DelReport:
         执行删除测试报告记录
         :return:
         """
-        if IS_CLEAN_REPORT == True:  # 如果为 True 清除 PRPORE_ALLURE_DIR、 PRPORE_JSON_DIR 、PRPORE_SCREEN_DIR 路径下报告
+        is_clean_report = reda_conf('CURRENCY').get('IS_CLEAN_REPORT')
+        if is_clean_report == True:  # 如果为 True 清除 PRPORE_ALLURE_DIR、 PRPORE_JSON_DIR 、PRPORE_SCREEN_DIR 路径下报告
 
             try:
                 dir_list = [PRPORE_ALLURE_DIR, PRPORE_JSON_DIR, PRPORE_SCREEN_DIR]
@@ -419,7 +444,6 @@ class ImgDiff:
         except Exception as e:
             logger.error(f'对比差感知哈希错误:{e}')
 
-
 # def read_img_verification_code(image: str):
 #     """
 #     读取图片验证码 借助 ddddocr 此库相对识别高 https://github.com/sml2h3/ddddocr
@@ -439,3 +463,6 @@ class ImgDiff:
 #                     r'/Users/reda-flight/Desktop/svn/reda-ui-auto/output/report_screen/test_login_1624331940125.png')
 #
 # print(d)
+# if __name__ == '__main__':
+#     l=reda_conf('CURRENCY').get('LEVEL')
+#     print(l)

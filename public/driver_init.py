@@ -16,17 +16,30 @@ from selenium import webdriver
 from appium import webdriver as appbdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from public.common import ErrorExcep, logger
-from config.ptahconf import WIN_CHROMEDRIVER, LUINX_CHROMEDRIVER, MAC_CHROMEDRIVER
-from config.ptahconf import WIN_FIREFOXDRIVER, LUINX_FIREFOXDRIVER, MAC_FIREFOXDRIVER
-from config.ptahconf import IE_PATH
-from config.ptahconf import LOG_DIR
-from config.setting import URL, BROWSERNAME, HUB_HOST, IS_COLONY
-from config.setting import PLATFORM, IOS_CAPA, ANDROID_CAPA, APIUMHOST
+from public.common import ErrorExcep, logger, reda_conf
+from config import WIN_CHROMEDRIVER, LUINX_CHROMEDRIVER, MAC_CHROMEDRIVER
+from config import WIN_FIREFOXDRIVER, LUINX_FIREFOXDRIVER, MAC_FIREFOXDRIVER
+from config import IE_PATH
+from config import LOG_DIR
 
 DAY = time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
 T = TypeVar('T')  # 可以是任何类型。
+
+# 读取配置参数
+WEB_UI = reda_conf('WEB_UI')
+URL = WEB_UI.get('WEB_URL')
+BROWSERNAME = WEB_UI.get('WEB_BROWSERNAME')
+WEB_HUB_HOST = WEB_UI.get('WEB_HUB_HOST')
+WEB_IS_COLONY = WEB_UI.get('WEB_IS_COLONY')
+
+APP_UI = reda_conf('APP_UI')
+PLATFORM = APP_UI.get('APP_PLATFORM')
+IOS_CAPA = APP_UI.get('IOS_CAPA')
+ANDROID_CAPA = APP_UI.get('ANDROID_CAPA')
+APIUMHOST = APP_UI.get('APIUMHOST')
+APP_IS_COLONY = APP_UI.get('APP_IS_COLONY')
+APP_HUB_HOST = APP_UI.get('APP_HUB_HOST')
 
 
 def if_linux_firefox() -> bool:
@@ -36,7 +49,7 @@ def if_linux_firefox() -> bool:
     :return:
     """
     # 如果不是集群 并且linx firfo
-    if IS_COLONY == False and sys.platform.lower() == 'linux' and BROWSERNAME.lower() == 'firefox':
+    if WEB_IS_COLONY == False and sys.platform.lower() == 'linux' and BROWSERNAME.lower() == 'firefox':
 
         return True
 
@@ -50,7 +63,6 @@ class AppInit:
     """
 
     def __init__(self):
-        # self.uuid = uuid
         self.appos = PLATFORM.lower()
 
     def decide_appos(self) -> dict:  # 判断移动系统选择参数
@@ -67,10 +79,10 @@ class AppInit:
     @property
     def enable(self) -> T:
         """
-        如果是 IS_COLONY 开启  启用集群 否则 启用模式
+        如果是 APP_IS_COLONY 开启  启用集群 否则 启用模式
         :return:
         """
-        if IS_COLONY:
+        if APP_IS_COLONY:
             return self.setups()
         else:
             return self.setup()
@@ -80,9 +92,10 @@ class AppInit:
         appium 单机连接
         :return:
         """
+        logger.debug('app单机模式启动')
         try:
             decide = self.decide_appos()
-            return appbdriver.Remote("http://" + APIUMHOST+ "/wd/hub", decide)
+            return appbdriver.Remote("http://" + APIUMHOST + "/wd/hub", decide)
 
         except Exception as e:
             logger.error(f'初始app失败 {e}')
@@ -94,12 +107,12 @@ class AppInit:
         :return:
         """
         try:
-
+            logger.debug('app集群环境启动')
             decide = self.decide_appos()
 
-            rep = requests.get(url="http://" + APIUMHOST)
+            rep = requests.get(url="http://" + APP_HUB_HOST)
             if rep.status_code == 200:
-                driver = appbdriver.Remote("http://" + HUB_HOST + "/wd/hub", decide)
+                driver = appbdriver.Remote("http://" + APP_HUB_HOST + "/wd/hub", decide)
                 return driver
             else:
                 logger.error('appium GRID集群启动失败,集群地址异常')
@@ -169,10 +182,10 @@ class WebInit:
     @property
     def enable(self) -> T:
         """
-        如果是 IS_COLONY 开启  启用集群 否则 启用模式
+        如果是 WEB_IS_COLONY 开启  启用集群 否则 启用模式
         :return:
         """
-        if IS_COLONY:
+        if WEB_IS_COLONY:
             return self.setups()
         else:
 
@@ -195,7 +208,7 @@ class WebInit:
         :param option:浏览器参数参数
         :return:
         """
-        driver = webdriver.Remote(command_executor='http://' + HUB_HOST + '/wd/hub',
+        driver = webdriver.Remote(command_executor='http://' + WEB_HUB_HOST + '/wd/hub',
                                   desired_capabilities=descap, options=option)
 
         driver.maximize_window()
@@ -284,7 +297,7 @@ class WebInit:
         """
         current_sys = sys.platform.lower()
         try:
-            if self.inspect_url_code(self.url) and self.inspect_url_code('http://' + HUB_HOST):  # 项目地址和 集群地址是不是通的
+            if self.inspect_url_code(self.url) and self.inspect_url_code('http://' + WEB_HUB_HOST):  # 项目地址和 集群地址是不是通的
                 if current_sys == 'linux':  # linux系统
                     if self.browser == 'chrome':
                         option = self.linux_chrome_args

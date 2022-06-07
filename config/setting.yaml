@@ -1,0 +1,110 @@
+### 通用参数相关配置
+- CURRENCY:
+    CASE_TYPE: 'app'                 # 项目类型  'app'  # web
+    IS_CLEAN_REPORT: True               # 是否清除 测试历史测试报告结果 * 默认清除
+    IS_REDIS: False                     # 是否读取redis 数据 (完成代码用列后导入管理平台时使用) 默认不读取 #False/True
+    LEVEL: 'DEBUG'                     # 'INFO'  #'DEBUG'  # INFO 日志级别
+
+#### WEB  ui相关配置
+- WEB_UI:
+    WEB_BROWSERNAME: "Chrome"                       # "Chrome" "Firefox" "Ie"  "Safari"  # 浏览器选择
+    WEB_URL: 'https://www.baidu.com/'               # 项目地址 web 时选择
+    WEB_WIMPLICITLY_WAIT_TIME: 10                    # 显示等待最长时间 /s
+    WEB_POLL_FREQUENCY: 0.2                         # 显示等待元素出现时 在此时间内检索一次 /s
+    WEB_IS_COLONY: False                        # 是否启动集群模式 True(启用)  False(不启用)
+    WEB_HUB_HOST: '192.168.7.101:4444'          # wbs集群hub地址和端口True(启用) 时必填
+
+#### 移动 ui 端相关配置
+- APP_UI:
+    APP_PLATFORM: 'Android'                             # 'Android'  # ios Android  平台 app 时配合
+    APIUMHOST: '192.168.203.4:4723'             # appium 服务器地址
+    APP_IS_COLONY: True                        # 是否启动集群模式 True(启用)  False(不启用)
+    APP_HUB_HOST: '192.168.7.101:4444'          # app集群hub地址和端口True(启用) 时必填
+    APP_IS_EXIT_APPLICATION: True                   # 是否退出应用
+    APP_IMPLICITLY_WAIT_TIME: 10                   # 显示等待最长时间 /s
+    APP_POLL_FREQUENCY: 0.2                        # 显示等待元素出现时 在此时间内检索一次 /s
+
+    ## ANDROID 连接参数
+    ANDROID_CAPA:
+      platformName: 'Android'
+      platformVersion: '7'                    # 系统版本
+      deviceName: 'emulator'               # 设备名称
+      appPackage: 'com.android.settings'   # app包名
+      appActivity: '.Settings'             # 启动页面 *
+      autoLaunch: True                    # 测试时是否需要自动运行app  * 必须要开启
+      autoGrantPermissions: True           # 让appium自动授权app权限，如果noReset为True，则该条不生效。
+      newCommandTimeout: 60               # 为了结束Appium会话，会设置一个等待从客户端发送命令的超时时间，默认为60秒，一般不需要设置
+      deviceReadyTimeout: 60              # 等待设备就绪的时间
+      noReset: True                        # 启动app时不要清除app里的原有的数据
+
+    ## IOS 连接参数
+    IOS_CAPA:
+      platformName: 'ios'
+      platformVersion: '12'                             # 系统版本 *
+      deviceName": 'Redad'                               # 设备名称 *
+      automationName: 'XCUITest'
+      bundleId": 'rn.notes.best'                           # "com.reda.appQBD", # app包名 *
+      udid": 'ed3703c917e436c88335f82c34d62f2a09f5334a'    # "ed3703c917e436c88335f82c34d62f2a09f5334a", # 手机UDID *
+      xcodeOrgId: 'J4397KG4TG'                           # 开发者id *
+      xcodeSigningId: 'iPhone Developer'
+      useNewWDA: False
+      noReset: True                                     # 启动app时不要清除app里的原有的数据
+      newCommandTimeo: 60
+
+### 报告通知相关配置
+- MSG:
+    EMAIL: # 邮件
+      email_host: 'smtp.163.com'
+      email_port: '465'
+      send_email_username: 'xxxx@163.com'   # 发送邮件账号
+      send_email_password: 'xxx'           # 发送密码或授权码
+      receive_email_user: [ 'xxx@163.com' ]   # 接收邮件账号
+
+    WECHAT: #企业微信
+      wechat_webhook: ''              # 企业微信群 webhook
+      wechat_mobile_list: [ '@all' ]   # 通知的人 ['@all'] 代表所有
+
+    DINGDING: #钉钉
+      dingding_webhook: ''          # 企业钉钉 webhook
+      dingding_mobile_list: [ ]     #通知@人 ['138xxxxxx']
+
+### 数据库相关配置
+- DB:
+    MYSQL: #mysql
+      user: 'root'        # 用户
+      password: 'root'    #密码
+      port: 3306          # 端口
+      host: '127.0.0.1'   # 数据库地址
+      db: 'testdb'        # 数据库
+
+    ORACLE: #oracle
+      user: 'root'        # 用户
+      password: 'root'    #密码
+      host: '192.168.7.0:1521/ORCL'   # 数据库地址
+
+    REDIS: #redis
+      host: '127.0.0.1'   # 数据库地址
+      port: 3306          # 端口
+      password: 'root'    #密码
+
+    REDIS_CLUSTER: #redis 集群
+      node1: # 节点1
+        host: '192.168.7.100'   # 数据库地址
+        port: 7000          # 端口
+      node2: # 节点2
+        host: '192.168.7.100'
+        port: 7001
+      node3: # 节点3
+        host: '192.168.7.101'
+        port: 7000
+      node4: # 节点4
+        host: '192.168.7.101'
+        port: 7001
+      node5: # 节点5
+        host: '192.168.7.102'
+        port: 7000
+      node6: # 节点6
+        host: '192.168.7.102'
+        port: 7001
+
+    REDIS_CLUSTER_PASWORD: '123456'  # 集群redis密码
