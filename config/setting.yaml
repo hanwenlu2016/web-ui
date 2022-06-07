@@ -43,9 +43,9 @@
       platformVersion: '12'                             # 系统版本 *
       deviceName": 'Redad'                               # 设备名称 *
       automationName: 'XCUITest'
-      bundleId": 'rn.notes.best'                           # "com.reda.appQBD", # app包名 *
-      udid": 'ed3703c917e436c88335f82c34d62f2a09f5334a'    # "ed3703c917e436c88335f82c34d62f2a09f5334a", # 手机UDID *
-      xcodeOrgId: 'J4397KG4TG'                           # 开发者id *
+      bundleId": 'rn.notes.best'                           # "com.", # app包名 *
+      udid": 'ed3703c917e436c88335f82c34d62f2a0xxxx'    # # 手机UDID *
+      xcodeOrgId: 'J43xxx'                           # 开发者id *
       xcodeSigningId: 'iPhone Developer'
       useNewWDA: False
       noReset: True                                     # 启动app时不要清除app里的原有的数据
