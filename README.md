@@ -37,7 +37,7 @@ web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码�
 
 ### 项目架构详情：
 
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frameexplain.png)
+![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/frameexplains.png)
 
 ### 测试输出报告：
 
