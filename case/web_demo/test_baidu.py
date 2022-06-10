@@ -32,6 +32,8 @@ class TestBaiDu:
 
 
         with allure.step('点击搜索'):
+
+
             baidu.click_search_button()
 
             baidu.sleep(3)
@@ -40,3 +42,8 @@ class TestBaiDu:
             search_relust = baidu.screen_shot('search')
             df = ImgDiff.ahaDiff('python.png', search_relust)
             assert df < 50
+
+
+
+
+

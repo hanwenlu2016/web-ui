@@ -27,7 +27,7 @@
       info: 点击搜索按钮
     - casesteid: 3
       types: function
-      operate: get_html
+      operate: web_html_content
       locate:
       listindex: # 多个时列表索引 单个为空 /int
       locawait:              #操作等待时间  folt/s

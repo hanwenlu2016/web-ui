@@ -7,30 +7,13 @@
       "name" : "所搜验证",
       "children" : [ {
         "name" : "输入内容并搜索",
-        "uid" : "737de604e23a29d8",
-        "parentUid" : "2249c6438e61b861cc328111dda6595b",
-        "status" : "passed",
-        "time" : {
-          "start" : 1654582834802,
-          "stop" : 1654582840564,
-          "duration" : 5762
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('c++',)" ]
-      }, {
-        "name" : "输入内容并搜索",
-        "uid" : "7d42f3aad256a98c",
+        "uid" : "662d45d1f89de685",
         "parentUid" : "2249c6438e61b861cc328111dda6595b",
         "status" : "failed",
         "time" : {
-          "start" : 1654582834832,
-          "stop" : 1654582840134,
-          "duration" : 5302
+          "start" : 1654832760384,
+          "stop" : 1654832764572,
+          "duration" : 4188
         },
         "flaky" : false,
         "newFailed" : false,
@@ -38,16 +21,16 @@
         "newBroken" : false,
         "retriesCount" : 0,
         "retriesStatusChange" : false,
-        "parameters" : [ "('python',)" ]
+        "parameters" : [ "('python', 'python', 'in')" ]
       }, {
         "name" : "输入内容并搜索",
-        "uid" : "2c5e01b4e6a3b9fa",
+        "uid" : "82f8a86eb936c970",
         "parentUid" : "2249c6438e61b861cc328111dda6595b",
         "status" : "failed",
         "time" : {
-          "start" : 1654582835118,
-          "stop" : 1654582840225,
-          "duration" : 5107
+          "start" : 1654832769000,
+          "stop" : 1654832772961,
+          "duration" : 3961
         },
         "flaky" : false,
         "newFailed" : false,
@@ -55,58 +38,7 @@
         "newBroken" : false,
         "retriesCount" : 0,
         "retriesStatusChange" : false,
-        "parameters" : [ "('java',)" ]
-      }, {
-        "name" : "输入内容并搜索",
-        "uid" : "6f064793a22fd919",
-        "parentUid" : "2249c6438e61b861cc328111dda6595b",
-        "status" : "failed",
-        "time" : {
-          "start" : 1654582846555,
-          "stop" : 1654582851811,
-          "duration" : 5256
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('go',)" ]
-      }, {
-        "name" : "输入内容并搜索",
-        "uid" : "9a9d2945be5b2b52",
-        "parentUid" : "2249c6438e61b861cc328111dda6595b",
-        "status" : "failed",
-        "time" : {
-          "start" : 1654582846641,
-          "stop" : 1654582851836,
-          "duration" : 5195
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('shell',)" ]
-      }, {
-        "name" : "输入内容并搜索",
-        "uid" : "7616c077f8482ecc",
-        "parentUid" : "2249c6438e61b861cc328111dda6595b",
-        "status" : "failed",
-        "time" : {
-          "start" : 1654582846779,
-          "stop" : 1654582852116,
-          "duration" : 5337
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('c#',)" ]
+        "parameters" : [ "('C++', 'C++', 'in')" ]
       } ],
       "uid" : "2249c6438e61b861cc328111dda6595b"
     } ],

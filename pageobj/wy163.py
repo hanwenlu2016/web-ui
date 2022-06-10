@@ -10,7 +10,7 @@ import sys
 sys.path.append(os.pardir)
 
 
-from public.web_base import WebBase
+from public import Web
 
 
 
@@ -20,7 +20,7 @@ pageobj  对应 locatorYAML 操作页面
 '''
 
 
-class WangYi(WebBase):
+class WangYi(Web):
 
 
     def froms(self):    # 如果需要跳转回来 使用switch_default_content

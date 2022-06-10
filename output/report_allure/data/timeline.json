@@ -4,16 +4,16 @@
   "children" : [ {
     "name" : "hanwenludeMac-mini.local",
     "children" : [ {
-      "name" : "47243-MainThread",
+      "name" : "1406-MainThread",
       "children" : [ {
         "name" : "输入内容并搜索",
-        "uid" : "2c5e01b4e6a3b9fa",
-        "parentUid" : "a1d19fa7696574f92b29bf2c79afba0e",
+        "uid" : "82f8a86eb936c970",
+        "parentUid" : "fce4733de5e259c02a4e21887b358416",
         "status" : "failed",
         "time" : {
-          "start" : 1654582835118,
-          "stop" : 1654582840225,
-          "duration" : 5107
+          "start" : 1654832769000,
+          "stop" : 1654832772961,
+          "duration" : 3961
         },
         "flaky" : false,
         "newFailed" : false,
@@ -21,16 +21,16 @@
         "newBroken" : false,
         "retriesCount" : 0,
         "retriesStatusChange" : false,
-        "parameters" : [ "('java',)" ]
+        "parameters" : [ "('C++', 'C++', 'in')" ]
       }, {
         "name" : "输入内容并搜索",
-        "uid" : "9a9d2945be5b2b52",
-        "parentUid" : "a1d19fa7696574f92b29bf2c79afba0e",
+        "uid" : "662d45d1f89de685",
+        "parentUid" : "fce4733de5e259c02a4e21887b358416",
         "status" : "failed",
         "time" : {
-          "start" : 1654582846641,
-          "stop" : 1654582851836,
-          "duration" : 5195
+          "start" : 1654832760384,
+          "stop" : 1654832764572,
+          "duration" : 4188
         },
         "flaky" : false,
         "newFailed" : false,
@@ -38,85 +38,9 @@
         "newBroken" : false,
         "retriesCount" : 0,
         "retriesStatusChange" : false,
-        "parameters" : [ "('shell',)" ]
+        "parameters" : [ "('python', 'python', 'in')" ]
       } ],
-      "uid" : "a1d19fa7696574f92b29bf2c79afba0e"
-    }, {
-      "name" : "47244-MainThread",
-      "children" : [ {
-        "name" : "输入内容并搜索",
-        "uid" : "7616c077f8482ecc",
-        "parentUid" : "ace060451ea9f64d079015ef44e72de2",
-        "status" : "failed",
-        "time" : {
-          "start" : 1654582846779,
-          "stop" : 1654582852116,
-          "duration" : 5337
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('c#',)" ]
-      }, {
-        "name" : "输入内容并搜索",
-        "uid" : "737de604e23a29d8",
-        "parentUid" : "ace060451ea9f64d079015ef44e72de2",
-        "status" : "passed",
-        "time" : {
-          "start" : 1654582834802,
-          "stop" : 1654582840564,
-          "duration" : 5762
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('c++',)" ]
-      } ],
-      "uid" : "ace060451ea9f64d079015ef44e72de2"
-    }, {
-      "name" : "47242-MainThread",
-      "children" : [ {
-        "name" : "输入内容并搜索",
-        "uid" : "6f064793a22fd919",
-        "parentUid" : "b41316da903e498dfd9b1a44ac9d79ec",
-        "status" : "failed",
-        "time" : {
-          "start" : 1654582846555,
-          "stop" : 1654582851811,
-          "duration" : 5256
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('go',)" ]
-      }, {
-        "name" : "输入内容并搜索",
-        "uid" : "7d42f3aad256a98c",
-        "parentUid" : "b41316da903e498dfd9b1a44ac9d79ec",
-        "status" : "failed",
-        "time" : {
-          "start" : 1654582834832,
-          "stop" : 1654582840134,
-          "duration" : 5302
-        },
-        "flaky" : false,
-        "newFailed" : false,
-        "newPassed" : false,
-        "newBroken" : false,
-        "retriesCount" : 0,
-        "retriesStatusChange" : false,
-        "parameters" : [ "('python',)" ]
-      } ],
-      "uid" : "b41316da903e498dfd9b1a44ac9d79ec"
+      "uid" : "fce4733de5e259c02a4e21887b358416"
     } ],
     "uid" : "f4d1aa0c234e58b35e9ffede6fbf27ca"
   } ]

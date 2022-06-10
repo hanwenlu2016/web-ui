@@ -1,35 +1,72 @@
 # web 模板说明
+
+#  """ ymal  操作类型operate说明
+#        操作类型:
+#        操作类型                                    执行动作
+#        input                       >               输入
+#        click                       >               点击
+#        text                        >               提取文本
+#        submit                      >               提交
+#        scroll                      >               滑动下拉
+#        clear                       >               清除
+#        jsclear                     >               js清除
+#        jsclear_continue_input      >               js清除后输入
+#        clear_continue_input        >               清除在输入
+#        web_url                     >               获取当前url    *types必须为function
+#        web_title                   >               获取当前title  *types必须为function
+#        web_html_content            >               获取html内容   *types必须为function
+#        iframe                      >               跳转到iframe
+#        """
+
+#  """ ymal 定位类型types说明
+#     types 对应selenium 的操作
+#       types                              selenium
+#       (/ 代表或者 link_text or link > LINK_TEXT)
+#       "id"                            >   ID
+#       "xpath"                         >   XPATH
+#       "link_text/link"                >   LINK_TEXT
+#       "partial_link_text/partial"     >   PARTIAL_LINK_TEXT
+#       "name"                          >   NAME
+#       "tag_name/tag"                  >   TAG_NAME
+#       "class_name/class"              >   CLASS_NAME
+#       "css_selector/css"              >   CSS_SELECTOR
+#       "function"                      >   web_html_content 或 web_url web_title
+
+
+
 - model: TestBaiDu                  # 对应 测试类
 
-- casename: test_baidu_search     # 对应类的 函数
-  title: 输入搜索内容               # 操作标题
-  precond:                        # 前置说明
-  testdata: # 测试数据
-    - content: python
-      assertion: "python"             # *断言时必填 当使用AutoRunCase 类时会自动处理断言  webexe 类处理时需要手动处理
-      assertype: 'in'                # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
-    - content: C++
-      assertion: "C++"             # *断言时必填
-      assertype: 'in'                # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
-  element: # 操作步骤 /列表
-    - casesteid: 1            # 操作步骤
-      types: name             # 定位类型  支持('id', 'name', 'xpath', 'css', 'class', 'link', 'partlink', 'tag', 'function')
-      operate: input          # 操作类型 支持 input(输入) , clear(清除) , submit(提交),jsclear (js清除),jsclear_continue_input(js清除后输入),clear_continue_input(清除在输入) 、click(点击) ,text(提取文本) ,scroll(滑动下拉) get_html(获取当前网页信息) get_url(获取当前url)* 注意 types = function  时  operate类型必须为 get_html get_url  locate可为空
-      locate: wd              # 定位元素
-      listindex: # 多个时列表索引 单个为空 /int
-      locawait:              #操作等待时间  folt/s
-      info: 点击输入框收入       # 操作说明
+
+
+- casename: test_baidu_search       # 对应类的 函数
+  title: 输入搜索内容                 # 操作标题
+  precond:                          # 前置说明
+  testdata:                         # 测试数据  **  locatorYAML时 此步骤可忽略
+    - content: 'python'
+      assertion: "python"           # *断言时必填 **并且必须使用AutoRunCase 类时会自动处理断言  webexe 类处理时需要手动处理
+      assertype: 'in'               # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
+    - content: 'C++'
+      assertion: "C++"
+      assertype: 'in'
+  element:                          # 操作步骤 **  caseYAML时 此步骤可忽略
+    - casesteid: 1                  # 操作步骤
+      types: name                   # 查看顶部 types说明
+      operate: input                # 查看顶部 operate说明
+      locate: wd                    # 定位元素
+      listindex:                    # 多个时列表索引 单个为空 /int
+      locawait:                     #操作等待时间  folt/s
+      info: 点击输入框收入             # 操作说明
     - casesteid: 2
       types: id
       operate: click
       locate: su
-      listindex: # 多个时列表索引 单个为空 /int
-      locawait:              #操作等待时间  folt/s
+      listindex:
+      locawait:
       info: 点击搜索按钮
     - casesteid: 3
       types: function
-      operate: get_html
+      operate: web_html_content
       locate:
-      listindex: # 多个时列表索引 单个为空 /int
-      locawait:              #操作等待时间  folt/s
-      info: 获取当前HTML页面 # 此步骤断言
+      listindex:
+      locawait:
+      info: 获取当前HTML页面

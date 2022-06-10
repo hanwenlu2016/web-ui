@@ -210,7 +210,7 @@ class WebInit:
         """
         driver = webdriver.Remote(command_executor='http://' + WEB_HUB_HOST + '/wd/hub',
                                   desired_capabilities=descap, options=option)
-
+        driver.find_element()
         driver.maximize_window()
         driver.get(self.url)
         return driver

@@ -9,7 +9,8 @@ import sys
 
 sys.path.append(os.pardir)
 
-from public.web_base import WebBase
+from public import Web
+
 
 
 
@@ -19,7 +20,8 @@ pageobj  对应 locatorYAML 操作页面
 '''
 
 
-class BaiDu(WebBase):
+class BaiDu(Web):
+
 
     def input_search_content(self, content):
         """
@@ -41,4 +43,8 @@ class BaiDu(WebBase):
         """
 
         self.webexe(__file__, sys._getframe().f_code.co_name,)
+
+
+
+
 

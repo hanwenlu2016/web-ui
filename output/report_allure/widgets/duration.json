@@ -1,61 +1,21 @@
 [ {
-  "uid" : "6f064793a22fd919",
+  "uid" : "662d45d1f89de685",
   "name" : "输入内容并搜索",
   "time" : {
-    "start" : 1654582846555,
-    "stop" : 1654582851811,
-    "duration" : 5256
+    "start" : 1654832760384,
+    "stop" : 1654832764572,
+    "duration" : 4188
   },
   "status" : "failed",
   "severity" : "normal"
 }, {
-  "uid" : "2c5e01b4e6a3b9fa",
+  "uid" : "82f8a86eb936c970",
   "name" : "输入内容并搜索",
   "time" : {
-    "start" : 1654582835118,
-    "stop" : 1654582840225,
-    "duration" : 5107
+    "start" : 1654832769000,
+    "stop" : 1654832772961,
+    "duration" : 3961
   },
   "status" : "failed",
-  "severity" : "normal"
-}, {
-  "uid" : "9a9d2945be5b2b52",
-  "name" : "输入内容并搜索",
-  "time" : {
-    "start" : 1654582846641,
-    "stop" : 1654582851836,
-    "duration" : 5195
-  },
-  "status" : "failed",
-  "severity" : "normal"
-}, {
-  "uid" : "7d42f3aad256a98c",
-  "name" : "输入内容并搜索",
-  "time" : {
-    "start" : 1654582834832,
-    "stop" : 1654582840134,
-    "duration" : 5302
-  },
-  "status" : "failed",
-  "severity" : "normal"
-}, {
-  "uid" : "7616c077f8482ecc",
-  "name" : "输入内容并搜索",
-  "time" : {
-    "start" : 1654582846779,
-    "stop" : 1654582852116,
-    "duration" : 5337
-  },
-  "status" : "failed",
-  "severity" : "normal"
-}, {
-  "uid" : "737de604e23a29d8",
-  "name" : "输入内容并搜索",
-  "time" : {
-    "start" : 1654582834802,
-    "stop" : 1654582840564,
-    "duration" : 5762
-  },
-  "status" : "passed",
   "severity" : "normal"
 } ]
