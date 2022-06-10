@@ -432,11 +432,35 @@ class GetCaseYmal:
         """
         return self.get_set(index, 'types')
 
+    def ios_types(self, index: int) -> str:
+        """
+        返回 用列步骤 ios_types 参数
+        """
+        return self.get_set(index, 'ios_types')
+
+    def android_types(self, index: int) -> str:
+        """
+        返回 用列步骤 android_types 参数
+        """
+        return self.get_set(index, 'android_types')
+
     def operate(self, index: int) -> str:
         """
         返回 用列步骤 operate 参数
         """
         return self.get_set(index, 'operate')
+
+    def ios_locate(self, index: int) -> str:
+        """
+        返回 用列步骤 ios_locate 参数
+        """
+        return self.get_set(index, 'ios_locate')
+
+    def android_locate(self, index: int) -> str:
+        """
+        返回 用列步骤 android_locate 参数
+        """
+        return self.get_set(index, 'android_locate')
 
     def locate(self, index: int) -> str:
         """

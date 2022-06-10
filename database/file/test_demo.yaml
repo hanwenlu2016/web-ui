@@ -1,0 +1,129 @@
+# yaml 模板说明
+
+#  """ ymal  操作类型operate说明
+#        操作类型:
+#        操作类型                                    执行动作
+#        input                       >               输入
+#        click                       >               点击
+#        text                        >               提取文本
+#        submit                      >               提交
+#        scroll                      >               滑动下拉
+#        clear                       >               清除
+#        jsclear                     >               js清除
+#        jsclear_continue_input      >               js清除后输入
+#        clear_continue_input        >               清除在输入
+#        web_url                     >               获取当前url    *types必须为function
+#        web_title                   >               获取当前title  *types必须为function
+#        web_html_content            >               获取html内容   *types必须为function
+#        iframe                      >               跳转到iframe
+#        """
+
+#定位类型
+# types 对应selenium 的操作
+# web 8中  function为函数类型
+# types                              selenium
+# (/ 代表或者 link_text or link > LINK_TEXT)
+# "id"                            >   ID
+# "xpath"                         >   XPATH
+# "link_text/link"                >   LINK_TEXT
+# "partial_link_text/partial"     >   PARTIAL_LINK_TEXT
+# "name"                          >   NAME
+# "tag_name/tag"                  >   TAG_NAME
+# "class_name/class"              >   CLASS_NAME
+# "css_selector/css"              >   CSS_SELECTOR
+# "function"                      >   web_html_content 或 web_url web_title
+# app 7中
+# "accessibility_id"        >    ACCESSIBILITY_ID       --对应检测器 android 对应 content-desc和accessibilityid/iso对应labe和name属性accessibilityid
+# "android_uiautomator"     >      ANDROID_UIAUTOMATOR  --对应检测器 java 语法 new UiSelector().text("显示")
+# "android_viewtag"         >      ANDROID_VIEWTAG
+# "android_datamatcher"     >      ANDROID_DATA_MATCHER
+#"android_viewmatcher"     >      ANDROID_VIEW_MATCHER
+#"ios_predicate"           >      IOS_PREDICATE   -- 对应检测器ios predicate
+# "ios_class_chain"         >      IOS_CLASS_CHAIN -- 对应检测器ios class chain
+#
+#  建议使用推荐  ** xpath消耗性能 app定位时尽量不使用 xpath
+#  *安卓 (android_uiautomator、android_viewtag、android_datamatcher、android_viewmatcher、resource-id、 id 、xpath )
+#  *iso (ios_predicate 、ios_class_chain 、resource-id、xpath)
+
+
+###### 以下 AutoRunCase 类运行只需要 caseYAML 定位器和用例数据
+- model: TestBaiDu                  # 对应 测试类
+- casename: test_baidu_search       # 对应类的 函数
+  title: 输入搜索内容                 # 操作标题
+  precond:                          # 前置说明
+  testdata: # 测试数据  **  locatorYAML时 此步骤可忽略
+    - content: 'python'
+      assertion: "python"           # *断言时必填 **并且必须使用AutoRunCase 类时会自动处理断言  webexe 类处理时需要手动处理
+      assertype: 'in'               # 断言参数填写时此必填类型  ==(等于) !=(不等于) in(包含) notin(不包含)
+    - content: 'C++'
+      assertion: "C++"
+      assertype: 'in'
+  element: # 操作步骤 **  caseYAML时 此步骤可忽略
+    - casesteid: 1                  # 操作步骤
+      types: name                   # 查看顶部 types说明
+      ios_types:                    # *项目非app时可忽略
+      android_types:                # *项目非app时可忽略
+      operate: input                # 查看顶部 operate说明
+      locate: wd                    # 定位元素
+      ios_locate:                   # *项目非app时可忽略
+      android_locate:               # *项目非app时可忽略
+      listindex:                    # 多个时列表索引 单个为空 /int
+      locawait:                     #操作等待时间  folt/s
+      info: 点击输入框收入             # 操作说明
+    - casesteid: 2
+      types: id
+      operate: click
+      locate: su
+      listindex:
+      locawait:
+      info: 点击搜索按钮
+    - casesteid: 3
+      types: function
+      operate: web_html_content
+      locate:
+      listindex:
+      locawait:
+      info: 获取当前HTML页面
+
+
+###### 适用于 app.appexe 以下locatYAML 定位器和用例数据 列如我们有2个不同的定位类型和定位器
+- casename: click_yes                     # 对应类的 函数
+  title: 点击同意                           # 操作标题
+  precond:                                # 前置说明
+  element:
+    - casesteid: 1                        # 操作步骤
+      types:                          # 查看顶部 types说明
+      ios_types: ios_predicate           # iso 定位方法
+      android_types: android_uiautomator               # android定位
+      operate: input                      # 查看顶部 operate说明
+      locate:                             # 定位元素
+      ios_locate: label == "同意"                              # iso定位器
+      android_locate: new UiSelector().text("同意")              # android定位器
+      listindex:                                                # 多个时列表索引 单个为空 /int
+      locawait:                                                 #操作等待时间  folt/s
+      info: 点击输入框收入                                         # 操作说明
+
+###### web yaml模板
+- casename: input_name                     # 对应类的 函数
+  title: 输入用户名                          # 操作标题
+  precond:                                # 前置说明
+  element:
+    - casesteid: 1                        # 操作步骤
+      types: name                         # 查看顶部 types说明
+      operate: input                      # 查看顶部 operate说明
+      locate: wd                            # 定位元素
+      listindex: 2                           # 多个时列表索引 单个为空 /int 有2个相同wd 取第二个
+      locawait:                              #操作等待时间  folt/s
+      info: 输入用户名                        # 操作说明
+
+##### caseYAML 测试数据魔板
+- casename: test_baidu_login      # 对应类的 函数
+  title: 多用户组合登陆            # 操作标题
+  precond:        # 前置说明
+  testdata: # 测试数据 /列表
+    - user: 123@163.vom
+      pwd: 123@163.vom
+    - user: 000@163.vom
+      pwd: 000@163.vom
+    - user: 333@163.vom
+      pwd: 333@163.vom

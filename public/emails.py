@@ -14,7 +14,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from config import PRPORE_TMP
-from public.common import logger,reda_conf
+from public.common import logger, reda_conf
 
 # 读取配置参数
 EMAIL = reda_conf('MSG').get('EMAIL')
@@ -28,7 +28,7 @@ RECEIVE_EMAIL_USER = EMAIL.get('receive_email_user')
 class SendEMail:
     """封装发送邮件类"""
 
-    def __init__(self, host: str = EMAIL_HOST, port: str = EMAIL_PORT, username: str = SEND_EMAIL_USERNAME,
+    def __init__(self, host: str = EMAIL_HOST, port: int = EMAIL_PORT, username: str = SEND_EMAIL_USERNAME,
                  paswword: str = SEND_EMAIL_PASSWORD, receive_email_user: list = RECEIVE_EMAIL_USER, ):
         """
         :param host: 邮箱地址

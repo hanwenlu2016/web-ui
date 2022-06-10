@@ -410,7 +410,6 @@ class App(AppBase):
                 logger.debug(notes)
                 return self.web_html_content
 
-
     def appexe(self, yamlfile, case, text=None, wait=0.1):
         """
         自动执行定位步骤
@@ -428,13 +427,46 @@ class App(AppBase):
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
-            if locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input'):
-                self.app_judge_execution(types=locator_data.types(locator), locate=locator_data.locate(locator),
-                                         operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                         text=text, index=locator_data.listindex(locator))
+            this_types = locator_data.types(locator)  # 通用定位类型
+            this_locate = locator_data.locate(locator)  # 通用定位器
+            this_ios_types = locator_data.ios_types(locator)  # ios定位类型
+            this_ios_locate = locator_data.ios_locate(locator)  # ios定位器
+            this_android_types = locator_data.android_types(locator)  # android 定位类型
+            this_android_locate = locator_data.android_locate(locator)  # android 定位器
+
+            # 如果为安卓  android_types android_locate都有值就选择安卓的类型和操作类型
+            # 否则就选择 默认的操作方式和定位类型
+            real_types = None
+            real_locate = None
+
+            if this_android_types and this_android_locate:
+                if PLATFORM.lower() == 'android':
+                    real_types = this_android_types
+                    real_locate = this_android_locate
+
+            # 如果为ios  iso定位类型 和操作类型都有选择iso 专属类型操作
+            # 否则就选择 默认的操作方式和定位类型
+            elif this_ios_types and this_ios_locate:
+                if PLATFORM.lower() == 'ios':
+                    real_types = this_ios_types
+                    real_locate = this_ios_locate
             else:
-                relust = self.app_judge_execution(types=locator_data.types(locator), locate=locator_data.locate(locator),
-                                                  operate=locator_data.operate(locator), notes=locator_data.info(locator),
-                                                  index=locator_data.listindex(locator))
-            self.sleep(wait)
-        return relust
+                real_types = this_types
+                real_locate = this_locate
+
+            if real_types and real_locate:
+                if locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input'):
+
+                    self.app_judge_execution(types=real_types, locate=real_locate,
+                                             operate=locator_data.operate(locator), notes=locator_data.info(locator),
+                                             text=text, index=locator_data.listindex(locator))
+                else:
+                    relust = self.app_judge_execution(types=real_types,
+                                                      locate=real_locate,
+                                                      operate=locator_data.operate(locator),
+                                                      notes=locator_data.info(locator),
+                                                      index=locator_data.listindex(locator))
+                self.sleep(wait)
+                return relust
+            else:
+                logger.error('定位类型 定位器不能为空')
