@@ -8,16 +8,9 @@
 
 ### 设计思路:
 
-web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端(django+rest_framework+react*M端暂未开源功能还未开发完成)
+web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码输入输出执行，M端
 做用例管理，定时任务分配，测试工具集合。
 
-### 前台页面：
-
-> ~~！！！ M端(django+rest_framework+react）此部分由于设计到公司的业务暂时不做了开源！！！~~
-
-```css 
--- 不过本人目前找时间在重新写一个M端管理平台 (django+mtv模式)
-```
 
 初步效果如下 [对应项目](https://github.com/hanwenlu2016/Salvation) 有时间持续更新！：
 
@@ -48,10 +41,6 @@ web-ui-auto分为 C端 (python+selenium+pytest+allure) 实现测试用例代码�
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run003.jpg)
 
 ### seleniumGrid集群：
-
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run1.jpg)
-
-![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run2.jpg)
 
 ![](https://github.com/hanwenlu2016/web-ui/blob/main/doct/img/run3.jpg)
 
