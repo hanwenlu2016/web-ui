@@ -467,6 +467,7 @@ class App(AppBase):
                                                       notes=locator_data.info(locator),
                                                       index=locator_data.listindex(locator))
                 self.sleep(wait)
-                return relust
+                
             else:
                 logger.error('定位类型 定位器不能为空')
+            return relust
