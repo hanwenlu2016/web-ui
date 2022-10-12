@@ -8,7 +8,7 @@ import os
 import sys
 import time
 from enum import Enum
-from typing import TypeVar
+from typing import TypeVar, Optional
 
 import allure
 from appium.webdriver.common.appiumby import AppiumBy
@@ -83,7 +83,7 @@ class Locaate(Enum):
 
     app_types = ['id', 'xpath', 'link_text', 'link', 'partial_link_text', 'partial', 'name', 'tag_name',
                  'tag', 'class_name', 'class', 'css_selector', 'css', 'function', 'accessibility_id', 'ios_predicate',
-                 'ios_class_chain', 'android_uiautomator','android_viewtag',
+                 'ios_class_chain', 'android_uiautomator', 'android_viewtag',
                  'android_datamatcher', 'android_viewmatcher']
 
 
@@ -479,7 +479,7 @@ class Base:
         except Exception as e:
             logger.error("查找alert弹出框异常-> {0}".format(e))
 
-    def screen_shot(self, doc: str, imgreport: bool = True) -> str or None:
+    def screen_shot(self, doc: Optional[None] = 'app', imgreport: bool = True) -> str or None:
         """
         截取当前界面图片
         :param doc:  str 名称
@@ -587,6 +587,19 @@ class Base:
         Select(selcet).select_by_visible_text(value)
         logger.debug('web下拉框选择')
 
+    def is_element_var(self, var) -> bool:
+        """
+        检查值是否存在
+        :param var:查询的值
+        :param locate: 定位器
+        :return:
+        """
+        content = self.web_html_content
+        if var in content:
+            return True
+        else:
+            return False
+
     def web_is_element_displayed(self, types: str, locate: str) -> EM or None:
         """
         检查元素是否存在
@@ -595,9 +608,13 @@ class Base:
         :return:
         """
         if types and locate is not None:
+
             element = self.driver_element(types, locate)
             displayed = element.is_displayed()
-            return displayed
+            if displayed:
+                return True
+            else:
+                return False
         else:
             logger.error('类型定位元素不能为空')
 
@@ -1115,6 +1132,7 @@ class Web(Base):
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
+            waits = locator_data.locawait(locator)
             if locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input'):
                 self.web_judge_execution(types=locator_data.types(locator), locate=locator_data.locate(locator),
                                          operate=locator_data.operate(locator), notes=locator_data.info(locator),
@@ -1125,6 +1143,10 @@ class Web(Base):
                                                   operate=locator_data.operate(locator),
                                                   notes=locator_data.info(locator),
                                                   index=locator_data.listindex(locator))
+            # 等待时间 如果yaml没有就使用默认
+            if waits is not None:
+                wait = waits
+
             self.sleep(wait)
         return relust
 
@@ -1154,7 +1176,7 @@ class AutoRunCase(Web):
         locator_step = locator_data.stepCount()
 
         for locator in range(locator_step):
-
+            waits = locator_data.locawait(locator)
             if locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input'):
 
                 self.web_judge_execution(types=locator_data.types(locator), locate=locator_data.locate(locator),
@@ -1168,6 +1190,9 @@ class AutoRunCase(Web):
                                                   notes=locator_data.info(locator),
                                                   index=locator_data.listindex(locator),
                                                   wait=locator_data.locawait(locator))
+            if waits is not None:
+                forwait = waits
+
             self.sleep(forwait)
 
         # 断言函数
