@@ -6,7 +6,7 @@
 
 
 import time
-from typing import TypeVar, Optional
+from typing import TypeVar, Optional, Callable
 
 from appium.webdriver.common.touch_action import TouchAction
 
@@ -117,7 +117,7 @@ class AppBase(Base):
 
         act.tap(element=element, x=x, y=y).perform()
 
-    def app_press_s(self, element: str = None, x: Optional[int] = None, y: Optional[int] = None, s: int = 1) -> None:
+    def app_press_s(self, element: str = None, x: Optional[int] = None, y: Optional[int] = None, s: int = 0.1) -> None:
         """
         app按下 指定秒数
         :param element: 定位的元素   如果 element x y 都传递 使用element  and vice versa
@@ -296,6 +296,13 @@ class App(AppBase):
      常用定位方式  class(安卓对应 ClassName / iso对应 type) 、 xpath 、 id、
     """
 
+    def get_fdoc(self, function: Callable) -> str:
+        """
+        获取函数帮助文档
+        function 函数名称
+        """
+        return function.__doc__.replace(' ', '').replace('\n', '').split(':')[0]
+
     def app_judge_execution(self, types, locate, operate=None, text=None, notes=None, index=None, wait=None):
         """
           app操作类型 执行:
@@ -455,6 +462,8 @@ class App(AppBase):
                 real_locate = this_locate
 
             if real_types and real_locate:
+                waits = locator_data.locawait(locator)
+
                 if locator_data.operate(locator) in ('input', 'clear_continue_input', 'jsclear_continue_input'):
 
                     self.app_judge_execution(types=real_types, locate=real_locate,
@@ -466,8 +475,12 @@ class App(AppBase):
                                                       operate=locator_data.operate(locator),
                                                       notes=locator_data.info(locator),
                                                       index=locator_data.listindex(locator))
+                # 等待时间 如果yaml没有就使用默认
+                if waits is not None:
+                    wait = waits
+
                 self.sleep(wait)
-                
+
             else:
                 logger.error('定位类型 定位器不能为空')
-            return relust
+        return relust
