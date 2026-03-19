@@ -1,3 +1,4 @@
+# ！！！此项目已经停止维护请到新项目：[新增项目](https://github.com/hanwenlu2016/ui_auto_new) 
 # ** 最近发现部分人员拿着我们开源的项目描述为自己所写 坚决抵制此行为 请遵守Apache License 2.0 开源协议
 
 # web-ui-auto 自动化框架
